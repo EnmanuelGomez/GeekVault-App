@@ -1,0 +1,15 @@
+<div class="subform" [formGroup]="group">
+  <h3>Estadísticas (1–7)</h3>
+  <div class="grid">
+    <div class="field" *ngFor="let s of labels">
+      <label [for]="s.key">{{ s.label }}</label>
+      <input
+        [id]="s.key"
+        type="number"
+        [formControlName]="s.key"
+        min="1"
+        max="7"
+      />
+    </div>
+  </div>
+</div>

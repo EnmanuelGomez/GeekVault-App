@@ -1,0 +1,115 @@
+.add-franchise-container {
+  width: 100%;
+}
+
+/* Imagen de fondo */
+.header-image {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-color: #f0f0f0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+
+  .image-overlay {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 20px;
+    border-radius: 8px;
+
+    h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+  }
+
+  .image-upload {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    label {
+      background: rgba(255,255,255,0.8);
+      color: black;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    input {
+      display: none;
+    }
+  }
+}
+
+/* Sección de formulario */
+.form-section {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 0 40px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      label {
+        font-weight: bold;
+        min-width: 180px;
+        text-align: left;
+        font-size: 1.2rem;
+      }
+
+      input,
+      textarea {
+        flex: 1;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        padding: 10px 6px;
+        font-size: 1.2rem;
+        background: transparent;
+        outline: none;
+
+        &:focus {
+          border-color: #007BFF;
+        }
+      }
+
+      textarea {
+        flex: 2;
+        resize: vertical;
+        margin: 0 auto;
+        display: block;
+      }
+    }
+
+    button {
+      align-self: flex-start;
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+
+      &:hover {
+        background: #0056b3;
+      }
+    }
+  }
+}

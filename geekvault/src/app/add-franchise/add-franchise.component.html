@@ -1,0 +1,46 @@
+<div class="add-franchise-container">
+  <!-- Imagen de fondo -->
+  <div
+    class="header-image"
+    [ngStyle]="{'background-image': selectedImage ? 'url(' + selectedImage + ')' : 'none'}">
+    <div class="image-overlay">
+      <h2>Página para agregar IP / Franquicia / Universo</h2>
+    </div>
+    <div class="image-upload">
+      <label for="uploadImage">Agregar Imagen de Fondo</label>
+      <input type="file" id="uploadImage" accept="image/*" (change)="onImageSelected($event)" />
+    </div>
+  </div>
+
+  <!-- Sección de contenido -->
+  <div class="form-section">
+    <form>
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Ej: Marvel, Star Wars, DC Comics..." />
+      </div>
+
+      <div class="form-group">
+        <label for="anio">Año de inicio:</label>
+        <input type="number" id="anio" placeholder="Ej: 1963" />
+      </div>
+
+      <div class="form-group">
+        <label for="creador">Creador(es):</label>
+        <input type="text" id="creador" placeholder="Ej: Stan Lee, George Lucas..." />
+      </div>
+
+      <div class="form-group">
+        <label for="pais">País de origen:</label>
+        <input type="text" id="pais" placeholder="Ej: Estados Unidos, Japón..." />
+      </div>
+
+      <div class="form-group">
+        <label for="resumen"></label>
+        <textarea id="resumen" rows="4" placeholder="Escribe un breve resumen..."></textarea>
+      </div>
+
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+</div>

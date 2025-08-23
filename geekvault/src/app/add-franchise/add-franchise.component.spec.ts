@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AddFranchiseComponent } from './add-franchise.component';
+
+describe('AddFranchiseComponent', () => {
+  let component: AddFranchiseComponent;
+  let fixture: ComponentFixture<AddFranchiseComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AddFranchiseComponent]
+    })
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(AddFranchiseComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

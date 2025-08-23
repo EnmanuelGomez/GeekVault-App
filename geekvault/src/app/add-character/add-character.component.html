@@ -1,0 +1,109 @@
+<div class="page">
+  <div class="layout">
+
+    <!-- Sección Izquierda (blanca) -->
+    <section class="section section--left">
+      <div class="section-bar">
+        <h2 class="section-title">Sección izquierda</h2>
+        <button type="button" class="icon-btn" (click)="onLeftAdd()" aria-label="Agregar en izquierda">
+          <span aria-hidden="true">+</span>
+        </button>
+      </div>
+      <!-- Contenido futuro -->
+    </section>
+
+    <!-- Sección Central (Formulario principal) -->
+    <section class="section section--center">
+      <header class="header">
+        <h1>Agregar Personaje</h1>
+        <p>Completa el formulario. La imagen se previsualiza al instante.</p>
+      </header>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
+
+        <div class="identity">
+          <!-- Imagen a la izquierda -->
+          <div class="image-block">
+            <div class="image-frame">
+              <img *ngIf="imagePreview(); else placeholder" [src]="imagePreview()!" alt="Vista previa de la imagen" />
+              <ng-template #placeholder>
+                <div class="image-placeholder">Vista previa</div>
+              </ng-template>
+            </div>
+
+            <div class="image-actions">
+              <label class="btn" aria-label="Subir imagen">
+                <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+                Subir imagen
+              </label>
+              <button type="button" class="btn btn--ghost" (click)="clearImage()" [disabled]="!imagePreview()">Quitar</button>
+            </div>
+          </div>
+
+          <!-- Campos a la derecha de la imagen -->
+          <div class="fields">
+            <div class="field">
+              <label for="name">Nombre del personaje</label>
+              <input id="name" type="text" formControlName="name" placeholder="Ej.: Bruce Wayne" />
+              <small class="error" *ngIf="f.name.touched && f.name.invalid">Requerido (mín. 2 caracteres).</small>
+            </div>
+
+            <div class="field">
+              <label for="universe">Universo</label>
+              <input id="universe" type="text" formControlName="universe" placeholder="DC, Marvel, Shonen, etc." />
+              <small class="error" *ngIf="f.universe.touched && f.universe.invalid">Requerido.</small>
+            </div>
+
+            <div class="field">
+              <label for="creator">Creador</label>
+              <input id="creator" type="text" formControlName="creator" placeholder="Ej.: Bob Kane" />
+              <small class="error" *ngIf="f.creator.touched && f.creator.invalid">Requerido.</small>
+            </div>
+
+            <div class="field">
+              <label for="yearCreated">Año creado</label>
+              <input id="yearCreated" type="number" formControlName="yearCreated" min="1895" [max]="currentYear" />
+              <small class="error" *ngIf="f.yearCreated.touched && f.yearCreated.invalid">
+                Año entre 1895 y {{ currentYear }}.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen debajo -->
+        <div class="field field--summary">
+          <label for="summary">Resumen</label>
+          <textarea id="summary" rows="6" formControlName="summary" placeholder="Breve descripción del personaje..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn--primary">Guardar</button>
+          <button type="button" class="btn btn--ghost" (click)="resetForm()">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Sección Derecha (blanca) -->
+    <section class="section section--right">
+      <div class="section-bar">
+        <h2 class="section-title">Sección derecha</h2>
+        <button type="button" class="icon-btn" (click)="onRightAdd()" aria-label="Agregar en derecha">
+          <span aria-hidden="true">+</span>
+        </button>
+      </div>
+      <!-- Contenido futuro -->
+    </section>
+
+    <!-- Sección Inferior (blanca) -->
+    <section class="section section--bottom">
+      <div class="section-bar">
+        <h2 class="section-title">Sección inferior</h2>
+        <button type="button" class="icon-btn" (click)="onBottomAdd()" aria-label="Agregar en inferior">
+          <span aria-hidden="true">+</span>
+        </button>
+      </div>
+      <!-- Contenido futuro -->
+    </section>
+
+  </div>
+</div>
