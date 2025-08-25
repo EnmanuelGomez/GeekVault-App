@@ -1,22 +1,44 @@
 <div class="page">
   <div class="layout">
 
-    <!-- Sección Izquierda (blanca) -->
+    <!-- Sección Izquierda -->
     <section class="section section--left">
       <div class="section-bar">
         <h2 class="section-title">Sección izquierda</h2>
-        <button type="button" class="icon-btn" (click)="onLeftAdd()" aria-label="Agregar en izquierda">
+        <button type="button" class="icon-btn" (click)="openPicker('left')" aria-label="Agregar en izquierda">
           <span aria-hidden="true">+</span>
         </button>
       </div>
-      <!-- Contenido futuro -->
+
+      <!-- Picker -->
+      <div class="picker" *ngIf="menuOpen === 'left'">
+        <header>Agregar subform</header>
+        <ul>
+          <li *ngFor="let s of availableSubformsFor('left')">
+            <button type="button" (click)="attachTo('left', s.key)">{{ s.title }}</button>
+          </li>
+        </ul>
+        <button type="button" class="picker-close" (click)="closePicker()">Cerrar</button>
+      </div>
+
+      <!-- Render dinámico de subforms colocados -->
+      <ng-container *ngFor="let key of placed.left">
+        <div class="subform-wrapper">
+          <div class="subform-header">
+            <h3>{{ metaFor(key).title }}</h3>
+            <button type="button" class="mini-remove" (click)="removeFrom('left', key)">×</button>
+          </div>
+          <ng-container
+            *ngComponentOutlet="metaFor(key).component; inputs: { group: inputFor(key) }">
+          </ng-container>
+        </div>
+      </ng-container>
     </section>
 
     <!-- Sección Central (Formulario principal) -->
     <section class="section section--center">
       <header class="header">
         <h1>Agregar Personaje</h1>
-        <p>Completa el formulario. La imagen se previsualiza al instante.</p>
       </header>
 
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
@@ -83,26 +105,72 @@
       </form>
     </section>
 
-    <!-- Sección Derecha (blanca) -->
+    <!-- Sección Derecha -->
     <section class="section section--right">
       <div class="section-bar">
         <h2 class="section-title">Sección derecha</h2>
-        <button type="button" class="icon-btn" (click)="onRightAdd()" aria-label="Agregar en derecha">
+        <button type="button" class="icon-btn" (click)="openPicker('right')" aria-label="Agregar en derecha">
           <span aria-hidden="true">+</span>
         </button>
       </div>
-      <!-- Contenido futuro -->
+
+      <!-- Picker -->
+      <div class="picker" *ngIf="menuOpen === 'right'">
+        <header>Agregar subform</header>
+        <ul>
+          <li *ngFor="let s of availableSubformsFor('right')">
+            <button type="button" (click)="attachTo('right', s.key)">{{ s.title }}</button>
+          </li>
+        </ul>
+        <button type="button" class="picker-close" (click)="closePicker()">Cerrar</button>
+      </div>
+
+      <!-- Render dinámico -->
+      <ng-container *ngFor="let key of placed.right">
+        <div class="subform-wrapper">
+          <div class="subform-header">
+            <h3>{{ metaFor(key).title }}</h3>
+            <button type="button" class="mini-remove" (click)="removeFrom('right', key)">×</button>
+          </div>
+          <ng-container
+            *ngComponentOutlet="metaFor(key).component; inputs: { group: inputFor(key) }">
+          </ng-container>
+        </div>
+      </ng-container>
     </section>
 
-    <!-- Sección Inferior (blanca) -->
+    <!-- Sección Inferior -->
     <section class="section section--bottom">
       <div class="section-bar">
         <h2 class="section-title">Sección inferior</h2>
-        <button type="button" class="icon-btn" (click)="onBottomAdd()" aria-label="Agregar en inferior">
+        <button type="button" class="icon-btn" (click)="openPicker('bottom')" aria-label="Agregar en inferior">
           <span aria-hidden="true">+</span>
         </button>
       </div>
-      <!-- Contenido futuro -->
+
+      <!-- Picker -->
+      <div class="picker" *ngIf="menuOpen === 'bottom'">
+        <header>Agregar subform</header>
+        <ul>
+          <li *ngFor="let s of availableSubformsFor('bottom')">
+            <button type="button" (click)="attachTo('bottom', s.key)">{{ s.title }}</button>
+          </li>
+        </ul>
+        <button type="button" class="picker-close" (click)="closePicker()">Cerrar</button>
+      </div>
+
+      <!-- Render dinámico -->
+      <ng-container *ngFor="let key of placed.bottom">
+        <div class="subform-wrapper">
+          <div class="subform-header">
+            <h3>{{ metaFor(key).title }}</h3>
+            <button type="button" class="mini-remove" (click)="removeFrom('bottom', key)">×</button>
+          </div>
+          <ng-container
+            *ngComponentOutlet="metaFor(key).component; inputs: { group: inputFor(key) }">
+          </ng-container>
+        </div>
+      </ng-container>
     </section>
 
   </div>

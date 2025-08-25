@@ -1,1 +1,13 @@
-<p>add-category works!</p>
+<div class="form container">
+  <h2>Agregar Categoría</h2>
+  <form [formGroup] = "categoryForm" (ngSubmit)  ="onSubmit()">
+
+    <label for = "name">Nombre</label>
+    <input id="name" type="text" formControlName="name" placeholder="Ej: Cómics, TV, Anime" />
+
+    <label for = "description">Descripción</label>
+    <textarea id="description" formControlName="description" placeholder="Describe el tipo de categoría..."></textarea>
+
+    <button type="submit" [disabled]="!categoryForm.valid">Guardar</button>
+  </form>
+</div>

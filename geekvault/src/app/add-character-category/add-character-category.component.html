@@ -1,0 +1,13 @@
+<div class="form-container">
+  <h2>Agregar Categoría de Personaje</h2>
+  <form [formGroup]="characterCategoryForm" (ngSubmit)="onSubmit()">
+
+    <label for="name">Nombre</label>
+    <input id="name" type="text" formControlName="name" placeholder="Ej: Superhéroe, Villano, Alien" />
+
+    <label for="description">Descripción</label>
+    <textarea id="description" formControlName="description" placeholder="Describe la categoría..."></textarea>
+
+    <button type="submit" [disabled]="!characterCategoryForm.valid">Guardar</button>
+  </form>
+</div>
