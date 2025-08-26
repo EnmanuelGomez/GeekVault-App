@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CYq62inOS0g=",
+  "dgSpecHash": "VmZNBBQ8Pzk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\egome\\GeekVault_backend\\GeekVault.Api\\GeekVault.Api.csproj",
+  "projectFilePath": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\GeekVault.Api\\GeekVault.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\egome\\.nuget\\packages\\ardalis.guardclauses\\5.0.0\\ardalis.guardclauses.5.0.0.nupkg.sha512",
     "C:\\Users\\egome\\.nuget\\packages\\fluentvalidation\\12.0.0\\fluentvalidation.12.0.0.nupkg.sha512",

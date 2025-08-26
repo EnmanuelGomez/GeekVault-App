@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\egome\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj": {}
+    "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\egome\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj": {
+    "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\egome\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj",
         "projectName": "GeekVault.Domain",
-        "projectPath": "C:\\Users\\egome\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj",
+        "projectPath": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\GeekVault.Domain\\GeekVault.Domain.csproj",
         "packagesPath": "C:\\Users\\egome\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\egome\\GeekVault_backend\\GeekVault.Domain\\obj\\",
+        "outputPath": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\GeekVault.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\egome\\AppData\\Roaming\\NuGet\\NuGet.Config",

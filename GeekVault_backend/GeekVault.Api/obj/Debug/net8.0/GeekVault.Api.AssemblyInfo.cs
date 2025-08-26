@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GeekVault.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c10248eac6789a1e05a7dacb1ccf0216040f2833")]
 [assembly: System.Reflection.AssemblyProductAttribute("GeekVault.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GeekVault.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

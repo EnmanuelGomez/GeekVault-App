@@ -1,0 +1,33 @@
+## Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Carpetas de compilación
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+
+## Archivos de dependencias
+packages/
+node_modules/
+*.nupkg
+*.snupkg
+
+## Archivos de publicación
+*.publishsettings
+*.pubxml
+*.pubxml.user
+
+## Archivos de configuración sensibles (opcional)
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+## Otros
+*.dbmdl
+*.bak
+*.sql
