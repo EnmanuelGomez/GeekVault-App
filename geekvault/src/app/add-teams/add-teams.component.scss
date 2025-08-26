@@ -1,0 +1,81 @@
+.form {
+  max-width: 640px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+
+  h2 { margin-bottom: .5rem; }
+
+  .field {
+    display: grid;
+    gap: .5rem;
+
+    label { font-weight: 600; }
+
+    input[type="text"],
+    input[type="number"],
+    .file-name {
+      padding: .65rem .8rem;
+      border: 1px solid #d6d6d6;
+      border-radius: .5rem;
+      outline: none;
+      &:focus { border-color: #6b8afd; box-shadow: 0 0 0 3px rgba(107,138,253,.15); }
+    }
+
+    .dropzone {
+      border: 1.5px dashed #b9b9b9;
+      border-radius: .75rem;
+      padding: 1rem;
+      text-align: center;
+      background: #fafafa;
+
+      p { margin: 0 0 .5rem 0; }
+
+      .btn-file {
+        display: inline-block;
+        span {
+          display: inline-block;
+          background: #111827;
+          color: #fff;
+          padding: .5rem .9rem;
+          border-radius: .5rem;
+          cursor: pointer;
+        }
+      }
+      .muted { display: block; margin-top: .4rem; color: #6b7280; }
+    }
+
+    .preview {
+      margin-top: .75rem;
+      display: flex; align-items: center; gap: .75rem;
+
+      img {
+        width: 120px; height: 120px; object-fit: cover;
+        border-radius: .5rem; border: 1px solid #e5e7eb;
+      }
+
+      .btn-remove {
+        background: transparent;
+        border: 1px solid #ef4444;
+        color: #ef4444;
+        padding: .4rem .7rem;
+        border-radius: .5rem;
+        cursor: pointer;
+        &:hover { background: #fef2f2; }
+      }
+    }
+
+    .error { color: #ef4444; }
+  }
+
+  .actions {
+    margin-top: .5rem;
+    display: flex; gap: .5rem; justify-content: flex-end;
+
+    button {
+      background: #111827; color: #fff;
+      padding: .6rem 1rem; border-radius: .6rem; border: none; cursor: pointer;
+      &:disabled { opacity: .6; cursor: not-allowed; }
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { createCharacterForm } from '../features/characters/forms/character.form
 
 // Subforms (standalone)
 import { FirstAppearanceComponent } from '../features/characters/subforms/first-appearance/first-appearance.component';
-import { PowersAbilitiesComponent } from '../features/characters/subforms/powers-abilities/powers-abilities.component';
+import { PowersAbilitiesSubformComponent } from '../features/characters/subforms/powers-abilities/powers-abilities.component';
 import { StatsSubformComponent } from '../features/characters/subforms/stats/stats.component';
 
 type SectionKey = 'left' | 'right' | 'bottom';
@@ -54,7 +54,7 @@ export class AddCharacterComponent {
     {
       key: 'powers',
       title: 'Poderes y habilidades',
-      component: PowersAbilitiesComponent,
+      component: PowersAbilitiesSubformComponent,
       // Este subform espera el group que contiene el FormArray "powers"
       selectInput: (root) => root.get('subforms') as FormGroup
     },

@@ -14,9 +14,12 @@ export class StatsSubformComponent {
   labels = [
     { key: 'strength', label: 'Fuerza' },
     { key: 'speed', label: 'Velocidad' },
+    { key: 'skills', label: 'Habilidades' },
     { key: 'intelligence', label: 'Inteligencia' },
     { key: 'durability', label: 'Durabilidad' },
-    { key: 'energy', label: 'Energía' },
+    { key: 'endurance', label: 'Resistencia' },
+    { key: 'experience', label: 'Experiencia' },
     { key: 'fighting', label: 'Combate' },
+    { key: 'power', label: 'Poder' },
   ] as const;
 }

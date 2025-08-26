@@ -1,1 +1,38 @@
-<p>first-appearance works!</p>
+<div class="subform" [formGroup]="group">
+  <h3>Primera Aparición</h3>
+  <div class="grid">
+
+    <div class="field">
+      <label for="medium">Medio</label>
+      <select id="medium" formControlName="medium">
+        <option [ngValue]="null">Seleccione...</option>
+        <option *ngFor="let m of mediums" [value]="m.value">{{ m.label }}</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="title">Título</label>
+      <input id="title" type="text" formControlName="title" />
+    </div>
+
+    <div class="field">
+      <label for="issueOrEpisode">Número/Episodio</label>
+      <input id="issueOrEpisode" type="text" formControlName="issueOrEpisode" />
+    </div>
+
+    <div class="field">
+      <label for="publisherOrStudio">Editorial/Estudio</label>
+      <input id="publisherOrStudio" type="text" formControlName="publisherOrStudio" />
+    </div>
+
+    <div class="field">
+      <label for="date">Fecha</label>
+      <input id="date" type="date" formControlName="date" />
+    </div>
+
+    <div class="field full">
+      <label for="notes">Notas</label>
+      <textarea id="notes" formControlName="notes"></textarea>
+    </div>
+  </div>
+</div>

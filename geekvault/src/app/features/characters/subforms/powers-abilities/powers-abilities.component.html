@@ -1,1 +1,23 @@
-<p>powers-abilities works!</p>
+<div class="subform" [formGroup]="group">
+  <h3>Poderes / Habilidades</h3>
+
+  <div formArrayName="powers">
+    <div class="power" *ngFor="let power of powers.controls; let i = index" [formGroupName]="i">
+      <div class="grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" formControlName="name" placeholder="Ej: Vuelo, Telepatía" />
+        </div>
+
+        <div class="field full">
+          <label>Descripción</label>
+          <textarea formControlName="description"></textarea>
+        </div>
+      </div>
+      <button type="button" class="remove-btn" (click)="removePower(i)">Eliminar</button>
+      <hr />
+    </div>
+  </div>
+
+  <button type="button" class="add-btn" (click)="addPower()">Agregar Poder/Habilidad</button>
+</div>

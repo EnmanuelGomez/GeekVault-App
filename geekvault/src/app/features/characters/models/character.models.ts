@@ -12,25 +12,26 @@ export interface FirstAppearance {
 
 export interface PowerAbility {
   name: string;
-  type: 'innate' | 'tech' | 'magic' | 'training';
   description?: string;
-  level?: number; // 1..10
 }
 
 export interface StatBlock {
-  strength: number;      // 1..7
-  speed: number;         // 1..7
-  intelligence: number;  // 1..7
-  durability: number;    // 1..7
-  energy: number;        // 1..7
-  fighting: number;      // 1..7
+  strength: number;      // 1...10
+  speed: number;
+  skills: number;
+  weapons: number;
+  intelligence: number;
+  durability: number;
+  endurance: number;
+  experience: number;
+  fighting: number;
+  power: number;
 }
 
 export interface TeamMembership {
   teamName: string;
-  role?: string;
-  fromYear?: number;
-  toYear?: number;
+  description: string;
+  date?: string;
 }
 
 export interface Ally {
@@ -46,9 +47,9 @@ export interface Rival {
 }
 
 export interface Version {
+  medium: Medium;
   name: string;
   continuity?: string;
-  actorOrVoice?: string;
   firstAppearanceRef?: string;
 }
 

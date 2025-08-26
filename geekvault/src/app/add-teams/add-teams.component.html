@@ -1,0 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
+  <h2>Agregar equipo</h2>
+
+  <!-- Nombre -->
+  <div class="field">
+    <label for="name">Nombre</label>
+    <input id="name" type="text" formControlName="name" placeholder="Ej.: Justice League" />
+    <small class="error" *ngIf="f.name.touched && f.name.invalid">
+      {{ f.name.errors?.['required'] ? 'El nombre es obligatorio.' : '' }}
+      {{ f.name.errors?.['minlength'] ? 'Mínimo 2 caracteres.' : '' }}
+      {{ f.name.errors?.['maxlength'] ? 'Máximo 60 caracteres.' : '' }}
+    </small>
+  </div>
+
+  <!-- Año de creación -->
+  <div class="field">
+    <label for="year">Año de creación</label>
+    <input id="year" type="number" inputmode="numeric" formControlName="year" placeholder="1992" />
+    <small class="error" *ngIf="f.year.touched && f.year.invalid">
+      {{ f.year.errors?.['required'] ? 'El año es obligatorio.' : '' }}
+      {{ f.year.errors?.['pattern'] ? 'Debe tener 4 dígitos.' : '' }}
+      {{ f.year.errors?.['min'] ? 'No puede ser menor a 1850.' : '' }}
+      {{ f.year.errors?.['max'] ? 'No puede ser mayor al año actual.' : '' }}
+    </small>
+  </div>
+
+  <!-- Imagen -->
+  <div class="field">
+    <label>Imagen</label>
+
+    <div class="dropzone"
+         (drop)="onDrop($event)"
+         (dragover)="onDragOver($event)"
+         (dragleave)="onDragLeave()">
+      <p>Arrastra y suelta una imagen aquí o</p>
+      <label class="btn-file">
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+        <span>Seleccionar archivo</span>
+      </label>
+      <small class="muted">PNG, JPG, WEBP. Máx {{MAX_IMAGE_MB}} MB.</small>
+    </div>
+
+    <div class="preview" *ngIf="imagePreview">
+      <img [src]="imagePreview" alt="Vista previa de imagen" />
+      <button type="button" class="btn-remove" (click)="removeImage()">Quitar imagen</button>
+    </div>
+
+    <input type="text" formControlName="imageName" class="file-name" placeholder="Sin archivo seleccionado" readonly />
+
+    <small class="error" *ngIf="form.errors?.['imageRequired']">La imagen es obligatoria.</small>
+    <small class="error" *ngIf="form.errors?.['invalidImageType']">Formato inválido: debe ser una imagen.</small>
+    <small class="error" *ngIf="form.errors?.['imageTooLarge']">La imagen supera el tamaño permitido.</small>
+  </div>
+
+  <div class="actions">
+    <button type="submit" [disabled]="form.invalid || isSubmitting()">Guardar</button>
+  </div>
+</form>

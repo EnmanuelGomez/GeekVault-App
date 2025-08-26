@@ -1,0 +1,41 @@
+.subform {
+  margin: 1rem 0;
+
+  h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select, textarea {
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+}
