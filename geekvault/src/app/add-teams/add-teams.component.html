@@ -14,14 +14,8 @@
 
   <!-- Año de creación -->
   <div class="field">
-    <label for="year">Año de creación</label>
-    <input id="year" type="number" inputmode="numeric" formControlName="year" placeholder="1992" />
-    <small class="error" *ngIf="f.year.touched && f.year.invalid">
-      {{ f.year.errors?.['required'] ? 'El año es obligatorio.' : '' }}
-      {{ f.year.errors?.['pattern'] ? 'Debe tener 4 dígitos.' : '' }}
-      {{ f.year.errors?.['min'] ? 'No puede ser menor a 1850.' : '' }}
-      {{ f.year.errors?.['max'] ? 'No puede ser mayor al año actual.' : '' }}
-    </small>
+    <label for="date">Fecha</label>
+    <input id="date" type="date" formControlName="date" />
   </div>
 
   <!-- Imagen -->

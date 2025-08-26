@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-add-character-category',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './add-character-category.component.html'
+  templateUrl: './add-character-category.component.html',
+  styleUrl: './add-character-category.component.scss'
 })
 export class AddCharacterCategoryComponent {
   characterCategoryForm: FormGroup;

@@ -28,7 +28,7 @@ export class AddTeamsComponent implements OnInit {
 
   form = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
-    year: [
+    date: [
       this.currentYear,
       [
         Validators.required,
@@ -99,14 +99,14 @@ export class AddTeamsComponent implements OnInit {
     // Construye el payload y EMITE al padre (sin llamar servicios)
     const fd = new FormData();
     fd.append('name', this.f.name.value!.trim());
-    fd.append('year', String(this.f.year.value));
+    fd.append('date', String(this.f.date.value));
     fd.append('image', this.imageFile, this.imageFile.name);
 
     this.teamCreate.emit(fd);
 
     // Limpieza rápida del form (el padre puede controlar navegación/toasts)
     this.isSubmitting.set(false);
-    this.form.reset({ year: this.currentYear, imageName: '' });
+    this.form.reset({ date: this.currentYear, imageName: '' });
     this.removeImage();
   }
 }
