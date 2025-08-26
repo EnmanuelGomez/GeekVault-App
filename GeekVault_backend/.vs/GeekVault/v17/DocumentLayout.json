@@ -1,12 +1,88 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\controllers\\characterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\controllers\\characterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "src\\GeekVault.Api\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "src\\GeekVault.Api\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T15:20:23.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CategoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\CategoriesController.cs",
+              "RelativeDocumentMoniker": "src\\GeekVault.Api\\Controllers\\CategoriesController.cs",
+              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\CategoriesController.cs",
+              "RelativeToolTip": "src\\GeekVault.Api\\Controllers\\CategoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T15:19:50.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CharactersController.cs",
+              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\CharactersController.cs",
+              "RelativeDocumentMoniker": "src\\GeekVault.Api\\Controllers\\CharactersController.cs",
+              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\CharactersController.cs",
+              "RelativeToolTip": "src\\GeekVault.Api\\Controllers\\CharactersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T15:19:02.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Program.cs",
+              "RelativeDocumentMoniker": "src\\GeekVault.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Program.cs",
+              "RelativeToolTip": "src\\GeekVault.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T15:18:07.954Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

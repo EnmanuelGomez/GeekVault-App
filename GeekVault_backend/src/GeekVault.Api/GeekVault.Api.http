@@ -1,0 +1,6 @@
+@GeekVault.Api_HostAddress = http://localhost:5188
+
+GET {{GeekVault.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
