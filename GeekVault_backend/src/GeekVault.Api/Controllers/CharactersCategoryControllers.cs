@@ -3,7 +3,7 @@
 namespace GeekVault.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/CharacterCategory")]
     public class CharactersCategoryControllers : ControllerBase
     {
         [HttpGet] public IActionResult Get() => Ok(new { message = "Character Categories OK" });

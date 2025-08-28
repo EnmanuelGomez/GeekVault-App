@@ -7,6 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{97E7A9CD-FB6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekVault.Api", "src\GeekVault.Api\GeekVault.Api.csproj", "{E1CBBD40-082D-4225-A4E1-9F298835E815}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekVault.Application", "src\GeekVault.Application\GeekVault.Application.csproj", "{A768EC58-7817-4604-AE3D-D8357059A0BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekVault.Domain", "src\GeekVault.Domain\GeekVault.Domain.csproj", "{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekVault.Infrastructure", "src\GeekVault.Infrastructure\GeekVault.Infrastructure.csproj", "{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +26,23 @@ Global
 		{E1CBBD40-082D-4225-A4E1-9F298835E815}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1CBBD40-082D-4225-A4E1-9F298835E815}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1CBBD40-082D-4225-A4E1-9F298835E815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A768EC58-7817-4604-AE3D-D8357059A0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A768EC58-7817-4604-AE3D-D8357059A0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A768EC58-7817-4604-AE3D-D8357059A0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A768EC58-7817-4604-AE3D-D8357059A0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E1CBBD40-082D-4225-A4E1-9F298835E815} = {97E7A9CD-FB68-4579-A3F9-88AADCB63313}
+		{A768EC58-7817-4604-AE3D-D8357059A0BF} = {97E7A9CD-FB68-4579-A3F9-88AADCB63313}
+		{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF} = {97E7A9CD-FB68-4579-A3F9-88AADCB63313}
+		{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4} = {97E7A9CD-FB68-4579-A3F9-88AADCB63313}
 	EndGlobalSection
 EndGlobal
