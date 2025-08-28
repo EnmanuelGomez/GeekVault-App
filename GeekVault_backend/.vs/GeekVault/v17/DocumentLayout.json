@@ -3,64 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}|src\\GeekVault.Infrastructure\\GeekVault.Infrastructure.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.infrastructure\\geekvaultdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77ACE3AF-DB29-4D42-B8D8-73626CC89CB4}|src\\GeekVault.Infrastructure\\GeekVault.Infrastructure.csproj|solutionrelative:src\\geekvault.infrastructure\\geekvaultdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\charactercharactertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\charactercharactertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\charactertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\charactertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\teammembership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\teammembership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\franchise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\franchise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\controllers\\characterscategorycontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\controllers\\characterscategorycontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\entities\\franchisecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\entities\\franchisecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\geekvault.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\geekvault.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.domain\\geekvault.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{F7BCDD7A-7031-4F8B-B0E5-AE3C489460AF}|src\\GeekVault.Domain\\GeekVault.Domain.csproj|solutionrelative:src\\geekvault.domain\\geekvault.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|c:\\users\\egome\\mi-proyecto-angular\\geekvault_backend\\src\\geekvault.api\\models\\franchise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1CBBD40-082D-4225-A4E1-9F298835E815}|src\\GeekVault.Api\\GeekVault.Api.csproj|solutionrelative:src\\geekvault.api\\models\\franchise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,128 +26,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GeekVaultDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Infrastructure\\GeekVaultDbContext.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Infrastructure\\GeekVaultDbContext.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Infrastructure\\GeekVaultDbContext.cs",
-              "RelativeToolTip": "src\\GeekVault.Infrastructure\\GeekVaultDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T14:42:43.861Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Character.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Character.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\Character.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Character.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\Character.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAYwBgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T14:44:28.552Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CharacterType.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\CharacterType.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\CharacterType.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\CharacterType.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\CharacterType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T15:50:33.51Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Franchise.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Franchise.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\Franchise.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Franchise.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\Franchise.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T14:45:58.95Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Team.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\Team.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Team.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\Team.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAowAwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T14:46:19.481Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TeamMembership.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\TeamMembership.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\TeamMembership.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\TeamMembership.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\TeamMembership.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T15:53:41.589Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Program.cs",
               "RelativeDocumentMoniker": "src\\GeekVault.Api\\Program.cs",
               "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Program.cs",
               "RelativeToolTip": "src\\GeekVault.Api\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-27T14:40:59.926Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Category.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Category.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\Category.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\Category.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\Category.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T14:45:27.067Z",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "src\\GeekVault.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\appsettings.json",
+              "RelativeToolTip": "src\\GeekVault.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-27T12:57:46.264Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CharacterCharacterType.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\CharacterCharacterType.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\CharacterCharacterType.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\CharacterCharacterType.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\CharacterCharacterType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T15:52:27.131Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "CharactersCategoryControllers.cs",
               "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Controllers\\CharactersCategoryControllers.cs",
               "RelativeDocumentMoniker": "src\\GeekVault.Api\\Controllers\\CharactersCategoryControllers.cs",
@@ -199,72 +64,19 @@
               "RelativeToolTip": "src\\GeekVault.Api\\Controllers\\CharactersCategoryControllers.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-26T16:59:42.62Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-26T16:59:42.62Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "GeekVault.Api",
+              "DocumentIndex": 3,
+              "Title": "GeekVault.Api.csproj",
               "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\GeekVault.Api.csproj",
               "RelativeDocumentMoniker": "src\\GeekVault.Api\\GeekVault.Api.csproj",
               "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\GeekVault.Api.csproj",
               "RelativeToolTip": "src\\GeekVault.Api\\GeekVault.Api.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-08-27T15:26:46.648Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "FranchiseCategory.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\FranchiseCategory.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\Entities\\FranchiseCategory.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\Entities\\FranchiseCategory.cs",
-              "RelativeToolTip": "src\\GeekVault.Domain\\Entities\\FranchiseCategory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T15:53:12.722Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\appsettings.json",
-              "RelativeDocumentMoniker": "src\\GeekVault.Api\\appsettings.json",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\appsettings.json",
-              "RelativeToolTip": "src\\GeekVault.Api\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-08-27T12:57:46.264Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "GeekVault.Domain",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\GeekVault.Domain.csproj",
-              "RelativeDocumentMoniker": "src\\GeekVault.Domain\\GeekVault.Domain.csproj",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Domain\\GeekVault.Domain.csproj",
-              "RelativeToolTip": "src\\GeekVault.Domain\\GeekVault.Domain.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-08-27T14:43:57.333Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Franchise.cs",
-              "DocumentMoniker": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Models\\Franchise.cs",
-              "RelativeDocumentMoniker": "src\\GeekVault.Api\\Models\\Franchise.cs",
-              "ToolTip": "C:\\Users\\egome\\mi-proyecto-angular\\GeekVault_backend\\src\\GeekVault.Api\\Models\\Franchise.cs",
-              "RelativeToolTip": "src\\GeekVault.Api\\Models\\Franchise.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-26T16:41:22.693Z"
+              "WhenOpened": "2025-08-27T15:26:46.648Z"
             }
           ]
         }
