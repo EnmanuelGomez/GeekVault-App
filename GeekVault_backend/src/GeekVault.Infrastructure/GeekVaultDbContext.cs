@@ -22,8 +22,13 @@ namespace GeekVault.Infrastructure
 
             // Configuración de tablas intermedias (composite keys)
 
-            modelBuilder.Entity<FranchiseCategory>()
-                .HasKey(fc => new { fc.FranchiseId, fc.CategoryId });
+            modelBuilder.Entity<Franchise>()
+           .HasIndex(f => f.CategoryId);
+
+            modelBuilder.Entity<Franchise>()
+                .Property(f => f.Name)
+                .HasMaxLength(200)
+                .IsRequired();
 
             modelBuilder.Entity<CharacterCharacterType>()
                 .HasKey(cct => new { cct.CharacterId, cct.CharacterTypeId });

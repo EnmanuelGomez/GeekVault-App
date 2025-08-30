@@ -12,6 +12,7 @@ builder.Services.AddDbContext<GeekVaultDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GeekVaultDB")));
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IFranchiseService, FranchiseService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

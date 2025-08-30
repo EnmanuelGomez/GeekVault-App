@@ -1,13 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GeekVault.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
-namespace GeekVault.Api.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class FranchisesController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class FranchiseController : ControllerBase
+    private readonly IFranchiseService _service;
+
+    public FranchisesController(IFranchiseService service)
     {
-        [HttpGet] public IActionResult Get() => Ok(new { message = "Franchise OK" });
-        [HttpGet("{id:int}")] public IActionResult GetById(int id) => Ok(new { id, message = "Detalle pending" });
+        _service = service;
     }
 
+    // GET /api/Franchises
+    // GET /api/Franchises?categoryId={GUID}
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] Guid? categoryId)
+    {
+        if (categoryId.HasValue && categoryId.Value != Guid.Empty)
+        {
+            var byCat = await _service.GetByCategoryAsync(categoryId.Value);
+            return Ok(byCat);
+        }
+
+        var all = await _service.GetAllAsync();
+        return Ok(all);
+    }
 }

@@ -1,0 +1,14 @@
+<article class="franchise-card" title="{{ franchise.name }}">
+  <div class="image-wrap">
+    <img
+      [src]="franchise.imageUrl || 'assets/placeholders/franchise-fallback.png'"
+      (error)="fallback($event)"
+      [alt]="franchise.name"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="name">
+    {{ franchise.name }}
+  </div>
+</article>

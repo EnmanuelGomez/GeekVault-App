@@ -1,0 +1,10 @@
+<ng-container *ngIf="franchises$ | async as franchises">
+  <section *ngIf="franchises.length > 0" class="franchises-strip">
+    <div class="h-scroll">
+      <app-franchise-card
+        *ngFor="let f of franchises; trackBy: trackById"
+        [franchise]="f"
+      ></app-franchise-card>
+    </div>
+  </section>
+</ng-container>
