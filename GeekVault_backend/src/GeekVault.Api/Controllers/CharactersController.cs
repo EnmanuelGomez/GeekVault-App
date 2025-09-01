@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GeekVault.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GeekVault.Api.Controllers;
 
@@ -6,6 +7,21 @@ namespace GeekVault.Api.Controllers;
 [Route("api/[controller]")]
 public class CharactersController : ControllerBase
 {
-    [HttpGet] public IActionResult Get() => Ok(new { message = "Characters OK" });
-    [HttpGet("{id:int}")] public IActionResult GetById(int id) => Ok(new { id, message = "Detalle pending" });
+    private readonly ICharacterService _service;
+
+    public CharactersController(ICharacterService service)
+    {
+        _service = service;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+        => Ok(await _service.GetAllAsync());
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var ch = await _service.GetByIdAsync(id);
+        return ch is null ? NotFound() : Ok(ch);
+    }
 }

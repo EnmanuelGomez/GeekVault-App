@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<GeekVaultDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GeekVaultDB")));
 
+builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFranchiseService, FranchiseService>();
 
