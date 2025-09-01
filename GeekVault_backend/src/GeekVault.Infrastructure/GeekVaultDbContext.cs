@@ -20,21 +20,34 @@ namespace GeekVault.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuración de tablas intermedias (composite keys)
-
-            modelBuilder.Entity<Franchise>()
-           .HasIndex(f => f.CategoryId);
-
+            // Franchise
             modelBuilder.Entity<Franchise>()
                 .Property(f => f.Name)
                 .HasMaxLength(200)
                 .IsRequired();
 
+            // Tabla puente FranchiseCategory (M:N)
+            modelBuilder.Entity<FranchiseCategory>()
+                .HasKey(fc => new { fc.FranchiseId, fc.CategoryId });
+
+            modelBuilder.Entity<FranchiseCategory>()
+                .HasOne(fc => fc.Franchise)
+                .WithMany(f => f.FranchiseCategories)
+                .HasForeignKey(fc => fc.FranchiseId);
+
+            modelBuilder.Entity<FranchiseCategory>()
+                .HasOne(fc => fc.Category)
+                .WithMany(c => c.FranchiseCategories)
+                .HasForeignKey(fc => fc.CategoryId);
+
+            // CharacterCharacterType (M:N)
             modelBuilder.Entity<CharacterCharacterType>()
                 .HasKey(cct => new { cct.CharacterId, cct.CharacterTypeId });
 
+            // TeamMembership (M:N)
             modelBuilder.Entity<TeamMembership>()
                 .HasKey(tm => new { tm.TeamId, tm.CharacterId });
         }
+
     }
 }
