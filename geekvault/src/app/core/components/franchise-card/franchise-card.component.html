@@ -1,4 +1,4 @@
-<article class="franchise-card" title="{{ franchise.name }}">
+<a class="franchise-card" [routerLink]="['/franchise', franchise.id]" title="{{ franchise.name }}">
   <div class="image-wrap">
     <img
       [src]="franchise.imageUrl || 'assets/placeholders/franchise-fallback.png'"
@@ -11,4 +11,4 @@
   <div class="name">
     {{ franchise.name }}
   </div>
-</article>
+</a>

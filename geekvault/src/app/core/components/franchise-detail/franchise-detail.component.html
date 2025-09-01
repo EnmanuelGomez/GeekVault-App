@@ -1,0 +1,58 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <section *ngIf="vm.error; else content" class="state error">
+    {{ vm.error }}
+  </section>
+
+  <ng-template #content>
+    <ng-container *ngIf="vm.franchise as f">
+      <!-- HERO: imagen full-bleed -->
+      <div class="hero" *ngIf="f.imageUrl">
+        <img [src]="f.imageUrl" [alt]="f.name" />
+      </div>
+
+      <section class="container">
+        <a routerLink="/" class="back">← Volver</a>
+        <h1 class="title">{{ f.name }}</h1>
+
+        <div class="meta">
+          <div class="meta-item">
+            <div class="label">Creador</div>
+            <div class="value">{{ f.creator || '—' }}</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Fecha de creación</div>
+            <div class="value">
+              {{ f.date ? (f.date | date:'longDate') : '—' }}
+            </div>
+          </div>
+          <div class="meta-item">
+            <div class="label">País de origen</div>
+            <div class="value">{{ f.originCountry || '—' }}</div>
+          </div>
+        </div>
+
+        <!-- Sección Personajes -->
+        <h2 class="section-title">Personajes</h2>
+
+        <div class="characters-grid" *ngIf="vm.characters?.length; else noChars">
+          <div class="character-card" *ngFor="let c of vm.characters; trackBy: trackByCharId">
+            <div class="thumb">
+             <img
+  [src]="c.imageUrl || 'assets/placeholders/character-portrait.png'"
+  [alt]="c.name"
+  loading="lazy"
+  (error)="onImgError($event)"
+/>
+            </div>
+            <div class="caption">{{ c.name }}</div>
+          </div>
+        </div>
+
+        <ng-template #noChars>
+          <div class="characters-empty">No hay personajes registrados para esta franquicia.</div>
+        </ng-template>
+
+      </section>
+    </ng-container>
+  </ng-template>
+</ng-container>

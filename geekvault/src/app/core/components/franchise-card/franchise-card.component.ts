@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Franchise } from '../../models/franchise.model';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-franchise-card',
   standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './franchise-card.component.html',
   styleUrls: ['./franchise-card.component.scss'],
 })

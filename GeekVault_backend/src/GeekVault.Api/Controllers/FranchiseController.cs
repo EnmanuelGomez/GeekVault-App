@@ -12,6 +12,13 @@ public class FranchisesController : ControllerBase
         _service = service;
     }
 
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var item = await _service.GetByIdAsync(id);
+        return item is null ? NotFound() : Ok(item);
+    }
+
     // GET /api/Franchises
     // GET /api/Franchises?categoryId={GUID}
     [HttpGet]

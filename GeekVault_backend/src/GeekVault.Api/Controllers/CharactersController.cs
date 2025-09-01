@@ -24,4 +24,8 @@ public class CharactersController : ControllerBase
         var ch = await _service.GetByIdAsync(id);
         return ch is null ? NotFound() : Ok(ch);
     }
+
+    [HttpGet("by-franchise/{franchiseId:guid}")]
+    public async Task<IActionResult> GetByFranchise(Guid franchiseId)
+    => Ok(await _service.GetByFranchiseAsync(franchiseId));
 }

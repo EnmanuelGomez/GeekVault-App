@@ -13,4 +13,8 @@ getByCategory(categoryId: string | number) {
   const id = String(categoryId);
   return this.http.get<Franchise[]>(`${this.baseUrl}?categoryId=${encodeURIComponent(id)}`);
 }
+getById(id: string) {
+  return this.http.get<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`);
+}
+
 }

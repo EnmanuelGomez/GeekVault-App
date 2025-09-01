@@ -27,6 +27,24 @@ namespace GeekVault.Infrastructure.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<CharacterDto>> GetByFranchiseAsync(Guid franchiseId)
+        {
+            return await _db.Characters
+                .AsNoTracking()
+                .Where(c => c.FranchiseId == franchiseId)
+                .Select(c => new CharacterDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Alias = c.Alias,
+                    Description = c.Description,
+                    FranchiseId = c.FranchiseId,
+                    ExtraData = c.ExtraData,
+                    ImageUrl = c.ImageUrl
+                })
+                .ToListAsync();
+        }
+
         public async Task<CharacterDto?> GetByIdAsync(Guid id) =>
             await _db.Characters.AsNoTracking()
                  .Where(c => c.Id == id)

@@ -25,6 +25,22 @@ namespace GeekVault.Infrastructure.Services
                 .ToListAsync();
         }
 
+        public async Task<FranchiseDto?> GetByIdAsync(Guid id)
+        {
+            return await _db.Franchises
+                .AsNoTracking()
+                .Where(f => f.Id == id)
+                .Select(f => new FranchiseDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    OriginCountry = f.OriginCountry,
+                    ImageUrl = f.ImageUrl
+                })
+                .FirstOrDefaultAsync();
+        }
+
+
         public async Task<IEnumerable<FranchiseDto>> GetByCategoryAsync(Guid categoryId)
         {
             // Many-to-many: filtramos por la tabla puente FranchiseCategory
