@@ -20,6 +20,8 @@ namespace GeekVault.Infrastructure.Services
                     Name = f.Name,
                     Description = f.Description,
                     OriginCountry = f.OriginCountry,
+                    FoundedOn = f.FoundedOn,
+                    Founders = f.Founders,
                     ImageUrl = f.ImageUrl
                 })
                 .ToListAsync();
@@ -34,7 +36,10 @@ namespace GeekVault.Infrastructure.Services
                 {
                     Id = f.Id,
                     Name = f.Name,
+                    Description = f.Description,
                     OriginCountry = f.OriginCountry,
+                    FoundedOn = f.FoundedOn,
+                    Founders = f.Founders,
                     ImageUrl = f.ImageUrl
                 })
                 .FirstOrDefaultAsync();
@@ -53,6 +58,8 @@ namespace GeekVault.Infrastructure.Services
                     Name = fc.Franchise.Name,
                     Description = fc.Franchise.Description,
                     OriginCountry = fc.Franchise.OriginCountry,
+                    FoundedOn = fc.Franchise.FoundedOn,
+                    Founders = fc.Franchise.Founders,
                     ImageUrl = fc.Franchise.ImageUrl
                 })
                 .Distinct() // por seguridad si hubiera duplicados

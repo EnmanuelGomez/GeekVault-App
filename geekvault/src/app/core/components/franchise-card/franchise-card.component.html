@@ -1,14 +1,12 @@
-<a class="franchise-card" [routerLink]="['/franchise', franchise.id]" title="{{ franchise.name }}">
+<!-- franchise-card.component.html -->
+<div class="franchise-card" (click)="open()" role="button" tabindex="0"
+     (keydown.enter)="open()" (keydown.space)="open()"
+     title="{{ franchise.name }}">
   <div class="image-wrap">
-    <img
-      [src]="franchise.imageUrl || 'assets/placeholders/franchise-fallback.png'"
-      (error)="fallback($event)"
-      [alt]="franchise.name"
-      loading="lazy"
-    />
+    <img [src]="franchise.imageUrl || 'assets/placeholders/franchise-fallback.png'"
+         (error)="fallback($event)"
+         [alt]="franchise.name"
+         loading="lazy"/>
   </div>
-
-  <div class="name">
-    {{ franchise.name }}
-  </div>
-</a>
+  <div class="name">{{ franchise.name }}</div>
+</div>

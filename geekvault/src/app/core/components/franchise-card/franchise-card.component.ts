@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Franchise } from '../../models/franchise.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-franchise-card',
@@ -12,6 +13,13 @@ import { RouterModule } from '@angular/router';
 })
 export class FranchiseCardComponent {
   @Input({ required: true }) franchise!: Franchise;
+
+  constructor(private router: Router) {}
+
+  open() {
+    if (!this.franchise?.id) return;
+    this.router.navigate(['/franchise', this.franchise.id]);
+  }
 
   fallback(src: Event) {
     const el = src.target as HTMLImageElement;

@@ -3,7 +3,7 @@ export interface Franchise {
   name: string;
   imageUrl: string | null;
   categoryId: number;
-  creator?: string;
+  founder?: string;
   date?: string;        // fecha de creación de la franquicia
   originCountry?: string;
 }

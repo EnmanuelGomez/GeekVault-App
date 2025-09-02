@@ -26,6 +26,20 @@ namespace GeekVault.Infrastructure
                 .HasMaxLength(200)
                 .IsRequired();
 
+            modelBuilder.Entity<Franchise>(b =>
+            {
+                b.Property(f => f.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                // NUEVO: mapear DATE y tamaño de Founders
+                b.Property(f => f.FoundedOn)
+                    .HasColumnType("date"); // PostgreSQL DATE
+
+                b.Property(f => f.Founders)
+                    .HasMaxLength(300);     // ajusta si necesitas más
+            });
+
             // Tabla puente FranchiseCategory (M:N)
             modelBuilder.Entity<FranchiseCategory>()
                 .HasKey(fc => new { fc.FranchiseId, fc.CategoryId });
