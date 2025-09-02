@@ -20,6 +20,6 @@ export const routes: Routes = [
   path: 'franchise/:id',
   component: FranchiseDetailComponent,
   resolve: { vm: franchiseDetailResolver },
-  runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  runGuardsAndResolvers: 'always'
   },
 ];

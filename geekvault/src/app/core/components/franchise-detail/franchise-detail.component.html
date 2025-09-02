@@ -12,12 +12,12 @@
       <div class="meta">
         <div class="meta-item">
           <div class="label">Fundador/es</div>
-          <div class="value">{{ f.founder || '—' }}</div>
+          <div class="value">{{ f.founders || '—' }}</div>
         </div>
         <div class="meta-item">
           <div class="label">Fecha de creación</div>
           <div class="value">
-            {{ f.date ? (f.date | date:'longDate') : '—' }}
+            {{ f.foundedOn ? (f.foundedOn | date:'longDate') : '—' }}
           </div>
         </div>
         <div class="meta-item">

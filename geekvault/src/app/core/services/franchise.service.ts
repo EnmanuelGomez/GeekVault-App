@@ -7,7 +7,11 @@ import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class FranchiseService {
   private http = inject(HttpClient);
-  private baseUrl = `${environment.apiBaseUrl}/api/Franchises`; // ← aquí sí agregamos /api
+  private baseUrl = `${environment.apiBaseUrl}/api/Franchises`;
+
+getAll(): Observable<Franchise[]> {
+  return this.http.get<Franchise[]>(this.baseUrl);
+}
 
 getByCategory(categoryId: string | number) {
   const id = String(categoryId);

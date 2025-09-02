@@ -1,7 +1,11 @@
+// Franchise-detail.component.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
+import { FranchiseService } from '../../services/franchise.service';
+import { CharacterService } from '../../services/character.service';
 
 @Component({
   selector: 'app-franchise-detail',
@@ -12,10 +16,18 @@ import { map } from 'rxjs/operators';
 })
 export class FranchiseDetailComponent {
   private route = inject(ActivatedRoute);
+  private franchiseSvc = inject(FranchiseService);
+  private characterSvc = inject(CharacterService);
 
-  // El resolver garantiza que 'vm' existe cuando se activa la ruta
-  vm$ = this.route.data.pipe(
-    map(data => data['vm'] as { franchise: any; characters: any[] })
+  vm$ = this.route.paramMap.pipe(
+    switchMap(params => {
+      const id = params.get('id')!;
+      return forkJoin({
+        franchise: this.franchiseSvc.getById(id).pipe(catchError(() => of(null))),
+        characters: this.characterSvc.getByFranchise(id).pipe(catchError(() => of([])))
+      });
+    }),
+    map(({ franchise, characters }) => ({ franchise, characters }))
   );
 
   trackByCharId = (_: number, c: { id: string }) => c.id;

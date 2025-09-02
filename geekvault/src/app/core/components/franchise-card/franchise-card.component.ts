@@ -16,11 +16,6 @@ export class FranchiseCardComponent {
 
   constructor(private router: Router) {}
 
-  open() {
-    if (!this.franchise?.id) return;
-    this.router.navigate(['/franchise', this.franchise.id]);
-  }
-
   fallback(src: Event) {
     const el = src.target as HTMLImageElement;
     el.src = 'assets/placeholders/franchise-fallback.png'; // crea este asset si quieres
