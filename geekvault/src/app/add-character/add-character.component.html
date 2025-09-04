@@ -66,6 +66,18 @@
           <div class="fields">
             <div class="field">
               <label for="name">Nombre del personaje</label>
+              <input id="name" type="text" formControlName="name" placeholder="Ej.: Batman" />
+              <small class="error" *ngIf="f.name.touched && f.name.invalid">Requerido (mín. 2 caracteres).</small>
+            </div>
+
+            <div class="field">
+              <label for="name">Identidad</label>
+              <input id="alias" type="text" formControlName="name" placeholder="Ej.: Bruce Wayne" />
+              <small class="error" *ngIf="f.alias.touched && f.alias.invalid">Requerido (mín. 2 caracteres).</small>
+            </div>
+
+            <div class="field">
+              <label for="name">Categorías del personaje</label>
               <input id="name" type="text" formControlName="name" placeholder="Ej.: Bruce Wayne" />
               <small class="error" *ngIf="f.name.touched && f.name.invalid">Requerido (mín. 2 caracteres).</small>
             </div>

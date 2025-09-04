@@ -110,6 +110,7 @@ export class AddCharacterComponent {
     console.log('Nuevo personaje:', this.form.value);
     this.form.reset({
       name: '',
+      alias: '',
       universe: '',
       creator: '',
       yearCreated: this.currentYear,
@@ -122,6 +123,7 @@ export class AddCharacterComponent {
   resetForm() {
     this.form.reset({
       name: '',
+      alias: '',
       universe: '',
       creator: '',
       yearCreated: this.currentYear,
