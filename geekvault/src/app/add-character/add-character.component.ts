@@ -1,4 +1,13 @@
-import { Component, DestroyRef, Type, inject, signal } from '@angular/core';
+// add-character.component.ts
+// ==============================================
+// Componente: Agregar Personaje
+// - Carga tipos de personaje desde API
+// - Permite seleccionar múltiples categorías (IDs tipo string)
+// - Muestra chips removibles
+// - Renderiza subforms dinámicos (firstAppearance, powers, stats)
+// ==============================================
+
+import { Component, DestroyRef, Type, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 
@@ -9,6 +18,13 @@ import { FirstAppearanceComponent } from '../features/characters/subforms/first-
 import { PowersAbilitiesSubformComponent } from '../features/characters/subforms/powers-abilities/powers-abilities.component';
 import { StatsSubformComponent } from '../features/characters/subforms/stats/stats.component';
 
+// Servicios / modelos
+import { CharacterTypesService } from '../core/services/character-types.service';
+import { CharacterType } from '../core/models/character-types.model';
+
+// ----------------------------------------------
+// Tipos internos para el sistema de subforms
+// ----------------------------------------------
 type SectionKey = 'left' | 'right' | 'bottom';
 type SubformKey = 'firstAppearance' | 'powers' | 'stats';
 
@@ -16,7 +32,7 @@ interface SubformMeta {
   key: SubformKey;
   title: string;
   component: Type<unknown>;
-  // Función que devuelve el control/grupo que el subform espera como @Input() group
+  // Devuelve el control/grupo que el subform espera como @Input() group
   selectInput: (root: FormGroup) => any;
 }
 
@@ -26,24 +42,39 @@ interface SubformMeta {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    // Registrar subforms para que *ngComponentOutlet* pueda usarlos
-   /* FirstAppearanceComponent,
-    PowersAbilitiesComponent,
-    StatsSubformComponent*/
+    // Si deseas que *ngComponentOutlet* resuelva los standalone components,
+    // puedes importar explícitamente:
+    // FirstAppearanceComponent,
+    // PowersAbilitiesSubformComponent,
+    // StatsSubformComponent
   ],
   templateUrl: './add-character.component.html',
   styleUrls: ['./add-character.component.scss']
 })
-export class AddCharacterComponent {
+export class AddCharacterComponent implements OnInit {
+
+  // ----------------------------------------------
+  // Inyecciones / estado base
+  // ----------------------------------------------
   private fb = inject(NonNullableFormBuilder);
   private destroyRef = inject(DestroyRef);
+  private characterTypesSvc = inject(CharacterTypesService);
 
   readonly currentYear = new Date().getFullYear();
   imagePreview = signal<string | null>(null);
 
+  // Form principal (asegúrate de que 'categories' sea string[] en character.forms.ts)
   form = createCharacterForm(this.fb, this.currentYear);
 
-  // === REGISTRO de subforms disponibles ===
+  // ----------------------------------------------
+  // Categorías (catálogo y utilidades)
+  // ----------------------------------------------
+  characterTypes: CharacterType[] = [];           // catálogo desde API
+  private typesMap = new Map<string, string>();   // id(string) -> name
+
+  // ----------------------------------------------
+  // Registro de subforms disponibles (dinámicos)
+  // ----------------------------------------------
   readonly subforms: SubformMeta[] = [
     {
       key: 'firstAppearance',
@@ -66,17 +97,41 @@ export class AddCharacterComponent {
     }
   ];
 
-  // === Dónde está colocado cada subform (si está visible) ===
+  // Dónde se colocó cada subform en la UI
   placed: Record<SectionKey, SubformKey[]> = {
     left:   [],
     right:  [],
     bottom: []
   };
 
-  // Menú (picker) abierto en qué sección
+  // Picker abierto en sección
   menuOpen: SectionKey | null = null;
 
-  // Imagen
+  // ----------------------------------------------
+  // Ciclo de vida: cargar catálogo de categorías
+  // ----------------------------------------------
+  ngOnInit(): void {
+    this.characterTypesSvc.getAll().subscribe({
+      next: (types) => {
+        // Normalizamos a string los IDs por si backend envía números
+        this.characterTypes = (types ?? []).map(t => ({
+          ...t,
+          id: String((t as any).id) // fuerza string
+        }));
+        // Construimos mapa id->name para resolver nombres rápido
+        this.typesMap = new Map(this.characterTypes.map(t => [String(t.id), t.name]));
+      },
+      error: (err) => {
+        console.error('Error cargando CharacterTypes', err);
+        this.characterTypes = [];
+        this.typesMap.clear();
+      }
+    });
+  }
+
+  // ----------------------------------------------
+  // Imagen: manejo de selección / limpieza
+  // ----------------------------------------------
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {
@@ -102,12 +157,64 @@ export class AddCharacterComponent {
     this.form.patchValue({ imageFile: null });
   }
 
+  // ----------------------------------------------
+  // Getters / helpers de formulario
+  // ----------------------------------------------
+  get f() { return this.form.controls; }
+
+  // Devuelve el nombre de la categoría por ID (string)
+  nameFor(id: string | number): string {
+    return this.typesMap.get(String(id)) ?? `#${id}`;
+  }
+
+  // Verifica si una categoría (por ID string) ya está seleccionada
+  isSelected(id: string): boolean {
+    const selected: string[] = this.f['categories'].value ?? [];
+    return selected.includes(id);
+  }
+
+  // ----------------------------------------------
+  // Selección de categorías (selector + chips)
+  // ----------------------------------------------
+  onCategoryPicked(ev: Event): void {
+    const sel = ev.target as HTMLSelectElement;
+    const raw = sel.value;           // siempre string
+    if (!raw) return;
+
+    const id = String(raw);          // 🔑 tratamos ID como string
+    this.addCategory(id);
+
+    sel.value = '';                  // reset selector para próxima selección
+  }
+
+  addCategory(id: string): void {
+    const current: string[] = this.f['categories'].value ?? [];
+    if (!current.includes(id)) {
+      this.f['categories'].setValue([...current, id]);
+      this.f['categories'].markAsDirty();
+      this.f['categories'].markAsTouched();
+    }
+  }
+
+  removeCategory(id: string): void {
+    const current: string[] = this.f['categories'].value ?? [];
+    this.f['categories'].setValue(current.filter(x => x !== id));
+    this.f['categories'].markAsDirty();
+    this.f['categories'].markAsTouched();
+  }
+
+  // ----------------------------------------------
+  // Submit / Reset
+  // ----------------------------------------------
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
+
+    // En este punto, this.form.value.categories es string[]
     console.log('Nuevo personaje:', this.form.value);
+
     this.form.reset({
       name: '',
       alias: '',
@@ -115,7 +222,8 @@ export class AddCharacterComponent {
       creator: '',
       yearCreated: this.currentYear,
       summary: '',
-      imageFile: null
+      imageFile: null,
+      categories: []   // limpiar selección
     });
     this.clearImage();
   }
@@ -128,20 +236,21 @@ export class AddCharacterComponent {
       creator: '',
       yearCreated: this.currentYear,
       summary: '',
-      imageFile: null
+      imageFile: null,
+      categories: []   // limpiar selección
     });
     this.clearImage();
   }
 
-  // === UI: abrir/cerrar picker ===
-  openPicker(section: SectionKey) {
-    this.menuOpen = section;
-  }
-  closePicker() {
-    this.menuOpen = null;
-  }
+  // ----------------------------------------------
+  // UI: Picker para colocar subforms en secciones
+  // ----------------------------------------------
+  openPicker(section: SectionKey) { this.menuOpen = section; }
+  closePicker() { this.menuOpen = null; }
 
-  // === Helpers de registro ===
+  // ----------------------------------------------
+  // Subforms: helpers para render dinámico
+  // ----------------------------------------------
   metaFor(key: SubformKey): SubformMeta {
     const found = this.subforms.find(s => s.key === key);
     if (!found) throw new Error(`Subform no registrado: ${key}`);
@@ -151,7 +260,9 @@ export class AddCharacterComponent {
     return this.metaFor(key).selectInput(this.form);
   }
 
-  // === Colocar subforms dinámicamente ===
+  // ----------------------------------------------
+  // Subforms: colocar / remover dinámicamente
+  // ----------------------------------------------
   attachTo(section: SectionKey, key: SubformKey) {
     // Si ya está en otra sección, removerlo de allí
     (Object.keys(this.placed) as SectionKey[]).forEach(sec => {
@@ -161,29 +272,24 @@ export class AddCharacterComponent {
       }
     });
 
-    // Evitar duplicados en la misma sección
+    // Evitar duplicado en la misma sección
     if (!this.placed[section].includes(key)) {
       this.placed[section].push(key);
     }
     this.closePicker();
   }
 
-  // Remover manualmente un subform de una sección
   removeFrom(section: SectionKey, key: SubformKey) {
     const idx = this.placed[section].indexOf(key);
     if (idx >= 0) this.placed[section].splice(idx, 1);
   }
 
-  // Para mostrar solo los que aún no están colocados
   availableSubformsFor(section: SectionKey) {
     const alreadyPlaced = new Set([
       ...this.placed.left,
       ...this.placed.right,
       ...this.placed.bottom
     ]);
-    // Si quieres permitir “mover” desde el picker, comenta el filtro y déjalos todos
     return this.subforms.filter(s => !alreadyPlaced.has(s.key));
   }
-
-  get f() { return this.form.controls; }
 }
