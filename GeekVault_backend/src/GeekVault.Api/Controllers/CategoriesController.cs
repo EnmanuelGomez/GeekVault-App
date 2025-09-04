@@ -1,5 +1,4 @@
-﻿// GeekVault.Api/Controllers/CategoriesController.cs
-using GeekVault.Application.Interfaces;
+﻿using GeekVault.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]

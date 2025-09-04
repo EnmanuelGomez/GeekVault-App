@@ -61,6 +61,24 @@ namespace GeekVault.Infrastructure
             // TeamMembership (M:N)
             modelBuilder.Entity<TeamMembership>()
                 .HasKey(tm => new { tm.TeamId, tm.CharacterId });
+
+            // TeamMembership (M:N) - relaciones explícitas
+            modelBuilder.Entity<TeamMembership>(b =>
+            {
+                b.HasKey(tm => new { tm.TeamId, tm.CharacterId });
+
+                b.HasOne(tm => tm.Team)
+                    .WithMany(t => t.Memberships)
+                    .HasForeignKey(tm => tm.TeamId);
+
+                b.HasOne(tm => tm.Character)
+                    .WithMany(c => c.TeamMemberships) 
+                    .HasForeignKey(tm => tm.CharacterId);
+
+                // Mapea DateOnly a DATE
+                b.Property(tm => tm.JoinDate).HasColumnType("date");
+                b.Property(tm => tm.LeaveDate).HasColumnType("date");
+            });
         }
 
     }

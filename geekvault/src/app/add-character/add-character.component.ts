@@ -42,11 +42,6 @@ interface SubformMeta {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    // Si deseas que *ngComponentOutlet* resuelva los standalone components,
-    // puedes importar explícitamente:
-    // FirstAppearanceComponent,
-    // PowersAbilitiesSubformComponent,
-    // StatsSubformComponent
   ],
   templateUrl: './add-character.component.html',
   styleUrls: ['./add-character.component.scss']
