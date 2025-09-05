@@ -29,18 +29,24 @@
       <h2 class="section-title">Personajes</h2>
 
       <div class="characters-grid" *ngIf="vm.characters?.length; else noChars">
-        <div class="character-card" *ngFor="let c of vm.characters; trackBy: trackByCharId">
-          <div class="thumb">
-            <img
-              [src]="c.imageUrl || 'assets/placeholders/character-portrait.png'"
-              [alt]="c.name"
-              loading="lazy"
-              (error)="onImgError($event)"
-            />
-          </div>
-          <div class="caption">{{ c.name }}</div>
-        </div>
-      </div>
+  <a
+  class="character-card"
+  *ngFor="let c of vm.characters; trackBy: trackByCharId"
+  [routerLink]="['/characters', c.id]"
+  [attr.aria-label]="'Ver detalle de ' + c.name"
+>
+  <div class="thumb">
+    <img
+      [src]="c.imageUrl || 'assets/placeholders/character-portrait.png'"
+      [alt]="c.name"
+      loading="lazy"
+      (error)="onImgError($event)"
+    />
+  </div>
+  <div class="caption">{{ c.name }}</div>
+</a>
+</div>
+
 
       <ng-template #noChars>
         <div class="characters-empty">No hay personajes registrados para esta franquicia.</div>

@@ -7,6 +7,8 @@ import { AddCharacterCategoryComponent } from './add-character-category/add-char
 import { AddTeamsComponent } from './add-teams/add-teams.component';
 import { FranchiseDetailComponent } from './core/components/franchise-detail/franchise-detail.component';
 import { franchiseDetailResolver } from './core/resolvers/franchise-detail.resolver';
+import { CharacterDetailComponent } from './features/characters/character-detail/character-detail.component';
+import { characterResolver } from './core/resolvers/character-detail.resolver';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -21,5 +23,12 @@ export const routes: Routes = [
   component: FranchiseDetailComponent,
   resolve: { vm: franchiseDetailResolver },
   runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'characters/:id',
+    loadComponent: () =>
+      import('./features/characters/character-detail/character-detail.component')
+        .then(m => m.CharacterDetailComponent),
+    resolve: { character: characterResolver },
   },
 ];

@@ -5,5 +5,6 @@ export interface Character {
   description?: string | null;
   imageUrl?: string | null;
   franchiseId: string;
+  categories: { id: string | number; name: string }[]; // mapea tus ids -> nombres
   extraData?: string | null;
 }

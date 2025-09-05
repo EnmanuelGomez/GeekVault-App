@@ -20,6 +20,8 @@ namespace GeekVault.Infrastructure.Services
                     Name = f.Name,
                     Alias = f.Alias,
                     Description = f.Description,
+                    CreatedBy = f.CreatedBy,
+                    CreatedOn = f.CreatedOn,
                     FranchiseId = f.FranchiseId,
                     ExtraData = f.ExtraData,
                     ImageUrl = f.ImageUrl
@@ -38,6 +40,8 @@ namespace GeekVault.Infrastructure.Services
                     Name = c.Name,
                     Alias = c.Alias,
                     Description = c.Description,
+                    CreatedBy = c.CreatedBy,
+                    CreatedOn = c.CreatedOn,
                     FranchiseId = c.FranchiseId,
                     ExtraData = c.ExtraData,
                     ImageUrl = c.ImageUrl
@@ -54,6 +58,8 @@ namespace GeekVault.Infrastructure.Services
                     Name = c.Name,
                     Alias = c.Alias,
                     Description = c.Description,
+                    CreatedBy = c.CreatedBy,
+                    CreatedOn = c.CreatedOn,
                     FranchiseId = c.FranchiseId,
                     ExtraData = c.ExtraData,
                     ImageUrl = c.ImageUrl
