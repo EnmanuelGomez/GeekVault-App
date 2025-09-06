@@ -15,8 +15,11 @@
       <div class="headline">
         <h1 class="title">{{ c.name }}</h1>
         <div class="alias" *ngIf="c.alias">Identidad: <strong>{{ c.alias }}</strong></div>
+        <!--<div class="alias" *ngIf="c.alias">Universo: <strong>{{ c.alias }}</strong></div>-->
+        <div class="createdBy" *ngIf="c.createdBy">Creador/es: <strong>{{ c.createdBy }}</strong></div>
+        <div class="createdOn" *ngIf="c.createdOn">Año creado:<strong>{{ c.createdOn }}</strong></div>
+        Categorías: <span>{{ categoryList() }}</span>
         <div class="cats" *ngIf="c.categories?.length">
-          Categorías: <span>{{ categoryList() }}</span>
         </div>
         <p class="summary" *ngIf="c.description || c.description">
           {{ c.description || c.description }}

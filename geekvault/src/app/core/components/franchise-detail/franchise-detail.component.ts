@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { FranchiseService } from '../../services/franchise.service';
@@ -9,7 +9,7 @@ import { CharacterService } from '../../services/character.service';
 @Component({
   selector: 'app-franchise-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NgIf, NgFor, RouterLink],
   styleUrls: ['./franchise-detail.component.scss'],
   templateUrl: './franchise-detail.component.html'
 })
