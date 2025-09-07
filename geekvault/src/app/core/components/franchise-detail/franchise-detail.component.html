@@ -30,11 +30,11 @@
 
       <div class="characters-grid" *ngIf="vm.characters?.length; else noChars">
   <a
-    class="character-card"
-      *ngFor="let c of vm.characters; trackBy: trackByCharId"
-      [routerLink]="['characters', c.id]"
-      [attr.aria-label]="'Ver detalle de ' + c.name"
-  >
+  class="character-card"
+  *ngFor="let c of vm.characters; trackBy: trackByCharId"
+  [routerLink]="['/characters', c.id]"
+  [attr.aria-label]="'Ver detalle de ' + c.name"
+>
   <div class="thumb">
     <img
       [src]="c.imageUrl || 'assets/placeholders/character-portrait.png'"

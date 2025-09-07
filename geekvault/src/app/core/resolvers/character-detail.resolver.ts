@@ -1,8 +1,17 @@
-import { ResolveFn } from '@angular/router';
+// core/resolvers/character-detail.resolver.ts
+import { ResolveFn, ActivatedRouteSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
-import { CharacterService } from '../services/character.service';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { CharacterService, CharacterDetail } from '../services/character.service';
 
-export const characterResolver: ResolveFn<any> = (route) => {
+export const characterResolver: ResolveFn<CharacterDetail | null> = (route: ActivatedRouteSnapshot) => {
   const id = route.paramMap.get('id')!;
-  return inject(CharacterService).getById(id);
+  const svc = inject(CharacterService);
+  return svc.getById(id).pipe(
+    catchError(err => {
+      console.error('characterResolver error', err);
+      return of(null); // <- no canceles la navegación
+    })
+  );
 };
