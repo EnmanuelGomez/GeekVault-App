@@ -13,6 +13,7 @@ builder.Services.AddDbContext<GeekVaultDbContext>(options =>
 
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<ICharacterCategoryService, CharacterCategoryService>();
+builder.Services.AddScoped<ICharacterCharacterTypeService, CharacterCharacterTypeService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFranchiseService, FranchiseService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
