@@ -10,11 +10,11 @@ namespace GeekVault.Infrastructure.Services
 
         public CharacterCategoryService(GeekVaultDbContext db) => _db = db;
 
-        public async Task<IEnumerable<CharacterCategoryDto>> GetAllAsync()
+        public async Task<IEnumerable<CharacterTypeDto>> GetAllAsync()
         {
             return await _db.CharacterTypes  //Character Types = Character Categories
                 .AsNoTracking()
-                .Select(c => new CharacterCategoryDto
+                .Select(c => new CharacterTypeDto
                 {
                     Id = c.Id,
                     Name = c.Name,

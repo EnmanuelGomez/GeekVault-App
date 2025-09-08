@@ -57,5 +57,19 @@ namespace GeekVault.Infrastructure.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task<IReadOnlyList<CharacterTypeDto>> GetCategoriesByCharacterAsync(Guid characterId)
+        {
+            return await _db.CharacterCharacterTypes
+                .AsNoTracking()
+                .Where(x => x.CharacterId == characterId)
+                .Select(x => new CharacterTypeDto(
+                    x.CharacterType.Id,
+                    x.CharacterType.Name
+                ))
+                .Distinct()
+                .OrderBy(ct => ct.Name)
+                .ToListAsync();
+        }
     }
 }

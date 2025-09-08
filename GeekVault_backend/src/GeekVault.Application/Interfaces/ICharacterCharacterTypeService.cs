@@ -7,5 +7,6 @@ namespace GeekVault.Application.Interfaces
         Task<IEnumerable<CharacterCharacterTypeDto>> GetAllAsync();
         Task<IEnumerable<CharacterCharacterTypeDto>> GetByCharacterAsync(Guid characterId);
         Task<IEnumerable<CharacterCharacterTypeDto>> GetByTypeAsync(Guid typeId);
+        Task<IReadOnlyList<CharacterTypeDto>> GetCategoriesByCharacterAsync(Guid characterId);
     }
 }

@@ -23,4 +23,8 @@ public class CharacterCharacterTypesController : ControllerBase
     [HttpGet("type/{typeId:guid}")]
     public async Task<IActionResult> GetByType(Guid typeId)
         => Ok(await _service.GetByTypeAsync(typeId));
+
+    [HttpGet("character/{characterId:guid}/categories")]
+    public async Task<IActionResult> GetCategoriesByCharacter(Guid characterId)
+        => Ok(await _service.GetCategoriesByCharacterAsync(characterId));
 }

@@ -4,6 +4,6 @@ namespace GeekVault.Application.Interfaces
 {
     public interface ICharacterCategoryService
     {
-        Task<IEnumerable<CharacterCategoryDto>> GetAllAsync();
+        Task<IEnumerable<CharacterTypeDto>> GetAllAsync();
     }
 }
