@@ -15,12 +15,23 @@
       <div class="headline">
         <h1 class="title">{{ c.name }}</h1>
         <div class="alias" *ngIf="c.alias">Identidad: <strong>{{ c.alias }}</strong></div>
-        <!--<div class="alias" *ngIf="c.alias">Universo: <strong>{{ c.alias }}</strong></div>-->
+
+        <div class="universe">
+          Universo: <span *ngIf="franchiseName; else noUniverse"><strong>{{ franchiseName }}</strong></span>
+          <ng-template #noUniverse>Desconocido</ng-template>
+        </div>
+
         <div class="createdBy" *ngIf="c.createdBy">Creador/es: <strong>{{ c.createdBy }}</strong></div>
         <div class="createdOn" *ngIf="c.createdOn">Año creado:<strong>{{ c.createdOn }}</strong></div>
-        Categorías: <span>{{ categoryList() }}</span>
-        <div class="cats" *ngIf="c.categories?.length">
+
+        <div class="cats" *ngIf="categories">
+          Categorías:
+          <ng-container *ngIf="categories.length; else noCats">
+            <span>{{ categoryList() }}</span>
+          </ng-container>
+          <ng-template #noCats><span class="muted">—</span></ng-template>
         </div>
+
         <p class="summary" *ngIf="c.description || c.description">
           {{ c.description || c.description }}
         </p>
@@ -45,8 +56,10 @@
       <h2>Poderes y habilidades</h2>
       <ul class="list">
         <li *ngFor="let p of c.powers">
-          <strong>{{ p.name }}</strong>
-          <span *ngIf="p.description"> — {{ p.description }}</span>
+          <div class="power-item">
+            <strong>{{ p.name }}</strong>
+            <p *ngIf="p.description">{{ p.description }}</p>
+          </div>
         </li>
       </ul>
     </section>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { CharacterService, CharacterDetail } from '../../../core/services/character.service';
+import { CharacterType } from '../../../core/models/character-type.model';
 
 export type StatKey =
   | 'strength' | 'speed' | 'skills' | 'weapons'
@@ -23,6 +24,7 @@ export class CharacterDetailComponent {
   private characterSvc = inject(CharacterService);
 
   character: CharacterDetail | null = null;
+  categories: CharacterType[] = [];
 
   // Claves tipadas de StatBlock para el *ngFor
   statKeys: StatKey[] = [
@@ -31,20 +33,51 @@ export class CharacterDetailComponent {
     'experience','fighting','power'
   ];
 
+  franchiseName: string | null = null;
+
   constructor() {
     const resolved = this.route.snapshot.data['character'] as CharacterDetail | undefined;
     if (resolved) {
       this.character = resolved;
+      this.ensureCategories();
+      this.ensureFranchise();
     } else {
       const id = this.route.snapshot.paramMap.get('id');
       if (id) {
         this.characterSvc.getById(id).subscribe({
-          next: (c) => (this.character = c),
+          next: (c) => {
+            this.character = c;
+            this.ensureCategories();
+            this.ensureFranchise();
+          },
           error: () => (this.character = null),
         });
       }
     }
   }
+
+   private ensureFranchise() {
+    if (!this.character?.franchiseId) return;
+
+    this.characterSvc.getFranchiseById(this.character.franchiseId).subscribe({
+      next: (f) => (this.franchiseName = f?.name ?? null),
+      error: () => (this.franchiseName = null),
+    });
+  }
+
+  private ensureCategories() {
+  if (!this.character) return;
+  const id = this.character.id;
+
+  if (this.character.categories && this.character.categories.length > 0) {
+    this.categories = this.character.categories;
+  } else {
+    this.characterSvc.getCategoriesByCharacter(id).subscribe({
+      next: (cats) => (this.categories = cats ?? []),
+      error: () => (this.categories = []),
+    });
+  }
+}
 
   onImgError(event: Event) {
     (event.target as HTMLImageElement).src = 'assets/placeholders/character-portrait.png';
@@ -58,9 +91,9 @@ export class CharacterDetailComponent {
     return map[m] ?? m;
   }
 
-  categoryList(): string {
-    if (!this.character?.categories?.length) return '';
-    return this.character.categories.map(c => c.name).join(', ');
+   categoryList(): string {
+    const list = this.categories?.map(c => c.name) ?? [];
+    return list.join(', ');
   }
 
   getStat(

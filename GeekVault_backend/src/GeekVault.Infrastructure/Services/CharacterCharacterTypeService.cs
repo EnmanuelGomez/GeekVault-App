@@ -61,14 +61,12 @@ namespace GeekVault.Infrastructure.Services
         public async Task<IReadOnlyList<CharacterTypeDto>> GetCategoriesByCharacterAsync(Guid characterId)
         {
             return await _db.CharacterCharacterTypes
-                .AsNoTracking()
                 .Where(x => x.CharacterId == characterId)
-                .Select(x => new CharacterTypeDto(
-                    x.CharacterType.Id,
-                    x.CharacterType.Name
-                ))
-                .Distinct()
-                .OrderBy(ct => ct.Name)
+                .Select(x => new CharacterTypeDto
+                {
+                    Id = x.CharacterTypeId,
+                    Name = x.CharacterType.Name
+                })
                 .ToListAsync();
         }
     }

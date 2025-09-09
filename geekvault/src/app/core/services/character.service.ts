@@ -5,6 +5,8 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Character } from '../models/character.model';
+import { CharacterType } from '../models/character-type.model';
+import { Franchise } from '../models/franchise.model';
 
 // Tipado opcional del detalle (extiende el base con posibles extras)
 export type CharacterDetail = Character & {
@@ -29,12 +31,19 @@ export type CharacterDetail = Character & {
 export class CharacterService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiBaseUrl}/api/Characters`;
+  private categoriesBaseUrl = `${environment.apiBaseUrl}/api/CharacterCharacterTypes`;
+  private franchiseBaseUrl = `${environment.apiBaseUrl}/api/Franchises`;
 
   /** Lista por franquicia */
   getByFranchise(franchiseId: string): Observable<Character[]> {
     return this.http.get<Character[]>(
       `${this.baseUrl}/by-franchise/${encodeURIComponent(franchiseId)}`
     );
+  }
+
+  /** Obtener franquicia mediante id **/
+  getFranchiseById(id: string): Observable<Franchise> {
+    return this.http.get<Franchise>(`${this.franchiseBaseUrl}/${encodeURIComponent(id)}`);
   }
 
   /** Detalle por id con merge de extraData (si existe y es JSON válido). */
@@ -67,4 +76,37 @@ export class CharacterService {
     // Sin extras
     return c as CharacterDetail;
   }
+
+  // categorías del personaje
+  getCategoriesByCharacter(id: string): Observable<CharacterType[]> {
+  return this.http
+    .get<any[]>(
+      `${this.categoriesBaseUrl}/character/${encodeURIComponent(id)}/categories`
+    )
+    .pipe(
+      map((arr) => {
+        const list = Array.isArray(arr) ? arr : [];
+        // Normaliza: soporta {id,name}, {characterTypeId,typeName}, {characterType:{id,name}}, etc.
+        const norm = list.map((x) => {
+          const id =
+            x?.id ??
+            x?.characterTypeId ??
+            x?.typeId ??
+            x?.characterType?.id ??
+            x?.type?.id;
+
+          const name =
+            x?.name ??
+            x?.typeName ??
+            x?.characterType?.name ??
+            x?.type?.name;
+
+          return { id, name } as CharacterType;
+        });
+
+        // filtra solo válidos
+        return norm.filter((c) => c.id && c.name);
+      })
+    );
+}
 }

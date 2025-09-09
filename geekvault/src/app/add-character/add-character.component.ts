@@ -20,7 +20,7 @@ import { StatsSubformComponent } from '../features/characters/subforms/stats/sta
 
 // Servicios / modelos
 import { CharacterTypesService } from '../core/services/character-types.service';
-import { CharacterType } from '../core/models/character-types.model';
+import { CharacterType } from '../core/models/character-type.model';
 
 // ----------------------------------------------
 // Tipos internos para el sistema de subforms
