@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GeekVault.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
-namespace GeekVault.Api.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class TeamsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class TeamsController : ControllerBase
+    private readonly ITeamService _service;
+    public TeamsController(ITeamService service) => _service = service;
+
+    // GET /api/teams?includeMembers=false
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] bool includeMembers = false)
+        => Ok(await _service.GetAllAsync(includeMembers));
+
+    // GET /api/teams/{id}?includeMembers=true
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id, [FromQuery] bool includeMembers = false)
     {
-        [HttpGet] public IActionResult Get() => Ok(new { message = "Team up OK" });
-        [HttpGet("{id:int}")] public IActionResult GetById(int id) => Ok(new { id, message = "Detalle pending" });
+        var team = await _service.GetByIdAsync(id, includeMembers);
+        return team is null ? NotFound() : Ok(team);
     }
 }

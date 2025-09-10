@@ -30,3 +30,48 @@
   </button>
 </section>
 
+<!-- Estados de carga / error -->
+<section *ngIf="loading" class="state info">Cargando categorías…</section>
+<section *ngIf="!loading && error" class="state error">{{ error }}</section>
+
+<!-- SIEMPRE suscríbete con async primero -->
+<ng-container *ngIf="categories$ | async as categories; else loadingOrError">
+
+  <!-- Si hubo error, muéstralo -->
+  <section *ngIf="error; else categoriesBlock" class="state error">
+    {{ error }}
+  </section>
+
+  <!-- Lista de categorías -->
+  <ng-template #categoriesBlock>
+    <section class="categories">
+      <div
+        class="category-section"
+        *ngFor="let cat of categories; trackBy: trackByCatId"
+      >
+        <h2 class="category-title">{{ cat.name }}</h2>
+
+        <!-- Tira horizontal de franquicias por categoría -->
+        <app-franchises-strip [categoryId]="cat.id"></app-franchises-strip>
+      </div>
+
+      <!-- Opcional: si no hay categorías y no hubo error -->
+      <div *ngIf="categories.length === 0 && !error" class="state info">
+        No hay categorías para mostrar.
+      </div>
+    </section>
+  </ng-template>
+</ng-container>
+
+<!-- Bloque de Loading / Error cuando aún no hay emisión -->
+<ng-template #loadingOrError>
+  <section *ngIf="error; else loadingBlock" class="state error">
+    {{ error }}
+  </section>
+  <ng-template #loadingBlock>
+    <section class="state info">Cargando categorías…</section>
+  </ng-template>
+</ng-template>
+
+
+

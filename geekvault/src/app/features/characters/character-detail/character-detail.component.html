@@ -1,0 +1,84 @@
+<div class="detail-page" *ngIf="character as c">
+  <section class="container">
+    <a routerLink="/" class="back">← Volver</a>
+
+    <div class="header">
+      <div class="portrait">
+        <img
+          [src]="c.imageUrl || 'assets/placeholders/character-portrait.png'"
+          [alt]="c.name"
+          loading="lazy"
+          (error)="onImgError($event)"
+        />
+      </div>
+
+      <div class="headline">
+        <h1 class="title">{{ c.name }}</h1>
+        <div class="alias" *ngIf="c.alias">Identidad: <strong>{{ c.alias }}</strong></div>
+
+        <div class="universe">
+          Universo: <span *ngIf="franchiseName; else noUniverse"><strong>{{ franchiseName }}</strong></span>
+          <ng-template #noUniverse>Desconocido</ng-template>
+        </div>
+
+        <div class="createdBy" *ngIf="c.createdBy">Creador/es: <strong>{{ c.createdBy }}</strong></div>
+        <div class="createdOn" *ngIf="c.createdOn">Año creado:<strong>{{ c.createdOn }}</strong></div>
+
+        <div class="cats" *ngIf="categories">
+          Categorías:
+          <ng-container *ngIf="categories.length; else noCats">
+            <span>{{ categoryList() }}</span>
+          </ng-container>
+          <ng-template #noCats><span class="muted">—</span></ng-template>
+        </div>
+
+        <p class="summary" *ngIf="c.description || c.description">
+          {{ c.description || c.description }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Sección opcional: First Appearance -->
+    <section class="card" *ngIf="c.firstAppearance as fa">
+      <h2>Aparición inicial</h2>
+      <div class="grid">
+        <div><span class="label">Medio:</span> {{ mediumLabel(fa.medium) }}</div>
+        <div><span class="label">Título:</span> {{ fa.title }}</div>
+        <div *ngIf="fa.issueOrEpisode"><span class="label">N° / Episodio:</span> {{ fa.issueOrEpisode }}</div>
+        <div *ngIf="fa.publisherOrStudio"><span class="label">Editorial/Estudio:</span> {{ fa.publisherOrStudio }}</div>
+        <div *ngIf="fa.date"><span class="label">Fecha:</span> {{ fa.date | date:'longDate' }}</div>
+      </div>
+      <p class="notes" *ngIf="fa.notes">{{ fa.notes }}</p>
+    </section>
+
+    <!-- Sección opcional: Habilidades -->
+    <section class="card" *ngIf="c.powers?.length">
+      <h2>Poderes y habilidades</h2>
+      <ul class="list">
+        <li *ngFor="let p of c.powers">
+          <div class="power-item">
+            <strong>{{ p.name }}</strong>
+            <p *ngIf="p.description">{{ p.description }}</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Sección opcional: Stats -->
+    <section class="card" *ngIf="c.stats as s">
+  <h2>Estadísticas</h2>
+  <div class="stats">
+    <div class="stat" *ngFor="let k of statKeys">
+      <div class="row">
+        <span class="label">{{ k }}</span>
+        <span class="value">{{ getStat(s, k) }}/10</span>
+      </div>
+      <div class="bar">
+        <div class="fill" [style.width.%]="barPercent(getStat(s, k))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </section>
+</div>

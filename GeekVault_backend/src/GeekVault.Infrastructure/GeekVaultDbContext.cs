@@ -20,16 +20,66 @@ namespace GeekVault.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuración de tablas intermedias (composite keys)
+            // Franchise
+            modelBuilder.Entity<Franchise>()
+                .Property(f => f.Name)
+                .HasMaxLength(200)
+                .IsRequired();
 
+            modelBuilder.Entity<Franchise>(b =>
+            {
+                b.Property(f => f.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                // NUEVO: mapear DATE y tamaño de Founders
+                b.Property(f => f.FoundedOn)
+                    .HasColumnType("date"); // PostgreSQL DATE
+
+                b.Property(f => f.Founders)
+                    .HasMaxLength(300);     // ajusta si necesitas más
+            });
+
+            // Tabla puente FranchiseCategory (M:N)
             modelBuilder.Entity<FranchiseCategory>()
                 .HasKey(fc => new { fc.FranchiseId, fc.CategoryId });
 
+            modelBuilder.Entity<FranchiseCategory>()
+                .HasOne(fc => fc.Franchise)
+                .WithMany(f => f.FranchiseCategories)
+                .HasForeignKey(fc => fc.FranchiseId);
+
+            modelBuilder.Entity<FranchiseCategory>()
+                .HasOne(fc => fc.Category)
+                .WithMany(c => c.FranchiseCategories)
+                .HasForeignKey(fc => fc.CategoryId);
+
+            // CharacterCharacterType (M:N)
             modelBuilder.Entity<CharacterCharacterType>()
                 .HasKey(cct => new { cct.CharacterId, cct.CharacterTypeId });
 
+            // TeamMembership (M:N)
             modelBuilder.Entity<TeamMembership>()
                 .HasKey(tm => new { tm.TeamId, tm.CharacterId });
+
+            // TeamMembership (M:N) - relaciones explícitas
+            modelBuilder.Entity<TeamMembership>(b =>
+            {
+                b.HasKey(tm => new { tm.TeamId, tm.CharacterId });
+
+                b.HasOne(tm => tm.Team)
+                    .WithMany(t => t.Memberships)
+                    .HasForeignKey(tm => tm.TeamId);
+
+                b.HasOne(tm => tm.Character)
+                    .WithMany(c => c.TeamMemberships) 
+                    .HasForeignKey(tm => tm.CharacterId);
+
+                // Mapea DateOnly a DATE
+                b.Property(tm => tm.JoinDate).HasColumnType("date");
+                b.Property(tm => tm.LeaveDate).HasColumnType("date");
+            });
         }
+
     }
 }

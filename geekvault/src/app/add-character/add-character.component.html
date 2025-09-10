@@ -64,10 +64,17 @@
 
           <!-- Campos a la derecha de la imagen -->
           <div class="fields">
+
             <div class="field">
               <label for="name">Nombre del personaje</label>
-              <input id="name" type="text" formControlName="name" placeholder="Ej.: Bruce Wayne" />
+              <input id="name" type="text" formControlName="name" placeholder="Ej.: Batman" />
               <small class="error" *ngIf="f.name.touched && f.name.invalid">Requerido (mín. 2 caracteres).</small>
+            </div>
+
+            <div class="field">
+              <label for="alias">Identidad</label>
+              <input id="alias" type="text" formControlName="alias" placeholder="Ej.: Bruce Wayne" />
+              <small class="error" *ngIf="f.alias.touched && f.alias.invalid">Requerido (mín. 2 caracteres).</small>
             </div>
 
             <div class="field">
@@ -90,7 +97,43 @@
               </small>
             </div>
           </div>
-        </div>
+
+         <!-- ===================== CATEGORÍAS ===================== -->
+            <div class="field">
+              <label for="categories">Categorías del personaje</label>
+                <div class="category-picker">
+                  <select id="categories"
+                    (change)="onCategoryPicked($event)"
+                    [disabled]="characterTypes.length === 0"
+                    aria-label="Seleccionar categoría">
+                  <option value="">Selecciona una categoría…</option>
+                  <option *ngFor="let ct of characterTypes"
+                    [value]="ct.id"
+                    [disabled]="isSelected(ct.id + '')">
+                    {{ ct.name }}
+                  </option>
+                  </select>
+                    <small *ngIf="characterTypes.length === 0">Cargando categorías…</small>
+                </div>
+            </div>
+        <!-- Chips (FILA COMPLETA) -->
+            <div class="field field--chips">
+            <div class="chips" *ngIf="(f['categories'].value?.length || 0) > 0">
+              <span class="chip" *ngFor="let id of f['categories'].value">
+                {{ nameFor(id) }}
+              <button type="button"
+                class="chip-remove"
+                (click)="removeCategory(id)"
+                aria-label="Quitar categoría"> ×
+              </button>
+              </span>
+            </div>
+              <small class="error" *ngIf="f['categories'].touched && f['categories'].invalid">
+                Selecciona al menos una categoría.
+              </small>
+            </div>
+            </div>
+<!-- =================== FIN CATEGORÍAS ==================== -->
 
         <!-- Resumen debajo -->
         <div class="field field--summary">

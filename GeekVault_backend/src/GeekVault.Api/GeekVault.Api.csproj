@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GeekVault.Infrastructure\GeekVault.Infrastructure.csproj" />
+    <ProjectReference Include="..\GeekVault.Application\GeekVault.Application.csproj" />
+    <ProjectReference Include="..\GeekVault.Domain\GeekVault.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,56 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <ng-container *ngIf="vm.franchise as f">
+    <div class="hero" *ngIf="f.imageUrl">
+      <img [src]="f.imageUrl" [alt]="f.name" />
+    </div>
+
+    <section class="container">
+      <a routerLink="/" class="back">← Volver</a>
+
+      <h1 class="title">{{ f.name }}</h1>
+
+      <div class="meta">
+        <div class="meta-item">
+          <div class="label">Fundador/es</div>
+          <div class="value">{{ f.founders || '—' }}</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Fecha de creación</div>
+          <div class="value">
+            {{ f.foundedOn ? (f.foundedOn | date:'longDate') : '—' }}
+          </div>
+        </div>
+        <div class="meta-item">
+          <div class="label">País de origen</div>
+          <div class="value">{{ f.originCountry || '—' }}</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Personajes</h2>
+
+      <div class="characters-grid" *ngIf="vm.characters?.length; else noChars">
+  <a
+  class="character-card"
+  *ngFor="let c of vm.characters; trackBy: trackByCharId"
+  [routerLink]="['/characters', c.id]"
+  [attr.aria-label]="'Ver detalle de ' + c.name"
+>
+  <div class="thumb">
+    <img
+      [src]="c.imageUrl || 'assets/placeholders/character-portrait.png'"
+      [alt]="c.name"
+      loading="lazy"
+      (error)="onImgError($event)"
+    />
+  </div>
+  <div class="caption">{{ c.name }}</div>
+</a>
+</div>
+
+
+      <ng-template #noChars>
+        <div class="characters-empty">No hay personajes registrados para esta franquicia.</div>
+      </ng-template>
+    </section>
+  </ng-container>
+</ng-container>

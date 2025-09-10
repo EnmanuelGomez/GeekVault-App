@@ -6,6 +6,8 @@
         public string Name { get; set; } = default!;
         public string? Alias { get; set; }
         public string? Description { get; set; }
+        public int? CreatedOn { get; set; }   // Año de creación
+        public string? CreatedBy { get; set; }
 
         // Relationships
         public Guid FranchiseId { get; set; }

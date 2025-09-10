@@ -40,3 +40,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Archivos de configuración de Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates

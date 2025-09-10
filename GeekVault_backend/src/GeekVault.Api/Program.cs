@@ -1,5 +1,7 @@
 using System.Reflection;
+using GeekVault.Application.Interfaces;
 using GeekVault.Infrastructure;
+using GeekVault.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -8,6 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add DbContext
 builder.Services.AddDbContext<GeekVaultDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GeekVaultDB")));
+
+builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<ICharacterCategoryService, CharacterCategoryService>();
+builder.Services.AddScoped<ICharacterCharacterTypeService, CharacterCharacterTypeService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IFranchiseService, FranchiseService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
