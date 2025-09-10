@@ -20,12 +20,22 @@ export interface Character {
 export type Medium = 'comic' | 'tv' | 'movie' | 'game' | 'anime' | 'novel' | 'other';
 
 export interface FirstAppearance {
-  medium: Medium;
+  imageUrl?: string | null;
   title: string;
+  medium: Medium;
   issueOrEpisode?: string;
   publisherOrStudio?: string;
   date?: string; // ISO yyyy-mm-dd
   notes?: string;
+}
+
+export interface StoryLines{
+  name: string;
+  yearStart?: number;        // Año de inicio de la saga
+  yearEnd?: number | null;          // Año de finalización (por si abarca varios años)
+  issuesInvolved?: string[] | null;
+  description?: string;
+  imageUrl?: string | null;
 }
 
 export interface PowerAbility {
@@ -49,22 +59,23 @@ export interface StatBlock {
 export interface TeamMembership {
   teamName: string;
   description: string;
-  date?: string;
+  date?: string; // fecha de ingreso al equipo
 }
 
 export interface Ally {
+  imageUrl?: string | null;
   name: string;
-  relation?: string;
   notes?: string;
 }
 
 export interface Rival {
+  imageUrl?: string | null;
   name: string;
-  hostility?: 'low'|'mid'|'high';
   notes?: string;
 }
 
 export interface Version {
+  imageUrl?: string | null;
   medium: Medium;
   name: string;
   continuity?: string;
@@ -72,6 +83,7 @@ export interface Version {
 }
 
 export interface Adaptation {
+  imageUrl?: string | null;
   medium: Medium;
   title: string;
   year?: number;
@@ -86,12 +98,13 @@ export interface Weakness {
 }
 
 export interface Equipment {
+  imageUrl?: string | null;
   name: string;
   type?: string;
   origin?: string;
   description?: string;
 }
-
+/*  SERAN FEATURES FUTUROS
 export interface Ranking {
   source: string;
   category: string;
@@ -109,7 +122,7 @@ export interface Merchandise {
   sku?: string;
   notes?: string;
 }
-
+*/
 export interface Publisher {
   name: string;
   country?: string;

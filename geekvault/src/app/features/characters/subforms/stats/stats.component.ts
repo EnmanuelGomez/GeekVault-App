@@ -15,6 +15,7 @@ export class StatsSubformComponent {
     { key: 'strength', label: 'Fuerza' },
     { key: 'speed', label: 'Velocidad' },
     { key: 'skills', label: 'Habilidades' },
+    { key: 'weapons', label: 'Armas' },
     { key: 'intelligence', label: 'Inteligencia' },
     { key: 'durability', label: 'Durabilidad' },
     { key: 'endurance', label: 'Resistencia' },

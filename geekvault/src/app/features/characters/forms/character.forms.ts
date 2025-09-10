@@ -24,8 +24,9 @@ export function createCharacterForm(fb: NonNullableFormBuilder, currentYear: num
 // Factories reutilizables (permite mantener consistencia en todos los formularios)
 export function createFirstAppearanceForm(fb: NonNullableFormBuilder) {
   return fb.group({
-    medium: fb.control<'comic'|'tv'|'movie'|'game'|'anime'|'novel'|'other'>('comic', { validators: [Validators.required] }),
+    imageFile: fb.control<File | null>(null),
     title: fb.control('', { validators: [Validators.required, Validators.minLength(2)] }),
+    medium: fb.control<'comic'|'tv'|'movie'|'game'|'anime'|'novel'|'other'>('comic', { validators: [Validators.required] }),
     issueOrEpisode: fb.control<string>(''),
     publisherOrStudio: fb.control<string>(''),
     date: fb.control<string>(''), // ISO
