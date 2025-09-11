@@ -1,14 +1,26 @@
 <div class="subform" [formGroup]="group">
   <h3>Primera Aparición</h3>
-  <div class="grid">
 
+  <div class="grid">
+    <!-- Bloque de imagen -->
+    <div class="image-block">
       <div class="image-frame">
-        <img *ngIf="imagePreview(); else placeholder" [src]="imagePreview()!" alt="Vista previa de la imagen" />
-          <ng-template #placeholder>
-        <div class="image-placeholder">Vista previa</div>
-          </ng-template>
+        <img *ngIf="imagePreview() as img; else placeholder" [src]="img" alt="Vista previa de la imagen" />
+        <ng-template #placeholder>
+          <div class="image-placeholder">Vista previa</div>
+        </ng-template>
       </div>
 
+      <div class="image-actions">
+        <label class="btn">
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+          Subir imagen
+        </label>
+        <button type="button" class="btn btn--ghost" (click)="clearImage()" [disabled]="!imagePreview()">Quitar</button>
+      </div>
+    </div>
+
+    <!-- Campos -->
     <div class="field">
       <label for="title">Título</label>
       <input id="title" type="text" formControlName="title" />
@@ -17,7 +29,7 @@
     <div class="field">
       <label for="medium">Medio</label>
       <select id="medium" formControlName="medium">
-        <option [ngValue]="null">Seleccione...</option>
+        <!-- Si tu factory ya inicia en 'comic', no necesitas la opción null -->
         <option *ngFor="let m of mediums" [value]="m.value">{{ m.label }}</option>
       </select>
     </div>

@@ -1,20 +1,38 @@
-<div class="add-franchise-container">
-  <!-- Imagen de fondo -->
-  <div
-    class="header-image"
-    [ngStyle]="{'background-image': selectedImage ? 'url(' + selectedImage + ')' : 'none'}">
+<div class="add-franchise-container" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave()">
+  <!-- Header con imagen de fondo (preview de URL o base64) -->
+  <div class="header-image" [ngClass]="{'drag-over': isDragOver}"
+       [ngStyle]="{'background-image': previewImage ? 'url(' + previewImage + ')' : 'none'}">
+
     <div class="image-overlay">
       <h2>Página para agregar IP / Franquicia / Universo</h2>
     </div>
-    <div class="image-upload">
-      <label for="uploadImage">Agregar Imagen de Fondo</label>
-      <input type="file" id="uploadImage" accept="image/*" (change)="onImageSelected($event)" />
-    </div>
+
+    <!-- Zona unificada: subir archivo o usar URL -->
+    <mat-card class="image-dropzone" [matTooltip]="'Arrastra una imagen (archivo o desde la web), pega (Ctrl+V) o escribe una URL'">
+      <div class="dropzone-row">
+        <button mat-stroked-button color="primary" (click)="uploadInput.click()">
+          <mat-icon>upload</mat-icon>&nbsp; Subir desde tu PC
+        </button>
+        <input #uploadInput type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
+        <span class="or">o</span>
+        <mat-form-field appearance="outline" class="url-field">
+          <mat-label>URL de imagen (arrástrala desde el navegador o pégala)</mat-label>
+          <input matInput [(ngModel)]="urlInput" (blur)="onUrlBlur()" placeholder="https://ejemplo.com/imagen.jpg">
+          <mat-icon matSuffix>link</mat-icon>
+          <mat-hint *ngIf="!urlError">También puedes arrastrar una imagen desde otra pestaña.</mat-hint>
+          <mat-error *ngIf="urlError">{{ urlError }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="preview-row" *ngIf="previewImage">
+        <img [src]="previewImage" alt="Vista previa" />
+      </div>
+    </mat-card>
   </div>
 
   <!-- Sección de contenido -->
   <div class="form-section">
-    <form>
+    <form (submit)="$event.preventDefault(); onSubmit();">
       <div class="form-group">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" placeholder="Ej: Marvel, Star Wars, DC Comics..." />
@@ -22,7 +40,7 @@
 
       <div class="form-group">
         <label for="date">Fecha</label>
-        <input id="date" type="date" formControlName="date" />
+        <input id="date" type="date" />
       </div>
 
       <div class="form-group">
@@ -36,11 +54,13 @@
       </div>
 
       <div class="form-group">
-        <label for="resumen"></label>
+        <label for="resumen">Resumen:</label>
         <textarea id="resumen" rows="4" placeholder="Escribe un breve resumen..."></textarea>
       </div>
 
-      <button type="submit">Guardar</button>
+      <button mat-raised-button color="primary" type="submit">
+        <mat-icon>save</mat-icon>&nbsp; Guardar
+      </button>
     </form>
   </div>
 </div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PowersAbilitiesComponent } from './powers-abilities.component';
+import { PowersAbilitiesSubformComponent } from './powers-abilities.component';
 
 describe('PowersAbilitiesComponent', () => {
-  let component: PowersAbilitiesComponent;
-  let fixture: ComponentFixture<PowersAbilitiesComponent>;
+  let component: PowersAbilitiesSubformComponent;
+  let fixture: ComponentFixture<PowersAbilitiesSubformComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PowersAbilitiesComponent]
+      imports: [PowersAbilitiesSubformComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(PowersAbilitiesComponent);
+
+    fixture = TestBed.createComponent(PowersAbilitiesSubformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

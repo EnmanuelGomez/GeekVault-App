@@ -1,4 +1,5 @@
-﻿using GeekVault.Application.Interfaces;
+﻿using GeekVault.Application.DTOs;
+using GeekVault.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -33,4 +34,28 @@ public class FranchisesController : ControllerBase
         var all = await _service.GetAllAsync();
         return Ok(all);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] GeekVault.Application.DTOs.FranchiseDto request, CancellationToken ct)
+    {
+        try
+        {
+            var created = await _service.CreateAsync(request, ct);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        }
+        catch (ArgumentException ex)
+        {
+            return Problem(title: "Invalid request data",
+                           detail: ex.Message,
+                           statusCode: StatusCodes.Status400BadRequest);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Problem(title: "Conflict",
+                           detail: ex.Message,
+                           statusCode: StatusCodes.Status409Conflict);
+        }
+    }
+
+
 }

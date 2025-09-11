@@ -1,5 +1,6 @@
 using GeekVault.Application.DTOs;
 using GeekVault.Application.Interfaces;
+using GeekVault.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeekVault.Infrastructure.Services
@@ -65,5 +66,46 @@ namespace GeekVault.Infrastructure.Services
                 .Distinct() // por seguridad si hubiera duplicados
                 .ToListAsync();
         }
+
+        public async Task<FranchiseDto> CreateAsync(FranchiseDto request, CancellationToken ct = default)
+        {
+            // Regla simple: nombre único (case-insensitive)
+            var name = (request.Name ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name is required.");
+
+            var exists = await _db.Franchises
+                .AsNoTracking()
+                .AnyAsync(f => f.Name.ToLower() == name.ToLower(), ct);
+
+            if (exists)
+                throw new InvalidOperationException($"A franchise named '{name}' already exists.");
+
+            var entity = new Franchise
+            {
+                Id = Guid.NewGuid(),
+                Name = name,
+                Description = string.IsNullOrWhiteSpace(request.Description) ? null : request.Description!.Trim(),
+                OriginCountry = string.IsNullOrWhiteSpace(request.OriginCountry) ? null : request.OriginCountry!.Trim(),
+                FoundedOn = request.FoundedOn,
+                Founders = string.IsNullOrWhiteSpace(request.Founders) ? null : request.Founders!.Trim(),
+                ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? null : request.ImageUrl!.Trim()
+            };
+
+            _db.Franchises.Add(entity);
+            await _db.SaveChangesAsync(ct);
+
+            return new FranchiseDto
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                OriginCountry = entity.OriginCountry,
+                FoundedOn = entity.FoundedOn,
+                Founders = entity.Founders,
+                ImageUrl = entity.ImageUrl
+            };
+        }
+
     }
 }

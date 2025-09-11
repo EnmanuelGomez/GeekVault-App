@@ -77,9 +77,10 @@ export interface Rival {
 export interface Version {
   imageUrl?: string | null;
   medium: Medium;
-  name: string;
+  title: string;
   continuity?: string;
   firstAppearanceRef?: string;
+  createdBy: string;
 }
 
 export interface Adaptation {

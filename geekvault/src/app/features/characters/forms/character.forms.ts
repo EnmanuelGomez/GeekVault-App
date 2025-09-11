@@ -17,6 +17,7 @@ export function createCharacterForm(fb: NonNullableFormBuilder, currentYear: num
       firstAppearance: createFirstAppearanceForm(fb),
       powers: fb.array([]), // empieza con uno; puedes dejar [] si quieres
       stats: createStatsForm(fb),
+      versions: fb.array([]),
     })
   });
 }
@@ -54,5 +55,16 @@ export function createStatsForm(fb: NonNullableFormBuilder) {
     experience: fb.control(5, { validators: scale }),
     fighting: fb.control(5, { validators: scale }),
     power: fb.control(5, { validators: scale }),
+  });
+}
+
+export function createVersionForm(fb: NonNullableFormBuilder) {
+  return fb.group({
+    imageFile: fb.control<File | null>(null),
+    title: fb.control('', { validators: [Validators.required, Validators.minLength(2)] }),
+    medium: fb.control<'comic'|'tv'|'movie'|'game'|'anime'|'novel'|'other'>('comic', { validators: [Validators.required] }),
+    continuity: fb.control<string>(''),
+    firstAppearanceRef: fb.control<string>(''),
+    createdBy: fb.control<string>(''),
   });
 }

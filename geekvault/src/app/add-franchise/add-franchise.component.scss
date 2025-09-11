@@ -1,8 +1,6 @@
-.add-franchise-container {
-  width: 100%;
-}
+.add-franchise-container { width: 100%; }
 
-/* Imagen de fondo */
+/* Header */
 .header-image {
   position: relative;
   width: 100%;
@@ -15,6 +13,11 @@
   align-items: flex-end;
   justify-content: center;
   color: white;
+  transition: box-shadow .2s ease;
+
+  &.drag-over {
+    box-shadow: inset 0 0 0 4px #1976d2;
+  }
 
   .image-overlay {
     position: absolute;
@@ -24,33 +27,51 @@
     padding: 10px 20px;
     border-radius: 8px;
 
-    h2 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
+    h2 { margin: 0; font-size: 1.8rem; }
   }
 
-  .image-upload {
+  .image-dropzone {
     position: absolute;
     top: 20px;
+    left: 20px;
     right: 20px;
+    margin: 0 auto;
+    max-width: 980px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 12px;
+    padding: 14px 16px;
 
-    label {
-      background: rgba(255,255,255,0.8);
-      color: black;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
+    .dropzone-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+
+      .or { opacity: .7; font-weight: 600; }
+
+      .url-field {
+        flex: 1 1 420px;
+        min-width: 260px;
+      }
     }
 
-    input {
-      display: none;
+    .preview-row {
+      margin-top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-height: 180px;
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.15);
+      }
     }
   }
 }
 
-/* Sección de formulario */
+/* Formulario */
 .form-section {
   max-width: 100%;
   margin: 20px auto;
@@ -73,19 +94,16 @@
         font-size: 1.2rem;
       }
 
-      input,
-      textarea {
+      input, textarea {
         flex: 1;
         border: none;
         border-bottom: 2px solid #ccc;
         padding: 10px 6px;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         background: transparent;
         outline: none;
 
-        &:focus {
-          border-color: #007BFF;
-        }
+        &:focus { border-color: #1976d2; }
       }
 
       textarea {
@@ -93,22 +111,6 @@
         resize: vertical;
         margin: 0 auto;
         display: block;
-      }
-    }
-
-    button {
-      align-self: flex-start;
-      background: #007BFF;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-
-      &:hover {
-        background: #0056b3;
       }
     }
   }

@@ -21,12 +21,13 @@ import { StatsSubformComponent } from '../features/characters/subforms/stats/sta
 // Servicios / modelos
 import { CharacterTypesService } from '../core/services/character-types.service';
 import { CharacterType } from '../core/models/character-type.model';
+import { VersionSubformComponent } from '../features/characters/subforms/versions/versions.component';
 
 // ----------------------------------------------
 // Tipos internos para el sistema de subforms
 // ----------------------------------------------
 type SectionKey = 'left' | 'right' | 'bottom';
-type SubformKey = 'firstAppearance' | 'powers' | 'stats';
+type SubformKey = 'firstAppearance' | 'powers' | 'stats' | 'versions';
 
 interface SubformMeta {
   key: SubformKey;
@@ -89,6 +90,12 @@ export class AddCharacterComponent implements OnInit {
       title: 'Estadísticas',
       component: StatsSubformComponent,
       selectInput: (root) => root.get('subforms.stats') as FormGroup
+    },
+    {
+      key: 'versions',
+      title: 'Versiones',
+      component: VersionSubformComponent,
+      selectInput: (root) => root.get('subforms') as FormGroup
     }
   ];
 
