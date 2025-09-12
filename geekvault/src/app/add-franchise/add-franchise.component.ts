@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -9,7 +9,13 @@ import { MatIconModule }       from '@angular/material/icon';
 import { MatButtonModule }     from '@angular/material/button';
 import { MatCardModule }       from '@angular/material/card';
 import { MatTooltipModule }    from '@angular/material/tooltip';
-import { FormsModule } from '@angular/forms';
+import { MatSelectModule }     from '@angular/material/select';
+import { FormsModule }         from '@angular/forms';
+
+import { CategoryService } from '../core/services/category.service';
+import { FranchiseService } from '../core/services/franchise.service';
+import { Category } from '../core/models/category.model';
+import { FranchiseCreateRequest } from '../core/models/franchise-create.model';
 
 @Component({
   selector: 'app-add-franchise',
@@ -22,12 +28,13 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
   ],
   templateUrl: './add-franchise.component.html',
   styleUrls: ['./add-franchise.component.scss']
 })
-export class AddFranchiseComponent {
+export class AddFranchiseComponent implements OnInit {
   // Preview que se muestra en el header (puede ser URL remota o base64 local)
   previewImage: string | null = null;
 
@@ -41,8 +48,35 @@ export class AddFranchiseComponent {
   isDragOver = false;
   urlInput: string = '';
   urlError: string | null = null;
+  saving = false;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  // Modelo del formulario
+  nombre = '';
+  fecha: string | null = null; // yyyy-MM-dd
+  creador = '';
+  pais = '';
+  resumen = '';
+
+  // Categorías
+  categories: Category[] = [];
+  selectedCategoryId: string | null = null;
+
+  private sanitizer = inject(DomSanitizer);
+  private categoryService = inject(CategoryService);
+  private franchiseService = inject(FranchiseService);
+
+  ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  private loadCategories(): void {
+    this.categoryService.getAll().subscribe({
+      next: (cats) => this.categories = cats ?? [],
+      error: () => this.categories = []
+    });
+  }
+
+  trackCat = (_: number, c: Category) => c.id;
 
   // ==== Entrada por archivo local ====
   onImageSelected(event: Event): void {
@@ -164,21 +198,49 @@ export class AddFranchiseComponent {
 
   // ==== Guardar ====
   onSubmit(): void {
+    if (!this.nombre || !this.selectedCategoryId) return;
+
     // Regla: si hay URL, guardar esa dirección.
-    // Si no hay URL pero hay archivo local, aquí normalmente subirías y obtendrías una URL.
-    // Por simplicidad, dejamos el base64 como preview y un TODO para el upload real.
-    let valueToSave: string | null = null;
+    // Si no hay URL pero hay archivo local, normalmente harías upload → URL.
+    // Por simplicidad, enviamos imageUrl si existe; si no, omitimos.
+    const payload: FranchiseCreateRequest = {
+      name: this.nombre.trim(),
+      description: this.resumen?.trim() || undefined,
+      originCountry: this.pais?.trim() || undefined,
+      foundedOn: this.fecha || undefined, // yyyy-MM-dd
+      founders: this.creador?.trim() || undefined,
+      imageUrl: this.imageUrl || undefined, // TODO: si usaste archivo, sube y reemplaza
+      categoryId: this.selectedCategoryId
+    };
 
-    if (this.imageUrl) {
-      valueToSave = this.imageUrl;
-    } else if (this.imageFile) {
-      // TODO: reemplaza por upload real y usar la URL que retorne tu backend/CDN.
-      valueToSave = this.previewImage; // temporal (base64)
-    }
+    this.saving = true;
+    this.franchiseService.create(payload).subscribe({
+      next: (created) => {
+        console.log('Franquicia creada:', created);
+        alert('Franquicia creada correctamente');
+        // opcional: limpiar formulario
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Ocurrió un error al crear la franquicia');
+      },
+      complete: () => this.saving = false
+    });
+  }
 
-    // Aquí disparas tu lógica de guardado (servicio/HTTP, form, etc.)
-    console.log('Guardando imagen:', valueToSave);
-    alert(`Imagen guardada:\n${valueToSave ?? 'Ninguna'}`);
+  private resetForm(): void {
+    this.nombre = '';
+    this.fecha = null;
+    this.creador = '';
+    this.pais = '';
+    this.resumen = '';
+    this.selectedCategoryId = null;
+    this.previewImage = null;
+    this.imageUrl = null;
+    this.imageFile = null;
+    this.urlInput = '';
+    this.urlError = null;
   }
 
   // ==== Helpers ====
@@ -200,12 +262,10 @@ export class AddFranchiseComponent {
   }
 
   private extractImageUrlFromHtml(html: string): string | null {
-    // Intenta parsear un <img src="...">
     const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
     if (match?.[1]) return match[1];
-    // A veces te pasan un <a href="..."> hacia una imagen
     const link = html.match(/<a[^>]+href=["']([^"']+)["']/i)?.[1];
     if (link && this.looksLikeUrl(link)) return link;
     return null;
-    }
+  }
 }
