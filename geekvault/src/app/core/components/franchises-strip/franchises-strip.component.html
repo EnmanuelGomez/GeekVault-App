@@ -1,10 +1,39 @@
-<ng-container *ngIf="franchises$ | async as franchises">
-  <section *ngIf="franchises.length > 0" class="franchises-strip">
-    <div class="h-scroll">
-      <app-franchise-card
-        *ngFor="let f of franchises; trackBy: trackById"
-        [franchise]="f"
-      ></app-franchise-card>
+<!-- Renderiza la tira cuando hay datos; sin flechas ni controles extra -->
+<ng-container *ngIf="franchises$ | async as franchises; else loading">
+  <section
+    *ngIf="franchises.length > 0; else empty"
+    class="franchises-strip"
+    [class.at-start]="atStart"
+    [class.at-end]="atEnd"
+    [class.no-overflow]="!hasOverflow"
+  >
+    <!-- Carril horizontal desplazable -->
+    <div
+      #scroller
+      class="h-scroll"
+      (scroll)="onScroll()"
+      tabindex="0"
+      aria-label="Lista horizontal de franquicias"
+    >
+      <div class="franchise-item" *ngFor="let f of franchises; trackBy: trackById">
+        <!-- Card (tu componente) -->
+        <app-franchise-card class="franchise-card" [franchise]="f"></app-franchise-card>
+
+        <!-- Acciones debajo del card -->
+        <div class="actions">
+          <a class="link secondary" [routerLink]="['/franchise', f.id]">Ver</a>
+          <a class="link" [routerLink]="['/franchise', f.id, 'edit']">Editar</a>
+        </div>
+      </div>
     </div>
   </section>
 </ng-container>
+
+<!-- Estados auxiliares -->
+<ng-template #loading>
+  <section class="state info">Cargando franquicias…</section>
+</ng-template>
+
+<ng-template #empty>
+  <section class="state info">No hay franquicias para esta categoría.</section>
+</ng-template>

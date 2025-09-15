@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 // Angular Material (standalone)
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,14 +11,17 @@ import { MatButtonModule }     from '@angular/material/button';
 import { MatCardModule }       from '@angular/material/card';
 import { MatTooltipModule }    from '@angular/material/tooltip';
 import { MatSelectModule }     from '@angular/material/select';
-import { FormsModule }         from '@angular/forms';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { CategoryService } from '../core/services/category.service';
 import { FranchiseService } from '../core/services/franchise.service';
+
 import { Category } from '../core/models/category.model';
-import { FranchiseCreateRequest } from '../core/models/franchise-create.model';
 import { Franchise } from '../core/models/franchise.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { FranchiseCreateRequest } from '../core/models/franchise-create.model';
+import { FranchiseUpdateRequest } from '../core/models/franchise-update.model';
 
 @Component({
   selector: 'app-add-franchise',
@@ -37,40 +41,80 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./add-franchise.component.scss']
 })
 export class AddFranchiseComponent implements OnInit {
-  // Preview que se muestra en el header (puede ser URL remota o base64 local)
+
+  // ------------------------------
+  // Estado de imagen (preview / origen)
+  // ------------------------------
+  /** Imagen de vista previa: puede ser dataURL (base64) o URL remota */
   previewImage: string | null = null;
-
-  // Fuente remota elegida (lo que quieres guardar si viene de la web)
+  /** URL remota elegida (si el usuario pega/arrastra un link) */
   imageUrl: string | null = null;
-
-  // Archivo local seleccionado (si el usuario sube desde su PC)
+  /** Archivo local seleccionado (si el usuario sube desde su PC) */
   imageFile: File | null = null;
 
-  // Estados UI
+  // ------------------------------
+  // Estados de UI y helpers de entrada
+  // ------------------------------
   isDragOver = false;
   urlInput: string = '';
   urlError: string | null = null;
   saving = false;
 
-  // Modelo del formulario
+  // ------------------------------
+  // Modelo del formulario (campos del DTO)
+  // ------------------------------
   nombre = '';
-  fecha: string | null = null; // yyyy-MM-dd
+  /** ISO yyyy-MM-dd (como devuelve <input type="date">) */
+  fecha: string | null = null;
   creador = '';
   pais = '';
   resumen = '';
 
-  // Categorías
+  // ------------------------------
+  // Categorías (UI maneja una sola categoría)
+  // ------------------------------
   categories: Category[] = [];
   selectedCategoryId: string | null = null;
 
-  private sanitizer = inject(DomSanitizer);
+  // ------------------------------
+  // Modo edición
+  // ------------------------------
+  /** true si estamos en /franchise/:id/edit */
+  editMode = false;
+  /** id de la franquicia al editar */
+  franchiseId: string | null = null;
+
+  // ------------------------------
+  // Inyección de dependencias
+  // ------------------------------
+  private sanitizer = inject(DomSanitizer); // reservado por si luego sanitizamos contenido
   private categoryService = inject(CategoryService);
   private franchiseService = inject(FranchiseService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
+  // ------------------------------
+  // Ciclo de vida
+  // ------------------------------
   ngOnInit(): void {
     this.loadCategories();
+
+    // Detecta si estamos en ruta de edición: /franchise/:id/edit
+    // Si solo estás en /franchise/:id (detalle), no cambia a modo edición.
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id && this.router.url.includes('/edit')) {
+        this.editMode = true;
+        this.franchiseId = id;
+        this.loadForEdit(id);
+      }
+    });
   }
 
+  // ------------------------------
+  // Cargas iniciales
+  // ------------------------------
+  /** Carga catálogos de categorías para el combo */
   private loadCategories(): void {
     this.categoryService.getAll().subscribe({
       next: (cats) => this.categories = cats ?? [],
@@ -78,9 +122,47 @@ export class AddFranchiseComponent implements OnInit {
     });
   }
 
+  /** Al entrar en modo edición, precarga datos de la franquicia y su categoría actual */
+  private loadForEdit(id: string): void {
+    // 1) Datos de la franquicia
+    this.franchiseService.getById(id).subscribe({
+      next: (f: Franchise) => {
+        // Mapea DTO de lectura hacia los campos del formulario
+        this.nombre  = f.name ?? '';
+        this.resumen = f.description ?? '';
+        this.pais    = f.originCountry ?? '';
+        this.creador = f.founders ?? '';
+        // La API devuelve "yyyy-MM-dd" para DateOnly → es compatible con <input type="date">
+        this.fecha   = f.foundedOn ?? null;
+        // Imagen
+        this.imageUrl = f.imageUrl ?? null;
+        this.previewImage = this.imageUrl ?? null;
+      },
+      error: (err) => {
+        console.error('[Editar] Error cargando franquicia', err);
+        alert('No se pudo cargar la franquicia para edición.');
+        this.router.navigate(['/']); // fallback
+      }
+    });
+
+    // 2) Categoría asociada (UI asume una)
+    this.franchiseService.getPrimaryCategory(id).subscribe({
+      next: (x) => this.selectedCategoryId = x?.categoryId ?? null,
+      error: (err) => {
+        console.warn('[Editar] No se pudo determinar la categoría actual', err);
+        // No bloqueamos la edición si falla; el usuario puede elegir una.
+      }
+    });
+  }
+
+  // ------------------------------
+  // Utilidades de plantilla
+  // ------------------------------
   trackCat = (_: number, c: Category) => c.id;
 
-  // ==== Entrada por archivo local ====
+  // ------------------------------
+  // Entrada por archivo local
+  // ------------------------------
   onImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -95,7 +177,9 @@ export class AddFranchiseComponent implements OnInit {
     }
   }
 
-  // ==== Drag & drop (URL o archivo) ====
+  // ------------------------------
+  // Drag & drop (URL o archivo)
+  // ------------------------------
   onDragOver(evt: DragEvent): void {
     evt.preventDefault();
     this.isDragOver = true;
@@ -133,7 +217,7 @@ export class AddFranchiseComponent implements OnInit {
       return;
     }
 
-    // 3) ¿Arrastró texto/HTML que contiene una <img>?
+    // 3) ¿Arrastró HTML con <img>?
     const html = evt.dataTransfer.getData('text/html');
     if (html) {
       const url = this.extractImageUrlFromHtml(html);
@@ -151,13 +235,15 @@ export class AddFranchiseComponent implements OnInit {
     }
   }
 
-  // ==== Pegar (Ctrl+V) URL o imagen ====
+  // ------------------------------
+  // Pegar (Ctrl+V) URL o imagen
+  // ------------------------------
   @HostListener('paste', ['$event'])
   async onPaste(evt: ClipboardEvent): Promise<void> {
     const dt = evt.clipboardData;
     if (!dt) return;
 
-    // a) ¿Imagen en el portapapeles?
+    // a) Imagen del portapapeles
     const items = dt.items;
     for (let i = 0; i < items.length; i++) {
       const it = items[i];
@@ -176,7 +262,7 @@ export class AddFranchiseComponent implements OnInit {
       }
     }
 
-    // b) ¿URL en texto?
+    // b) URL en texto
     const text = dt.getData('text/plain');
     if (text && this.looksLikeUrl(text)) {
       this.setRemoteUrl(text.trim());
@@ -184,7 +270,9 @@ export class AddFranchiseComponent implements OnInit {
     }
   }
 
-  // ==== URL manual (input) ====
+  // ------------------------------
+  // URL manual (input)
+  // ------------------------------
   onUrlBlur(): void {
     const url = this.urlInput.trim();
     if (!url) {
@@ -198,42 +286,81 @@ export class AddFranchiseComponent implements OnInit {
     this.setRemoteUrl(url);
   }
 
-  // ==== Guardar ====
+  // ------------------------------
+  // Guardar (crear o actualizar)
+  // ------------------------------
   onSubmit(): void {
+    // Validación mínima del formulario
     if (!this.nombre || !this.selectedCategoryId) return;
 
-    // Regla: si hay URL, guardar esa dirección.
-    // Si no hay URL pero hay archivo local, normalmente harías upload → URL.
-    // Por simplicidad, enviamos imageUrl si existe; si no, omitimos.
-    const payload: FranchiseCreateRequest = {
-      name: this.nombre.trim(),
-      description: this.resumen?.trim() || undefined,
-      originCountry: this.pais?.trim() || undefined,
-      foundedOn: this.fecha || undefined, // yyyy-MM-dd
-      founders: this.creador?.trim() || undefined,
-      imageUrl: this.imageUrl || undefined, // TODO: si usaste archivo, sube y reemplaza
-      categoryId: this.selectedCategoryId
-    };
+    // Nota: si `imageFile` tiene contenido, normalmente subirías el archivo
+    // a un endpoint de storage y usarías la URL pública en `imageUrl`.
+    // Por simplicidad, aquí solo enviamos `imageUrl` si existe.
 
-    this.saving = true;
-    this.franchiseService.create(payload).subscribe({
-  next: (created) => {
-    console.log('Franquicia creada:', created);
-    alert(`Franquicia "${created.name}" creada correctamente`);
-    this.resetForm();
-  },
- error: (err: HttpErrorResponse) => {
-  console.error('HTTP ERROR', err.status, err);
-  const msg =
-    (err.error && (err.error.detail || err.error.title || err.error)) ||
-    (err.message ?? 'Error desconocido');
-  alert(`Error al crear la franquicia: ${msg}`);
-},
-  complete: () => (this.saving = false)
-});
+    if (this.editMode && this.franchiseId) {
+      // ---------- MODO EDICIÓN: PUT /api/Franchises/{id} ----------
+      const payload: FranchiseUpdateRequest = {
+        name: this.nombre.trim(),
+        description: this.resumen?.trim() || undefined,
+        originCountry: this.pais?.trim() || undefined,
+        foundedOn: this.fecha || undefined,       // yyyy-MM-dd
+        founders: this.creador?.trim() || undefined,
+        imageUrl: this.imageUrl || undefined,     // si usaste archivo, aquí iría la URL luego del upload
+        categoryId: this.selectedCategoryId
+      };
 
+      this.saving = true;
+      this.franchiseService.update(this.franchiseId, payload).subscribe({
+        next: (updated: Franchise) => {
+          console.log('Franquicia actualizada:', updated);
+          alert(`Franquicia "${updated.name}" actualizada correctamente`);
+          // Navega al detalle tras actualizar
+          this.router.navigate(['/franchise', updated.id]);
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('HTTP ERROR (update)', err.status, err);
+          const msg =
+            (err.error && (err.error.detail || err.error.title || err.error)) ||
+            (err.message ?? 'Error desconocido');
+          alert(`Error al actualizar la franquicia: ${msg}`);
+        },
+        complete: () => (this.saving = false)
+      });
+
+    } else {
+      // ---------- MODO CREACIÓN: POST /api/Franchises ----------
+      const payload: FranchiseCreateRequest = {
+        name: this.nombre.trim(),
+        description: this.resumen?.trim() || undefined,
+        originCountry: this.pais?.trim() || undefined,
+        foundedOn: this.fecha || undefined,       // yyyy-MM-dd
+        founders: this.creador?.trim() || undefined,
+        imageUrl: this.imageUrl || undefined,     // si usaste archivo, aquí iría la URL luego del upload
+        categoryId: this.selectedCategoryId
+      };
+
+      this.saving = true;
+      this.franchiseService.create(payload).subscribe({
+        next: (created: Franchise) => {
+          console.log('Franquicia creada:', created);
+          alert(`Franquicia "${created.name}" creada correctamente`);
+          this.resetForm();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('HTTP ERROR (create)', err.status, err);
+          const msg =
+            (err.error && (err.error.detail || err.error.title || err.error)) ||
+            (err.message ?? 'Error desconocido');
+          alert(`Error al crear la franquicia: ${msg}`);
+        },
+        complete: () => (this.saving = false)
+      });
+    }
   }
 
+  // ------------------------------
+  // Reset del formulario (tras crear)
+  // ------------------------------
   private resetForm(): void {
     this.nombre = '';
     this.fecha = null;
@@ -241,19 +368,23 @@ export class AddFranchiseComponent implements OnInit {
     this.pais = '';
     this.resumen = '';
     this.selectedCategoryId = null;
+
     this.previewImage = null;
     this.imageUrl = null;
     this.imageFile = null;
+
     this.urlInput = '';
     this.urlError = null;
   }
 
-  // ==== Helpers ====
+  // ------------------------------
+  // Helpers de imagen / URL
+  // ------------------------------
   private setRemoteUrl(url: string): void {
     this.urlError = null;
     this.imageUrl = url;
-    this.imageFile = null;
-    this.previewImage = url; // usamos la URL como preview directamente
+    this.imageFile = null;       // si pone URL, descartamos archivo
+    this.previewImage = url;     // mostramos la URL como preview
     this.urlInput = url;
   }
 

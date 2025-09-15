@@ -11,7 +11,7 @@ describe('FranchisesStripComponent', () => {
       imports: [FranchisesStripComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(FranchisesStripComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

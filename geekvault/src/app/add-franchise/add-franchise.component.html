@@ -71,8 +71,9 @@
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit" [disabled]="saving || !nombre || !selectedCategoryId">
-        <mat-icon>save</mat-icon>&nbsp; {{ saving ? 'Guardando...' : 'Guardar' }}
+        <mat-icon>save</mat-icon>&nbsp; {{ saving ? (editMode ? 'Actualizando...' : 'Guardando...') : (editMode ? 'Actualizar' : 'Guardar') }}
       </button>
+
     </form>
   </div>
 </div>

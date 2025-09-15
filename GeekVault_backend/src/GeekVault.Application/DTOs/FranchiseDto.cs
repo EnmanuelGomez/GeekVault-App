@@ -19,8 +19,18 @@
         public DateOnly? FoundedOn { get; init; }
         public string? Founders { get; init; }
         public string? ImageUrl { get; init; }
-
         public Guid CategoryId { get; init; } // <- requerido para la relación
+    }
 
+    public sealed class FranchiseUpdateRequestDto
+    {
+        public string Name { get; init; } = string.Empty;
+        public string? Description { get; init; }
+        public string? OriginCountry { get; init; }
+        public DateOnly? FoundedOn { get; init; }
+        public string? Founders { get; init; }
+        public string? ImageUrl { get; init; }
+        // Mantendremos 1 categoría “principal” desde la UI
+        public Guid CategoryId { get; init; }
     }
 }

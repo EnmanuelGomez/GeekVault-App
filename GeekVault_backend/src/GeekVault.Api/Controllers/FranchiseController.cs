@@ -54,4 +54,38 @@ public class FranchisesController : ControllerBase
                 statusCode: StatusCodes.Status409Conflict);
         }
     }
+
+    // PUT /api/Franchises/{id}
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] FranchiseUpdateRequestDto request, CancellationToken ct)
+    {
+        try
+        {
+            var updated = await _service.UpdateAsync(id, request, ct);
+            return Ok(updated);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (ArgumentException ex)
+        {
+            return Problem(title: "Invalid request data", detail: ex.Message,
+                           statusCode: StatusCodes.Status400BadRequest);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Problem(title: "Conflict", detail: ex.Message,
+                           statusCode: StatusCodes.Status409Conflict);
+        }
+    }
+
+    // GET /api/Franchises/{id}/category  -> para precargar la categoría
+    [HttpGet("{id:guid}/category")]
+    public async Task<IActionResult> GetPrimaryCategory(Guid id, CancellationToken ct)
+    {
+        var catId = await _service.GetPrimaryCategoryIdAsync(id, ct);
+        return Ok(new { categoryId = catId }); // puede ser null si no tiene
+    }
+
 }

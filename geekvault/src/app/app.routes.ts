@@ -31,4 +31,10 @@ export const routes: Routes = [
         .then(m => m.CharacterDetailComponent),
     resolve: { character: characterResolver },
   },
+  {
+    path: 'franchise/:id/edit',
+    component: AddFranchiseComponent,
+    resolve: { vm: franchiseDetailResolver },
+    runGuardsAndResolvers: 'always'
+  },
 ];
