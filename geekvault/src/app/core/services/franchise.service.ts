@@ -23,8 +23,8 @@ getById(id: string) {
   return this.http.get<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`);
 }
 
- create(payload: FranchiseCreateRequest): Observable<any> {
-    return this.http.post<any>(this.baseUrl, payload);
-  }
+create(payload: FranchiseCreateRequest): Observable<Franchise> {
+  return this.http.post<Franchise>(this.baseUrl, payload);
+}
 
 }

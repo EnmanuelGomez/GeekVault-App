@@ -67,9 +67,8 @@ namespace GeekVault.Infrastructure.Services
                 .ToListAsync();
         }
 
-        public async Task<FranchiseDto> CreateAsync(FranchiseDto request, CancellationToken ct = default)
+        public async Task<FranchiseDto> CreateAsync(FranchiseCreateRequestDto request, CancellationToken ct = default)
         {
-            // Regla simple: nombre único (case-insensitive)
             var name = (request.Name ?? string.Empty).Trim();
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is required.");
@@ -81,6 +80,16 @@ namespace GeekVault.Infrastructure.Services
             if (exists)
                 throw new InvalidOperationException($"A franchise named '{name}' already exists.");
 
+            if (request.CategoryId == Guid.Empty)
+                throw new ArgumentException("CategoryId is required.");
+
+            // valida que la categoría exista (opcional pero recomendado)
+            var catExists = await _db.Categories
+                .AsNoTracking()
+                .AnyAsync(c => c.Id == request.CategoryId, ct);
+            if (!catExists)
+                throw new ArgumentException("CategoryId not found.");
+
             var entity = new Franchise
             {
                 Id = Guid.NewGuid(),
@@ -91,6 +100,13 @@ namespace GeekVault.Infrastructure.Services
                 Founders = string.IsNullOrWhiteSpace(request.Founders) ? null : request.Founders!.Trim(),
                 ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? null : request.ImageUrl!.Trim()
             };
+
+            // agrega relación en la tabla puente
+            entity.FranchiseCategories.Add(new FranchiseCategory
+            {
+                FranchiseId = entity.Id,
+                CategoryId = request.CategoryId
+            });
 
             _db.Franchises.Add(entity);
             await _db.SaveChangesAsync(ct);
@@ -106,6 +122,5 @@ namespace GeekVault.Infrastructure.Services
                 ImageUrl = entity.ImageUrl
             };
         }
-
     }
 }

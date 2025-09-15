@@ -8,6 +8,6 @@ namespace GeekVault.Application.Interfaces
         Task<FranchiseDto?> GetByIdAsync(Guid id);
         Task<IEnumerable<FranchiseDto>> GetByCategoryAsync(Guid categoryId);
         // POST
-        Task<FranchiseDto> CreateAsync(FranchiseDto request, CancellationToken ct = default);
+        Task<FranchiseDto> CreateAsync(FranchiseCreateRequestDto request, CancellationToken ct = default);
     }
 }

@@ -16,6 +16,8 @@ import { CategoryService } from '../core/services/category.service';
 import { FranchiseService } from '../core/services/franchise.service';
 import { Category } from '../core/models/category.model';
 import { FranchiseCreateRequest } from '../core/models/franchise-create.model';
+import { Franchise } from '../core/models/franchise.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-franchise',
@@ -215,18 +217,21 @@ export class AddFranchiseComponent implements OnInit {
 
     this.saving = true;
     this.franchiseService.create(payload).subscribe({
-      next: (created) => {
-        console.log('Franquicia creada:', created);
-        alert('Franquicia creada correctamente');
-        // opcional: limpiar formulario
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Ocurrió un error al crear la franquicia');
-      },
-      complete: () => this.saving = false
-    });
+  next: (created) => {
+    console.log('Franquicia creada:', created);
+    alert(`Franquicia "${created.name}" creada correctamente`);
+    this.resetForm();
+  },
+ error: (err: HttpErrorResponse) => {
+  console.error('HTTP ERROR', err.status, err);
+  const msg =
+    (err.error && (err.error.detail || err.error.title || err.error)) ||
+    (err.message ?? 'Error desconocido');
+  alert(`Error al crear la franquicia: ${msg}`);
+},
+  complete: () => (this.saving = false)
+});
+
   }
 
   private resetForm(): void {

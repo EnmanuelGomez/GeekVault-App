@@ -36,7 +36,7 @@ public class FranchisesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] GeekVault.Application.DTOs.FranchiseDto request, CancellationToken ct)
+    public async Task<IActionResult> Create([FromBody] FranchiseCreateRequestDto request, CancellationToken ct)
     {
         try
         {
@@ -45,17 +45,13 @@ public class FranchisesController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            return Problem(title: "Invalid request data",
-                           detail: ex.Message,
-                           statusCode: StatusCodes.Status400BadRequest);
+            return Problem(title: "Invalid request data", detail: ex.Message,
+                statusCode: StatusCodes.Status400BadRequest);
         }
         catch (InvalidOperationException ex)
         {
-            return Problem(title: "Conflict",
-                           detail: ex.Message,
-                           statusCode: StatusCodes.Status409Conflict);
+            return Problem(title: "Conflict", detail: ex.Message,
+                statusCode: StatusCodes.Status409Conflict);
         }
     }
-
-
 }

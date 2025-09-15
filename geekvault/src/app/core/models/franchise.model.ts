@@ -1,9 +1,9 @@
 export interface Franchise {
-  id: number;
+  id: string;
   name: string;
-  imageUrl: string | null;
-  categoryId: number;
-  founders?: string | null;
-  foundedOn?: string | Date | null;
+  description?: string;
   originCountry?: string;
+  foundedOn?: string;
+  founders?: string;
+  imageUrl?: string;
 }
