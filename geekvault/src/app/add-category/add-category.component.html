@@ -1,13 +1,36 @@
 <div class="form container">
   <h2>Agregar Categoría</h2>
-  <form [formGroup] = "categoryForm" (ngSubmit)  ="onSubmit()">
 
-    <label for = "name">Nombre</label>
-    <input id="name" type="text" formControlName="name" placeholder="Ej: Cómics, TV, Anime" />
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
 
-    <label for = "description">Descripción</label>
-    <textarea id="description" formControlName="description" placeholder="Describe el tipo de categoría..."></textarea>
+    <label for="name">Nombre</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="Ej: Cómics, TV, Anime" />
+    <small *ngIf="name?.touched && name?.hasError('required')" style="color:#c0392b">
+      El nombre es obligatorio.
+    </small>
+    <small *ngIf="name?.touched && name?.hasError('minlength')" style="color:#c0392b">
+      Mínimo 3 caracteres.
+    </small>
 
-    <button type="submit" [disabled]="!categoryForm.valid">Guardar</button>
+    <label for="description">Descripción</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      placeholder="Describe el tipo de categoría..."></textarea>
+
+    <button type="submit" [disabled]="categoryForm.invalid || loading">
+      {{ loading ? 'Guardando...' : 'Guardar' }}
+    </button>
+
+    <p *ngIf="serverError" style="color:#c0392b; margin-top: .5rem;">
+      {{ serverError }}
+    </p>
+    <p *ngIf="successMessage" style="color:#1e8449; margin-top: .5rem;">
+      {{ successMessage }}
+    </p>
   </form>
 </div>

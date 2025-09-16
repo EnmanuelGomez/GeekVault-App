@@ -19,15 +19,43 @@
 
  <!-- Botones de acción -->
 <section class="admin_actions">
-  <button class="btn add" [routerLink]="['/add_franchise']">
-    Agregar IP / Franquicia / Universo
-  </button>
-  <button class="btn modify">
-    Modificar IP / Franquicia / Universo
-  </button>
-  <button class="btn delete">
-    Eliminar IP / Franquicia / Universo
-  </button>
+
+  <!-- 1. Franquicia / Universo -->
+  <div class="action-group">
+    <div class="buttons-row">
+      <button class="btn add" [routerLink]="['/add_franchise']">
+        Agregar IP / Franquicia / Universo
+      </button>
+    </div>
+  </div>
+
+  <!-- 2. Categorías -->
+  <div class="action-group">
+    <div class="buttons-row">
+      <button class="btn add" [routerLink]="['/add_category']">Agregar Categoría</button>
+      <button class="btn modify" [routerLink]="['/categories']">Modificar Categoría</button>
+      <button class="btn delete" [routerLink]="['/categories']">Eliminar Categoría</button>
+    </div>
+  </div>
+
+  <!-- 3. Personajes -->
+  <div class="action-group">
+    <div class="buttons-row">
+      <button class="btn add">Agregar Personaje</button>
+      <button class="btn modify">Modificar Personaje</button>
+      <button class="btn delete">Eliminar Personaje</button>
+    </div>
+  </div>
+
+  <!-- 4. Tipo de Personaje -->
+  <div class="action-group">
+    <div class="buttons-row">
+      <button class="btn add">Agregar Tipo de Personaje</button>
+      <button class="btn modify">Modificar Tipo de Personaje</button>
+      <button class="btn delete">Eliminar Tipo de Personaje</button>
+    </div>
+  </div>
+
 </section>
 
 <!-- Estados de carga / error -->

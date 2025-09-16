@@ -9,11 +9,15 @@ import { FranchiseDetailComponent } from './core/components/franchise-detail/fra
 import { franchiseDetailResolver } from './core/resolvers/franchise-detail.resolver';
 import { CharacterDetailComponent } from './features/characters/character-detail/character-detail.component';
 import { characterResolver } from './core/resolvers/character-detail.resolver';
+import { CategoriesListComponent } from './features/categories/categories-list/categories-list.component';
+import { EditCategoryComponent } from './features/categories/edit-category/edit-category.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'add_franchise', component: AddFranchiseComponent },
   { path: 'add_category' , component: AddCategoryComponent },
+  { path: 'categories', component: CategoriesListComponent },
+  { path: 'categories/:id/edit', component: EditCategoryComponent },
   { path: 'add_character', component: AddCharacterComponent },
   { path: 'add_character_category', component: AddCharacterCategoryComponent },
   { path: 'add_teams', component: AddTeamsComponent },

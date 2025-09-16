@@ -1,0 +1,52 @@
+<section class="container">
+  <h2>Categorías</h2>
+
+  <div *ngIf="loading" class="state info">Cargando…</div>
+  <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+  <div *ngIf="!loading && success" class="state success">{{ success }}</div>
+
+  <ng-container *ngIf="categories$ | async as categories">
+    <table *ngIf="categories.length; else emptyBlock" class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th style="width: 220px;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of categories; trackBy: trackById">
+          <td>{{ c.name }}</td>
+          <td>{{ c.description || '—' }}</td>
+          <td class="actions">
+            <button class="btn" (click)="goEdit(c.id)">Editar</button>
+            <button class="btn danger"
+                    (click)="askDelete(c.id)"
+                    [disabled]="deletingId === c.id">
+              {{ deletingId === c.id ? 'Eliminando…' : 'Eliminar' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyBlock>
+      <div class="state info">No hay categorías para mostrar.</div>
+    </ng-template>
+  </ng-container>
+
+  <!-- Modal de confirmación -->
+  <div class="modal-backdrop" *ngIf="confirmingId">
+    <div class="modal">
+      <h3>Confirmar eliminación</h3>
+      <p>¿Seguro que deseas eliminar esta categoría? Esta acción no se puede deshacer.</p>
+
+      <div class="modal-actions">
+        <button class="btn" (click)="cancelDelete()">Cancelar</button>
+        <button class="btn danger" (click)="confirmDelete(confirmingId!)">
+          Sí, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -7,10 +7,12 @@
   --gv-text: #f0f2f5;
   --gv-muted: #9aa0a6;
 
-  --gv-primary: #4f46e5;
+  --gv-third: #f32121;
+  --gv-third-contrast: #ffffff;
+  --gv-primary: #2196f3;
   --gv-primary-contrast: #ffffff;
   --gv-secondary: #22c55e;
-  --gv-secondary-contrast: #0b1113;
+  --gv-secondary-contrast: #ffffff;
 
   --card-w: 280px; /* ancho visual de cada card para consistencia */
 }
@@ -134,7 +136,21 @@
     &.secondary {
       color: var(--gv-secondary-contrast);
       background: var(--gv-secondary);
-      border-color: color-mix(in srgb, var(--gv-secondary), #000 15%);
+      border: 1px solid color-mix(in srgb, var(--gv-secondary), #000 15%);
+
+      &:hover {
+        background: color-mix(in srgb, var(--gv-secondary), #fff 6%);
+      }
+    }
+
+    &.third {
+      color: var(--gv-third-contrast);
+      background: var(--gv-third);
+      border: 1px solid color-mix(in srgb, var(--gv-third), #000 15%);
+
+      &:hover {
+        background: color-mix(in srgb, var(--gv-third), #fff 6%);
+      }
     }
   }
 }
