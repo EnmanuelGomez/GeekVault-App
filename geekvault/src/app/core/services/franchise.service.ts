@@ -29,13 +29,13 @@ create(payload: FranchiseCreateRequest): Observable<Franchise> {
 }
 
 // actualizar
-  update(id: string, payload: FranchiseUpdateRequest) {
-    return this.http.put<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`, payload);
-  }
+update(id: string, payload: FranchiseUpdateRequest) {
+  return this.http.put<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`, payload);
+}
 
   // obtener la categoría actual (UI maneja una)
-  getPrimaryCategory(franchiseId: string) {
-    return this.http.get<{ categoryId: string | null }>(`${this.baseUrl}/${encodeURIComponent(franchiseId)}/category`);
-  }
+getPrimaryCategory(franchiseId: string) {
+  return this.http.get<{ categoryId: string | null }>(`${this.baseUrl}/${encodeURIComponent(franchiseId)}/category`);
+}
 
 }

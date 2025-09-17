@@ -1,0 +1,25 @@
+.form.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: .75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+
+  h2 { margin-bottom: 1rem; }
+  label { display:block; margin-top:.75rem; margin-bottom:.25rem; }
+  input, textarea {
+    width: 100%;
+    padding: .7rem .9rem;
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+  }
+  textarea { min-height: 110px; }
+
+  .actions {
+    display:flex; gap:.75rem; margin-top:1rem;
+    .btn { border:0; padding:.6rem 1rem; border-radius:.5rem; cursor:pointer;}
+    .primary { background:#4a90e2; color:#fff; }
+    .secondary { background:#eee; }
+  }
+}

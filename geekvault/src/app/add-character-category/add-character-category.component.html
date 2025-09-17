@@ -1,13 +1,20 @@
 <div class="form-container">
   <h2>Agregar Categoría de Personaje</h2>
-  <form [formGroup]="characterCategoryForm" (ngSubmit)="onSubmit()">
 
+  <form [formGroup]="characterCategoryForm" (ngSubmit)="onSubmit()">
     <label for="name">Nombre</label>
     <input id="name" type="text" formControlName="name" placeholder="Ej: Superhéroe, Villano, Alien" />
+    <small class="error" *ngIf="nameCtrl?.touched && nameCtrl?.hasError('required')">El nombre es obligatorio.</small>
+    <small class="error" *ngIf="nameCtrl?.touched && nameCtrl?.hasError('minlength')">Mínimo 3 caracteres.</small>
 
     <label for="description">Descripción</label>
     <textarea id="description" formControlName="description" placeholder="Describe la categoría..."></textarea>
 
-    <button type="submit" [disabled]="!characterCategoryForm.valid">Guardar</button>
+    <button type="submit" [disabled]="characterCategoryForm.invalid || loading()">
+      {{ loading() ? 'Guardando...' : 'Guardar' }}
+    </button>
   </form>
+
+  <p class="ok" *ngIf="successMsg()">{{ successMsg() }}</p>
+  <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
 </div>

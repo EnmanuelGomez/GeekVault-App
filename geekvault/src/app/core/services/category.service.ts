@@ -12,7 +12,7 @@ export class CategoryService {
   getAll(): Observable<Category[]> {
     return this.http.get<Category[]>(this.baseUrl);
   }
-   getById(id: string): Observable<Category> {
+  getById(id: string): Observable<Category> {
     return this.http.get<Category>(`${this.baseUrl}/${id}`);
   }
   //POST
