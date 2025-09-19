@@ -7,7 +7,7 @@ export function createCharacterForm(fb: NonNullableFormBuilder, currentYear: num
     alias: fb.control('', { validators: [Validators.required, Validators.minLength(2)] }),
     // En character.forms.ts
     categories: fb.control<string[]>([], { validators: [Validators.required, Validators.minLength(1)] }),
-    universe: fb.control('', { validators: [Validators.required] }),
+    franchiseId: ['', [Validators.required]],
     creator: fb.control('', { validators: [Validators.required] }),
     yearCreated: fb.control(currentYear, { validators: [Validators.required, Validators.min(1895), Validators.max(currentYear)] }),
     summary: fb.control(''),

@@ -78,9 +78,18 @@
             </div>
 
             <div class="field">
-              <label for="universe">Universo</label>
-              <input id="universe" type="text" formControlName="universe" placeholder="DC, Marvel, Shonen, etc." />
-              <small class="error" *ngIf="f.universe.touched && f.universe.invalid">Requerido.</small>
+              <label for="franchiseId">Franquicia</label>
+              <div class="select-wrapper">
+                <select id="franchiseId" formControlName="franchiseId"
+                    [disabled]="franchises.length === 0" aria-label="Seleccionar franquicia">
+                  <option value="">Selecciona una franquicia…</option>
+                  <option *ngFor="let fr of franchises" [value]="fr.id">{{ fr.name }}</option>
+                </select>
+                <small *ngIf="franchises.length === 0">Cargando franquicias…</small>
+              </div>
+                <small class="error" *ngIf="f['franchiseId'].touched && f['franchiseId'].invalid">
+                  Selecciona una franquicia.
+                </small>
             </div>
 
             <div class="field">

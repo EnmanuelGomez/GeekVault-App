@@ -22,6 +22,8 @@ import { StatsSubformComponent } from '../features/characters/subforms/stats/sta
 import { CharacterTypesService } from '../core/services/character-types.service';
 import { CharacterType } from '../core/models/character-type.model';
 import { VersionSubformComponent } from '../features/characters/subforms/versions/versions.component';
+import { FranchiseService } from '../core/services/franchise.service';
+import { Franchise } from '../core/models/franchise.model';
 
 // ----------------------------------------------
 // Tipos internos para el sistema de subforms
@@ -55,12 +57,16 @@ export class AddCharacterComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   private destroyRef = inject(DestroyRef);
   private characterTypesSvc = inject(CharacterTypesService);
+  private franchiseSvc = inject(FranchiseService);
 
   readonly currentYear = new Date().getFullYear();
   imagePreview = signal<string | null>(null);
 
   // Form principal (asegúrate de que 'categories' sea string[] en character.forms.ts)
   form = createCharacterForm(this.fb, this.currentYear);
+  // Form principal 'franchise'
+  franchises: Franchise[] = [];
+  private franchiseMap = new Map<string, string>(); // id -> name
 
   // ----------------------------------------------
   // Categorías (catálogo y utilidades)
@@ -110,7 +116,7 @@ export class AddCharacterComponent implements OnInit {
   menuOpen: SectionKey | null = null;
 
   // ----------------------------------------------
-  // Ciclo de vida: cargar catálogo de categorías
+  // Ciclo de vida: cargar catálogo de categorías y franquicias
   // ----------------------------------------------
   ngOnInit(): void {
     this.characterTypesSvc.getAll().subscribe({
@@ -129,6 +135,27 @@ export class AddCharacterComponent implements OnInit {
         this.typesMap.clear();
       }
     });
+
+    // Cargar FRANQUICIAS
+    this.franchiseSvc.getAll().subscribe({
+      next: (list) => {
+        this.franchises = (list ?? []).map(f => ({
+          ...f,
+          id: String((f as any).id),
+        }));
+        this.franchiseMap = new Map(this.franchises.map(f => [String(f.id), f.name]));
+      },
+      error: (err) => {
+        console.error('Error cargando Franchises', err);
+        this.franchises = [];
+        this.franchiseMap.clear();
+      }
+    });
+  }
+
+   // Helper para mostrar nombre de franquicia si lo necesitas en chips/logs
+  franchiseNameFor(id: string | number) {
+    return this.franchiseMap.get(String(id)) ?? `#${id}`;
   }
 
   // ----------------------------------------------
@@ -220,7 +247,7 @@ export class AddCharacterComponent implements OnInit {
     this.form.reset({
       name: '',
       alias: '',
-      universe: '',
+      franchiseId: '',
       creator: '',
       yearCreated: this.currentYear,
       summary: '',
@@ -234,7 +261,7 @@ export class AddCharacterComponent implements OnInit {
     this.form.reset({
       name: '',
       alias: '',
-      universe: '',
+      franchiseId: '',
       creator: '',
       yearCreated: this.currentYear,
       summary: '',
