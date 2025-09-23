@@ -43,24 +43,44 @@
 
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
 
-        <div class="identity">
-          <!-- Imagen a la izquierda -->
-          <div class="image-block">
-            <div class="image-frame">
-              <img *ngIf="imagePreview(); else placeholder" [src]="imagePreview()!" alt="Vista previa de la imagen" />
-              <ng-template #placeholder>
-                <div class="image-placeholder">Vista previa</div>
-              </ng-template>
-            </div>
+    <div class="identity">
+    <!-- Imagen a la izquierda -->
+      <div class="image-block"
+        (drop)="onDrop($event)"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()">
 
-            <div class="image-actions">
-              <label class="btn" aria-label="Subir imagen">
-                <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
-                Subir imagen
-              </label>
-              <button type="button" class="btn btn--ghost" (click)="clearImage()" [disabled]="!imagePreview()">Quitar</button>
-            </div>
-          </div>
+      <div class="image-frame" [class.drag-over]="isDragOver">
+        <img *ngIf="imagePreview(); else placeholder" [src]="imagePreview()!" alt="Vista previa de la imagen" />
+      <ng-template #placeholder>
+        <div class="image-placeholder">Vista previa</div>
+      </ng-template>
+
+  <!-- URL de imagen (pega, arrastra desde otra pestaña o escribe) -->
+      <div class="image-url">
+        <label for="imgUrl">URL de imagen</label>
+        <input id="imgUrl"
+          type="url"
+          [value]="urlInput"
+          (input)="urlInput = $any($event.target).value"
+          (blur)="onUrlBlur()"
+          placeholder="https://ejemplo.com/imagen.jpg" />
+        <small class="hint" *ngIf="!urlError">Arrastra o pega una URL.</small>
+        <small class="error" *ngIf="urlError">{{ urlError }}</small>
+      </div>
+      </div>
+
+      <div class="image-actions">
+        <label class="btn" aria-label="Subir imagen">
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+          Subir desde tu PC
+        </label>
+
+        <button type="button" class="btn btn--ghost" (click)="clearImage()" [disabled]="!imagePreview()">
+          Quitar
+        </button>
+      </div>
+      </div>
 
           <!-- Campos a la derecha de la imagen -->
           <div class="fields">

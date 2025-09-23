@@ -11,7 +11,9 @@ export function createCharacterForm(fb: NonNullableFormBuilder, currentYear: num
     creator: fb.control('', { validators: [Validators.required] }),
     yearCreated: fb.control(currentYear, { validators: [Validators.required, Validators.min(1895), Validators.max(currentYear)] }),
     summary: fb.control(''),
+    //Imagenes
     imageFile: fb.control<File | null>(null),
+    imageUrl: fb.control<string | null>(null),
     // anexos (inicializados para que los subforms “encajen” sin romper)
     subforms: fb.group({
       firstAppearance: createFirstAppearanceForm(fb),

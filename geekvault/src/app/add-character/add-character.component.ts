@@ -7,7 +7,7 @@
 // - Renderiza subforms dinámicos (firstAppearance, powers, stats)
 // ==============================================
 
-import { Component, DestroyRef, Type, inject, signal, OnInit } from '@angular/core';
+import { Component, DestroyRef, Type, inject, signal, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 
@@ -115,6 +115,11 @@ export class AddCharacterComponent implements OnInit {
   // Picker abierto en sección
   menuOpen: SectionKey | null = null;
 
+  // Estados de URL/drag&drop
+  isDragOver = false;
+  urlInput = '';
+  urlError: string | null = null;
+
   // ----------------------------------------------
   // Ciclo de vida: cargar catálogo de categorías y franquicias
   // ----------------------------------------------
@@ -168,22 +173,144 @@ export class AddCharacterComponent implements OnInit {
       return;
     }
     const file = input.files[0];
-    this.form.patchValue({ imageFile: file });
+    this.form.patchValue({ imageFile: file, imageUrl: null });
 
     const prev = this.imagePreview();
-    if (prev) URL.revokeObjectURL(prev);
+    if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev);
 
     const url = URL.createObjectURL(file);
     this.imagePreview.set(url);
+
+    // limpiar posibles errores de URL
+    this.urlInput = '';
+    this.urlError = null;
 
     this.destroyRef.onDestroy(() => URL.revokeObjectURL(url));
   }
 
   clearImage() {
     const prev = this.imagePreview();
-    if (prev) URL.revokeObjectURL(prev);
+    if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev);
     this.imagePreview.set(null);
-    this.form.patchValue({ imageFile: null });
+    this.form.patchValue({ imageFile: null, imageUrl: null });
+    this.urlInput = '';
+    this.urlError = null;
+  }
+
+   // ========== DRAG & DROP (archivo o URL) ==========
+  onDragOver(evt: DragEvent): void {
+    evt.preventDefault();
+    this.isDragOver = true;
+  }
+  onDragLeave(): void {
+    this.isDragOver = false;
+  }
+  async onDrop(evt: DragEvent): Promise<void> {
+    evt.preventDefault();
+    this.isDragOver = false;
+    if (!evt.dataTransfer) return;
+
+    // 1) Archivos
+    if (evt.dataTransfer.files && evt.dataTransfer.files.length > 0) {
+      const file = evt.dataTransfer.files[0];
+      if (file.type.startsWith('image/')) {
+        // reutiliza onFileSelected logic
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        const fakeInput = { files: dt.files } as unknown as HTMLInputElement;
+        this.onFileSelected({ target: fakeInput } as any);
+        return;
+      }
+    }
+
+    // 2) URL directa (text/uri-list)
+    const uriList = evt.dataTransfer.getData('text/uri-list');
+    if (uriList) {
+      const url = uriList.split('\n')[0].trim();
+      this.setRemoteUrl(url);
+      return;
+    }
+
+    // 3) HTML con <img>
+    const html = evt.dataTransfer.getData('text/html');
+    if (html) {
+      const url = this.extractImageUrlFromHtml(html);
+      if (url) { this.setRemoteUrl(url); return; }
+    }
+
+    // 4) Texto plano con URL
+    const text = evt.dataTransfer.getData('text/plain');
+    if (text && this.looksLikeUrl(text)) {
+      this.setRemoteUrl(text.trim());
+    }
+  }
+
+  // ========== PEGAR (Ctrl+V) imagen o URL ==========
+  @HostListener('paste', ['$event'])
+  async onPaste(evt: ClipboardEvent): Promise<void> {
+    const dt = evt.clipboardData;
+    if (!dt) return;
+
+    // imagen del portapapeles
+    for (let i = 0; i < dt.items.length; i++) {
+      const it = dt.items[i];
+      if (it.type.startsWith('image/')) {
+        const blob = it.getAsFile();
+        if (blob) {
+          const file = new File([blob], 'pasted-image', { type: blob.type });
+          const dt2 = new DataTransfer();
+          dt2.items.add(file);
+          const fakeInput = { files: dt2.files } as unknown as HTMLInputElement;
+          this.onFileSelected({ target: fakeInput } as any);
+          return;
+        }
+      }
+    }
+
+    // URL en texto
+    const text = dt.getData('text/plain');
+    if (text && this.looksLikeUrl(text)) {
+      this.setRemoteUrl(text.trim());
+    }
+  }
+
+  // ========== URL (input) ==========
+  onUrlBlur(): void {
+    const url = this.urlInput.trim();
+    if (!url) { this.urlError = null; return; }
+    if (!this.looksLikeUrl(url)) { this.urlError = 'URL no válida'; return; }
+    this.setRemoteUrl(url);
+  }
+
+  // Helpers URL/preview
+  private setRemoteUrl(url: string): void {
+    this.urlError = null;
+
+    // liberar blob previo si lo hubiera
+    const prev = this.imagePreview();
+    if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev);
+
+    // set form
+    this.form.patchValue({ imageUrl: url, imageFile: null });
+
+    // preview con la propia URL
+    this.imagePreview.set(url);
+    this.urlInput = url;
+  }
+
+  private looksLikeUrl(text: string): boolean {
+    try {
+      const u = new URL(text);
+      return /^https?:$/i.test(u.protocol);
+    } catch { return false; }
+  }
+
+  private extractImageUrlFromHtml(html: string): string | null {
+    const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (match?.[1]) return match[1];
+    const link = html.match(/<a[^>]+href=["']([^"']+)["']/i)?.[1];
+    if (link && this.looksLikeUrl(link)) return link;
+    return null;
   }
 
   // ----------------------------------------------
