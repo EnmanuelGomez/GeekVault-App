@@ -41,7 +41,14 @@
         <h1>Agregar Personaje</h1>
       </header>
 
-      <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
+      <!-- Avisos -->
+<div *ngIf="apiError" class="alert alert--error">{{ apiError }}</div>
+<div *ngIf="apiSuccess" class="alert alert--ok">¡Personaje creado correctamente!</div>
+<div *ngIf="form.invalid && triedSubmit" class="alert alert--warn">
+  Revisa los campos requeridos (nombre, identidad, franquicia y al menos una categoría).
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
 
     <div class="identity">
     <!-- Imagen a la izquierda -->
@@ -100,8 +107,7 @@
             <div class="field">
               <label for="franchiseId">Franquicia</label>
               <div class="select-wrapper">
-                <select id="franchiseId" formControlName="franchiseId"
-                    [disabled]="franchises.length === 0" aria-label="Seleccionar franquicia">
+               <select id="franchiseId" formControlName="franchiseId" aria-label="Seleccionar franquicia">
                   <option value="">Selecciona una franquicia…</option>
                   <option *ngFor="let fr of franchises" [value]="fr.id">{{ fr.name }}</option>
                 </select>
@@ -147,21 +153,22 @@
             </div>
         <!-- Chips (FILA COMPLETA) -->
             <div class="field field--chips">
-            <div class="chips" *ngIf="(f['categories'].value?.length || 0) > 0">
-              <span class="chip" *ngFor="let id of f['categories'].value">
-                {{ nameFor(id) }}
-              <button type="button"
-                class="chip-remove"
-                (click)="removeCategory(id)"
-                aria-label="Quitar categoría"> ×
-              </button>
-              </span>
-            </div>
-              <small class="error" *ngIf="f['categories'].touched && f['categories'].invalid">
-                Selecciona al menos una categoría.
-              </small>
-            </div>
-            </div>
+  <div class="chips" *ngIf="(f['categories'].value?.length || 0) > 0">
+    <span class="chip" *ngFor="let id of f['categories'].value">
+      {{ nameFor(id) }}
+      <button type="button"
+        class="chip-remove"
+        (click)="removeCategory(id)"
+        aria-label="Quitar categoría"> ×
+      </button>
+    </span>
+  </div>
+  <small class="error" *ngIf="f['categories'].touched && f['categories'].invalid">
+    Selecciona al menos una categoría.
+  </small>
+</div>
+</div>
+
 <!-- =================== FIN CATEGORÍAS ==================== -->
 
         <!-- Resumen debajo -->
@@ -170,10 +177,19 @@
           <textarea id="summary" rows="6" formControlName="summary" placeholder="Breve descripción del personaje..."></textarea>
         </div>
 
-        <div class="actions">
-          <button type="submit" class="btn btn--primary">Guardar</button>
-          <button type="button" class="btn btn--ghost" (click)="resetForm()">Limpiar</button>
-        </div>
+       <div class="actions">
+  <button
+  type="submit"
+  class="btn btn--primary"
+  [disabled]="isSubmitting || !canSubmit()">
+  {{ isSubmitting ? 'Guardando…' : 'Agregar personaje' }}
+</button>
+
+  <button type="button" class="btn btn--ghost" (click)="resetForm()" [disabled]="isSubmitting">
+    Limpiar
+  </button>
+</div>
+
       </form>
     </section>
 

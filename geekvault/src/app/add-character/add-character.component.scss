@@ -1,4 +1,6 @@
-/* Fondo oscuro general */
+/* =========================================================
+   THEME / TOKENS
+   ========================================================= */
 :root {
   --page-bg: #0d0f14;       /* oscuro */
   --section-bg: #ffffff;    /* secciones blancas */
@@ -18,6 +20,9 @@
 
 * { box-sizing: border-box; }
 
+/* =========================================================
+   PAGE / LAYOUT
+   ========================================================= */
 .page {
   min-height: 100dvh;
   background: var(--page-bg);
@@ -27,7 +32,6 @@
   line-height: 1.45;
 }
 
-/* Centro un poco más estrecho; laterales más amplias */
 .layout {
   display: grid;
   grid-template-areas:
@@ -37,8 +41,11 @@
   gap: 18px;
 }
 
+/* =========================================================
+   SECTIONS / PANELS
+   ========================================================= */
 .section {
-  position: relative; /* Para anclar el picker */
+  position: relative; /* Ancla para pickers flotantes */
   background: var(--section-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -59,6 +66,7 @@
   gap: 12px;
   margin-bottom: 8px;
 }
+
 .section-title {
   margin: 0;
   font-size: var(--h2);
@@ -94,7 +102,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(2,6,23,.25);
-  z-index: 10;
+  z-index: 15; /* por encima de overlays locales, por debajo de .actions (20) */
   display: grid;
   gap: 8px;
   padding: 10px;
@@ -133,6 +141,7 @@
   }
 }
 
+/* Subforms en laterales/inferior */
 .subform-wrapper {
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -172,22 +181,31 @@
   }
 }
 
-/* Encabezado del form central */
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
 .header h1 { margin: 0 0 6px; font-size: var(--h1); }
 .header p  { margin: 0 0 12px; color: var(--muted); font-size: calc(var(--base) - 2px); }
 
-/* Form principal (igual que antes, sólo consolidado) */
+/* =========================================================
+   FORM GRID
+   ========================================================= */
 .form { display: grid; gap: 18px; }
 
+/* Bloque identidad (imagen + campos) */
 .identity {
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 18px;
   align-items: start;
 }
-/* ===== FRAGMENTO PARA IMAGEN ===== */
+
+/* =========================================================
+   IMAGE BLOCK
+   ========================================================= */
 .image-block {
-  position: relative; /* para que el overlay se ancle aquí */
+  position: relative;  /* ancla overlay interno */
+  z-index: 0;          /* base */
 }
 
 .image-frame {
@@ -199,7 +217,8 @@
   background: #f8fafc;
   display: grid;
   place-items: center;
-  position: relative; /* base para overlay */
+  position: relative;  /* base para overlay */
+  z-index: 0;
 }
 
 .image-frame img {
@@ -213,55 +232,51 @@
   color: var(--muted);
 }
 
-/* Overlay flotante */
+/* Overlay flotante SOLO dentro del frame */
 .image-url {
   position: absolute;
-  inset-inline: 10px;  /* margen horizontal */
-  bottom: 10px;        /* pegado abajo del frame */
+  inset-inline: 10px;
+  bottom: 10px;
   background: rgba(0, 0, 0, 0.55);
   padding: 8px 10px;
   border-radius: 10px;
   display: grid;
   gap: 4px;
   color: #fff;
-
-  label {
-    font-size: var(--sm);
-    color: #e2e8f0;
-  }
-
-  input {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    font-size: var(--sm);
-    outline: none;
-    backdrop-filter: blur(4px);
-
-    &::placeholder { color: rgba(255, 255, 255, 0.6); }
-    &:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--ring);
-      background: rgba(255, 255, 255, 0.25);
-    }
-  }
-
-  .hint {
-    font-size: 11px;
-    color: #d1d5db;
-  }
-
-  .error {
-    font-size: 12px;
-    color: #fecaca;
-  }
+  z-index: 5;            /* bajo .picker (15) y .actions (20) */
+  pointer-events: auto;  /* interactuable */
 }
 
-/* ===== CAMPOS ===== */
+.image-url label {
+  font-size: var(--sm);
+  color: #e2e8f0;
+}
 
+.image-url input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: var(--sm);
+  outline: none;
+  backdrop-filter: blur(4px);
+}
+
+.image-url input::placeholder { color: rgba(255, 255, 255, 0.6); }
+.image-url input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.image-url .hint  { font-size: 11px; color: #d1d5db; }
+.image-url .error { font-size: 12px; color: #fecaca; }
+
+/* =========================================================
+   FIELDS / INPUTS
+   ========================================================= */
 .fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -269,38 +284,101 @@
 }
 
 .field {
-  display: grid; gap: 6px;
-  label { font-size: var(--sm); color: var(--muted); }
-  input, textarea {
-    width: 100%; padding: 12px 14px; border-radius: 12px;
-    border: 1px solid var(--border); background: #fff; color: var(--text);
-    outline: none; font-size: var(--base);
-    transition: box-shadow .15s ease, border-color .15s ease;
-    &:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
-  }
+  display: grid;
+  gap: 6px;
 }
 
-.field--summary { grid-column: 1 / -1; textarea { resize: vertical; min-height: 130px; } }
+.field label {
+  font-size: var(--sm);
+  color: var(--muted);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  font-size: var(--base);
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.field--summary {
+  grid-column: 1 / -1;
+}
+
+.field--summary textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
 .error { color: #b91c1c; font-size: var(--sm); }
 
+/* =========================================================
+   BUTTONS / ACTIONS
+   ========================================================= */
 .btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 11px 16px; font-weight: 700; font-size: var(--btn);
-  border-radius: 12px; border: 1px solid var(--border);
-  background: #f3f4f6; color: var(--text);
-  cursor: pointer; transition: transform .05s ease, opacity .15s ease;
-  &:hover { opacity: .96; } &:active { transform: translateY(1px); }
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: var(--btn);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #f3f4f6;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .05s ease, opacity .15s ease;
 }
-.btn--primary { background: var(--primary); color: #fff; border-color: var(--primary); }
-.btn--ghost { background: transparent; border-color: var(--border); }
 
-.actions { display: flex; gap: 10px; justify-content: flex-end; }
+.btn:hover { opacity: .96; }
+.btn:active { transform: translateY(1px); }
 
-/* Responsivo */
+.btn--primary {
+  background: var(--primary);
+  color: #0d0f14;
+  border-color: var(--primary);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border);
+}
+
+/* Que los botones deshabilitados se SIGAN viendo claramente */
+.btn:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+  filter: none;
+}
+
+/* Barra de acciones: por encima de overlays/pickers */
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 20;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 @media (max-width: 1200px) {
   .layout { grid-template-columns: 320px 0.9fr 320px; }
   .identity { grid-template-columns: 220px 1fr; }
 }
+
 @media (max-width: 1024px) {
   .layout {
     grid-template-columns: 1fr;
@@ -311,46 +389,43 @@
       "bottom";
   }
   .identity { grid-template-columns: 1fr; }
-  .fields { grid-template-columns: 1fr; }
+  .fields   { grid-template-columns: 1fr; }
 }
 
-/* ===================== CATEGORÍAS (UI) ===================== */
-
-/* Selector */
+/* =========================================================
+   CATEGORÍAS (UI)
+   ========================================================= */
 .category-picker {
   display: grid;
   gap: 6px;
-
-  select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: #fff;
-    color: var(--text);
-    font-size: var(--base);
-    outline: none;
-    transition: box-shadow .15s ease, border-color .15s ease;
-
-    &:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px var(--ring);
-    }
-
-    &:disabled {
-      background: #f3f4f6;
-      color: var(--muted);
-      cursor: not-allowed;
-    }
-  }
 }
 
-/* Fila completa para las chips dentro del grid de .fields (2 columnas) */
-.field--chips {
-  grid-column: 1 / -1; /* ocupa ambas columnas */
+.category-picker select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-size: var(--base);
+  outline: none;
+  transition: box-shadow .15s ease, border-color .15s ease;
 }
 
-/* Contenedor de chips: flexible, con wrap y separación */
+.category-picker select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.category-picker select:disabled {
+  background: #f3f4f6;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+/* Chips ocupan toda la fila del grid */
+.field--chips { grid-column: 1 / -1; }
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -372,9 +447,9 @@
   font-size: var(--sm);
   color: var(--text);
   user-select: none;
+  /* Nota: antes había texto sin comentar aquí que rompía el CSS. */
 }
 
-/* Botón para quitar chip */
 .chip-remove {
   inline-size: 20px;
   block-size: 20px;
@@ -387,16 +462,22 @@
   font-weight: 700;
   cursor: pointer;
   padding: 0;
-
-  &:hover   { background: #fee2e2; border-color: #fecaca; }
-  &:active  { transform: translateY(1px); }
-  &:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
 }
 
-/* Responsivo: en móviles no cambia nada extra, pero si quisieras
-   puedes aumentar el gap para evitar amontonamiento */
+.chip-remove:hover   { background: #fee2e2; border-color: #fecaca; }
+.chip-remove:active  { transform: translateY(1px); }
+.chip-remove:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+.alert {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  &--error { background:#fee2e2; color:#7f1d1d; border:1px solid #fecaca; }
+  &--ok    { background:#dcfce7; color:#065f46; border:1px solid #bbf7d0; }
+  &--warn  { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; }
+}
+
 @media (max-width: 640px) {
   .chips { gap: 10px; }
 }
-/* =================== FIN CATEGORÍAS (UI) =================== */
-
