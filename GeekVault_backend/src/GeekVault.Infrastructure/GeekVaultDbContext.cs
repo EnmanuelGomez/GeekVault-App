@@ -67,6 +67,13 @@ namespace GeekVault.Infrastructure
                 .WithMany(c => c.FranchiseCategories)
                 .HasForeignKey(fc => fc.CategoryId);
 
+            // Character: mapea jsonb
+            modelBuilder.Entity<Character>(b =>
+            {
+                b.Property(c => c.ExtraData)
+                 .HasColumnType("jsonb"); // PostgreSQL jsonb
+            });
+
             // CharacterCharacterType (M:N)
             modelBuilder.Entity<CharacterCharacterType>()
                 .HasKey(cct => new { cct.CharacterId, cct.CharacterTypeId });
