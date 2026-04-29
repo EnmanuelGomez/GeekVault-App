@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Franchise } from '../models/franchise.model';
 import { environment } from '../../../environments/environment';
+import { MOCK_FRANCHISES } from '../mocks/mock-data';
 import { FranchiseCreateRequest } from '../models/franchise-create.model';
 import { FranchiseUpdateRequest } from '../models/franchise-update.model';
 
@@ -12,16 +13,16 @@ export class FranchiseService {
   private baseUrl = `${environment.apiBaseUrl}/api/Franchises`;
 
 getAll(): Observable<Franchise[]> {
-  return this.http.get<Franchise[]>(this.baseUrl);
+  return of(MOCK_FRANCHISES as Franchise[]);
 }
 
-getByCategory(categoryId: string | number) {
-  const id = String(categoryId);
-  return this.http.get<Franchise[]>(`${this.baseUrl}?categoryId=${encodeURIComponent(id)}`);
+getByCategory(categoryId: string | number): Observable<Franchise[]> {
+  const idNum = Number(categoryId);
+  return of((MOCK_FRANCHISES as Franchise[]).filter(f => (f as any).categoryId === idNum || (f as any).categoryId === categoryId));
 }
 
 getById(id: string) {
-  return this.http.get<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`);
+  return of((MOCK_FRANCHISES as Franchise[]).find(f => String(f.id) === String(id)) as Franchise);
 }
 
 create(payload: FranchiseCreateRequest): Observable<Franchise> {

@@ -33,14 +33,14 @@ export class EditCategoryComponent {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.svc.getById(this.id).subscribe({
-      next: cat => {
+      next: (cat: any) => {
         this.form.patchValue({
           name: cat.name,
           description: cat.description ?? ''
         });
         this.loading = false;
       },
-      error: err => {
+      error: (err: any) => {
         console.error('[EditCategory] error getById', err);
         this.error = 'No se pudo cargar la categoría.';
         this.loading = false;
@@ -62,10 +62,10 @@ export class EditCategoryComponent {
     this.svc.update(this.id, payload)
       .pipe(finalize(() => this.saving = false))
       .subscribe({
-        next: updated => {
+        next: (updated: any) => {
           this.success = `Guardado: ${updated.name}`;
         },
-        error: err => {
+        error: (err: any) => {
           const msg = err?.error?.message || err?.message || 'No se pudo guardar.';
           this.error = msg;
         }

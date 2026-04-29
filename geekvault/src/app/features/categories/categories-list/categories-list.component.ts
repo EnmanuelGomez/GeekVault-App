@@ -60,7 +60,7 @@ export class CategoriesListComponent {
         // recargar listado
         this.reload();
       },
-      error: (err) => {
+      error: (err: any) => {
         const msg = err?.error?.message || err?.message || 'No se pudo eliminar la categoría.';
         this.error = msg; // p.ej. 409: "La categoría está en uso…"
         this.confirmingId = null;

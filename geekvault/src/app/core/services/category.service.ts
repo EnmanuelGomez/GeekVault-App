@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Category, CategoryCreateRequest, CategoryUpdateRequest } from '../models/category.model';
-import { Observable } from 'rxjs';
+import { Category } from '../models/category.model';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { MOCK_CATEGORIES } from '../mocks/mock-data';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
@@ -10,21 +11,23 @@ export class CategoryService {
   private baseUrl = `${environment.apiBaseUrl}/api/Categories`;
 
   getAll(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.baseUrl);
+    return of(MOCK_CATEGORIES as Category[]);
   }
+
   getById(id: string): Observable<Category> {
-    return this.http.get<Category>(`${this.baseUrl}/${id}`);
+    const cat = MOCK_CATEGORIES.find(c => c.id === id);
+    return of((cat || MOCK_CATEGORIES[0]) as Category);
   }
-  //POST
-  create(dto: CategoryCreateRequest): Observable<Category> {
-    return this.http.post<Category>(this.baseUrl, dto);
+
+  create(category: any): Observable<Category> {
+    return of({ id: Math.random().toString(), ...category } as Category);
   }
-  // PUT
-  update(id: string, dto: CategoryUpdateRequest): Observable<Category> {
-    return this.http.put<Category>(`${this.baseUrl}/${id}`, dto);
+
+  update(id: string, category: any): Observable<Category> {
+    return of({ id, ...category } as Category);
   }
-  // DELETE
+
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return of(undefined);
   }
 }

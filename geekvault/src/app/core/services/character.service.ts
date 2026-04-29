@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators';
 import { Character } from '../models/character.model';
 import { CharacterType } from '../models/character-type.model';
 import { Franchise } from '../models/franchise.model';
-import { CreateCharacterRequest } from '../models/character-create.model';
+import { MOCK_CHARACTERS, MOCK_FRANCHISES, MOCK_CATEGORIES } from '../mocks/mock-data';
+import { of } from 'rxjs';
 
 // Tipado opcional del detalle (extiende el base con posibles extras)
 export type CharacterDetail = Character & {
@@ -37,21 +38,19 @@ export class CharacterService {
 
   /** Lista por franquicia */
   getByFranchise(franchiseId: string): Observable<Character[]> {
-    return this.http.get<Character[]>(
-      `${this.baseUrl}/by-franchise/${encodeURIComponent(franchiseId)}`
-    );
+    return of(MOCK_CHARACTERS.filter(c => c.franchiseId === franchiseId) as Character[]);
   }
 
   /** Obtener franquicia mediante id **/
   getFranchiseById(id: string): Observable<Franchise> {
-    return this.http.get<Franchise>(`${this.franchiseBaseUrl}/${encodeURIComponent(id)}`);
+    const franchise = MOCK_FRANCHISES.find(f => f.id === Number(id));
+    return of(franchise as Franchise);
   }
 
   /** Detalle por id con merge de extraData (si existe y es JSON válido). */
   getById(id: string): Observable<CharacterDetail> {
-    return this.http
-      .get<Character>(`${this.baseUrl}/${encodeURIComponent(id)}`)
-      .pipe(map((c) => this.mergeExtras(c)));
+    const character = MOCK_CHARACTERS.find(c => c.id === id);
+    return of(character as CharacterDetail);
   }
 
   /** Utilidad: combina extraData (string u objeto) sobre el Character base. */
@@ -80,39 +79,12 @@ export class CharacterService {
 
   // categorías del personaje
   getCategoriesByCharacter(id: string): Observable<CharacterType[]> {
-  return this.http
-    .get<any[]>(
-      `${this.categoriesBaseUrl}/character/${encodeURIComponent(id)}/categories`
-    )
-    .pipe(
-      map((arr) => {
-        const list = Array.isArray(arr) ? arr : [];
-        // Normaliza: soporta {id,name}, {characterTypeId,typeName}, {characterType:{id,name}}, etc.
-        const norm = list.map((x) => {
-          const id =
-            x?.id ??
-            x?.characterTypeId ??
-            x?.typeId ??
-            x?.characterType?.id ??
-            x?.type?.id;
-
-          const name =
-            x?.name ??
-            x?.typeName ??
-            x?.characterType?.name ??
-            x?.type?.name;
-
-          return { id, name } as CharacterType;
-        });
-
-        // filtra solo válidos
-        return norm.filter((c) => c.id && c.name);
-      })
-    );
+    return of(MOCK_CATEGORIES);
   }
 
-  /** Crear personaje */
-  create(req: CreateCharacterRequest): Observable<Character> {
-    return this.http.post<Character>(this.baseUrl, req);
+  /** Crear personaje (mock) */
+  create(payload: any): Observable<any> {
+    const newCharacter = { id: `char-${Date.now()}`, ...payload };
+    return of(newCharacter);
   }
 }

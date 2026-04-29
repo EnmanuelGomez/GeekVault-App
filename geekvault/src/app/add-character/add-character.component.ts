@@ -441,14 +441,14 @@ export class AddCharacterComponent implements OnInit {
     };
 
     this.characterSvc.create(payload).subscribe({
-      next: (created) => {
+      next: (created: any) => {
         // Limpia y muestra éxito
         this.resetForm();
         this.apiSuccess = true;
         // this.router.navigate(['/characters', created.id]); // opcional
         console.log('Creado', created);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(err);
         const msg = err?.error?.detail || err?.error?.title || err?.error?.error || err?.message;
         this.apiError = (typeof msg === 'string' && msg.trim().length > 0)

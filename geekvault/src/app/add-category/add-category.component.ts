@@ -40,14 +40,14 @@ export class AddCategoryComponent {
     this.categoryService.create(payload)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (created) => {
+        next: (created: any) => {
           this.successMessage = `Categoría creada: ${created.name}`;
           this.categoryForm.reset();
           // opcional: marcar pristine/touched
           this.categoryForm.markAsPristine();
           this.categoryForm.markAsUntouched();
         },
-        error: (err) => {
+        error: (err: any) => {
           // Manejo 409 (duplicado) u otros
           const msg = err?.error?.message || err?.message || 'Error al crear la categoría.';
           this.serverError = msg;
