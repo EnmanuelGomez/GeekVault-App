@@ -5,14 +5,9 @@ namespace GeekVault.Api.Controllers
 {
     [ApiController]
     [Route("api/CharacterCategory")]
-    public class CharactersCategoryController : ControllerBase
+    public class CharactersCategoryController(ICharacterCategoryService service) : ControllerBase
     {
-        private readonly ICharacterCategoryService _service;
-
-        public CharactersCategoryController(ICharacterCategoryService service)
-        {
-            _service = service;
-        }
+        private readonly ICharacterCategoryService _service = service;
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
