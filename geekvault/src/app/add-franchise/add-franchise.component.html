@@ -1,46 +1,79 @@
-<div class="add-franchise-container">
-  <!-- Imagen de fondo -->
-  <div
-    class="header-image"
-    [ngStyle]="{'background-image': selectedImage ? 'url(' + selectedImage + ')' : 'none'}">
+<div class="add-franchise-container" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave()">
+  <!-- Header con imagen de fondo (preview de URL o base64) -->
+  <div class="header-image" [ngClass]="{'drag-over': isDragOver}"
+       [ngStyle]="{'background-image': previewImage ? 'url(' + previewImage + ')' : 'none'}">
+
     <div class="image-overlay">
       <h2>Página para agregar IP / Franquicia / Universo</h2>
     </div>
-    <div class="image-upload">
-      <label for="uploadImage">Agregar Imagen de Fondo</label>
-      <input type="file" id="uploadImage" accept="image/*" (change)="onImageSelected($event)" />
-    </div>
+
+    <!-- Zona unificada: subir archivo o usar URL -->
+    <mat-card class="image-dropzone" [matTooltip]="'Arrastra una imagen (archivo o desde la web), pega (Ctrl+V) o escribe una URL'">
+      <div class="dropzone-row">
+        <button mat-stroked-button color="primary" (click)="uploadInput.click()">
+          <mat-icon>upload</mat-icon>&nbsp; Subir desde tu PC
+        </button>
+        <input #uploadInput type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
+        <span class="or">o</span>
+        <mat-form-field appearance="outline" class="url-field">
+          <mat-label>URL de imagen (arrástrala desde el navegador o pégala)</mat-label>
+          <input matInput [(ngModel)]="urlInput" name="urlInput" (blur)="onUrlBlur()" placeholder="https://ejemplo.com/imagen.jpg">
+          <mat-icon matSuffix>link</mat-icon>
+          <mat-hint *ngIf="!urlError">También puedes arrastrar una imagen desde otra pestaña.</mat-hint>
+          <mat-error *ngIf="urlError">{{ urlError }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="preview-row" *ngIf="previewImage">
+        <img [src]="previewImage" alt="Vista previa" />
+      </div>
+    </mat-card>
   </div>
 
   <!-- Sección de contenido -->
   <div class="form-section">
-    <form>
+    <form (submit)="$event.preventDefault(); onSubmit();" novalidate>
       <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" placeholder="Ej: Marvel, Star Wars, DC Comics..." />
+        <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required placeholder="Ej: Marvel, Star Wars, DC Comics..." />
       </div>
 
       <div class="form-group">
         <label for="date">Fecha</label>
-        <input id="date" type="date" formControlName="date" />
+        <input id="date" type="date" [(ngModel)]="fecha" name="fecha" />
       </div>
 
       <div class="form-group">
         <label for="creador">Creador(es):</label>
-        <input type="text" id="creador" placeholder="Ej: Stan Lee, George Lucas..." />
+        <input type="text" id="creador" [(ngModel)]="creador" name="creador" placeholder="Ej: Stan Lee, George Lucas..." />
       </div>
 
       <div class="form-group">
         <label for="pais">País de origen:</label>
-        <input type="text" id="pais" placeholder="Ej: Estados Unidos, Japón..." />
+        <input type="text" id="pais" [(ngModel)]="pais" name="pais" placeholder="Ej: Estados Unidos, Japón..." />
       </div>
 
       <div class="form-group">
-        <label for="resumen"></label>
-        <textarea id="resumen" rows="4" placeholder="Escribe un breve resumen..."></textarea>
+        <label for="resumen">Resumen:</label>
+        <textarea id="resumen" rows="4" [(ngModel)]="resumen" name="resumen" placeholder="Escribe un breve resumen..."></textarea>
       </div>
 
-      <button type="submit">Guardar</button>
+      <!-- NUEVO: Selector de categoría (única) cargada desde la BD -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Categoría</mat-label>
+        <mat-select [(ngModel)]="selectedCategoryId" name="selectedCategoryId" required>
+          <mat-option *ngFor="let c of categories; trackBy: trackCat" [value]="c.id">
+            {{ c.name }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="categories.length === 0">No hay categorías disponibles.</mat-hint>
+        <mat-error *ngIf="!selectedCategoryId">Selecciona una categoría.</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="saving || !nombre || !selectedCategoryId">
+        <mat-icon>save</mat-icon>&nbsp; {{ saving ? (editMode ? 'Actualizando...' : 'Guardando...') : (editMode ? 'Actualizar' : 'Guardar') }}
+      </button>
+
     </form>
   </div>
 </div>

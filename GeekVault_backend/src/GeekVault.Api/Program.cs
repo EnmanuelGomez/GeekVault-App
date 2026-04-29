@@ -7,6 +7,15 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS (asegúrate de permitir tu frontend)
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("AllowFrontend", p =>
+        p.WithOrigins("http://localhost:4200")
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+    );
+});
 // Add DbContext
 builder.Services.AddDbContext<GeekVaultDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GeekVaultDB")));
@@ -56,4 +65,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowFrontend");
+app.UseHttpsRedirection(); 
+app.MapControllers();
 app.Run();
+

@@ -1,13 +1,22 @@
-<a class="franchise-card"
-   [routerLink]="['/franchise', franchise.id]"
-   role="button"
-   tabindex="0"
-   title="{{ franchise.name }}">
-  <div class="image-wrap">
-    <img [src]="franchise.imageUrl || 'assets/placeholders/franchise-fallback.png'"
-         (error)="fallback($event)"
-         [alt]="franchise.name"
-         loading="lazy"/>
+<div class="franchise-item">
+  <!-- Imagen enlazada -->
+  <a [routerLink]="['/franchise', franchise.id]"
+     title="{{ franchise.name }}"
+     tabindex="0">
+    <div class="image-wrap">
+      <img
+        [src]="franchise.imageUrl || 'assets/placeholders/franchise-fallback.png'"
+        (error)="fallback($event)"
+        [alt]="franchise.name"
+        loading="lazy"
+      />
+    </div>
+  </a>
+
+  <!-- Nombre debajo (igual estilo que personajes) -->
+  <div class="franchise-name">
+    <a [routerLink]="['/franchise', franchise.id]" title="{{ franchise.name }}">
+      {{ franchise.name }}
+    </a>
   </div>
-  <div class="name">{{ franchise.name }}</div>
-</a>
+</div>

@@ -7,16 +7,19 @@ export function createCharacterForm(fb: NonNullableFormBuilder, currentYear: num
     alias: fb.control('', { validators: [Validators.required, Validators.minLength(2)] }),
     // En character.forms.ts
     categories: fb.control<string[]>([], { validators: [Validators.required, Validators.minLength(1)] }),
-    universe: fb.control('', { validators: [Validators.required] }),
+    franchiseId: ['', [Validators.required]],
     creator: fb.control('', { validators: [Validators.required] }),
     yearCreated: fb.control(currentYear, { validators: [Validators.required, Validators.min(1895), Validators.max(currentYear)] }),
     summary: fb.control(''),
+    //Imagenes
     imageFile: fb.control<File | null>(null),
+    imageUrl: fb.control<string | null>(null),
     // anexos (inicializados para que los subforms “encajen” sin romper)
     subforms: fb.group({
       firstAppearance: createFirstAppearanceForm(fb),
       powers: fb.array([]), // empieza con uno; puedes dejar [] si quieres
       stats: createStatsForm(fb),
+      versions: fb.array([]),
     })
   });
 }
@@ -54,5 +57,16 @@ export function createStatsForm(fb: NonNullableFormBuilder) {
     experience: fb.control(5, { validators: scale }),
     fighting: fb.control(5, { validators: scale }),
     power: fb.control(5, { validators: scale }),
+  });
+}
+
+export function createVersionForm(fb: NonNullableFormBuilder) {
+  return fb.group({
+    imageFile: fb.control<File | null>(null),
+    title: fb.control('', { validators: [Validators.required, Validators.minLength(2)] }),
+    medium: fb.control<'comic'|'tv'|'movie'|'game'|'anime'|'novel'|'other'>('comic', { validators: [Validators.required] }),
+    continuity: fb.control<string>(''),
+    firstAppearanceRef: fb.control<string>(''),
+    createdBy: fb.control<string>(''),
   });
 }

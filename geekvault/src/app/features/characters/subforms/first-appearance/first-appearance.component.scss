@@ -17,10 +17,7 @@
     flex-direction: column;
     gap: 0.3rem;
 
-    label {
-      font-weight: 600;
-      color: #333;
-    }
+    label { font-weight: 600; color: #333; }
 
     input, select, textarea {
       padding: 0.4rem;
@@ -29,13 +26,51 @@
       font-size: 0.9rem;
     }
 
-    textarea {
-      min-height: 70px;
-      resize: vertical;
+    textarea { min-height: 70px; resize: vertical; }
+  }
+
+  .full { grid-column: 1 / -1; }
+
+  /* --- Imagen (igual estilo que en versions) --- */
+  .image-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Rectángulo vertical */
+  .image-frame {
+    width: 160px;
+    height: 240px;
+    border: 1px dashed #bbb;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: #fafafa;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover; /* llena el marco sin deformar */
+      display: block;
     }
   }
 
-  .full {
-    grid-column: 1 / -1;
+  .image-placeholder { font-size: 0.85rem; color: #888; }
+
+  .image-actions {
+    display: flex;
+    gap: 0.5rem;
+
+    .btn {
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .btn--ghost { background: transparent; }
   }
 }

@@ -1,4 +1,6 @@
-﻿namespace GeekVault.Domain.Entities
+﻿using System.Text.Json;
+
+namespace GeekVault.Domain.Entities
 {
     public class Character
     {

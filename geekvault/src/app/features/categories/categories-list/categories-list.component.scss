@@ -1,0 +1,36 @@
+.container {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  background: #fff;
+  padding: 1.25rem 1.5rem;
+  border-radius: .75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  th, td { padding: .75rem; border-bottom: 1px solid #eee; }
+  thead th { text-align: left; background: #fafafa; }
+  .actions { display: flex; gap: .5rem; }
+}
+.btn {
+  border: none; border-radius: .5rem; padding: .5rem .85rem; cursor: pointer;
+  background: #4a90e2; color: #fff;
+  &.danger { background: #e74c3c; }
+}
+.state.info { color:#555; margin-top: .5rem; }
+.state.error { color:#c0392b; margin-top: .5rem; }
+.state.success { color:#1e8449; margin-top: .5rem; }
+
+/* Modal simple */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  display: grid; place-items: center; z-index: 1000;
+}
+.modal {
+  width: min(95vw, 480px);
+  background: #fff; padding: 1rem 1.25rem; border-radius: .75rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  h3 { margin-top: 0; }
+  .modal-actions { display:flex; gap:.5rem; justify-content:flex-end; margin-top: 1rem; }
+}

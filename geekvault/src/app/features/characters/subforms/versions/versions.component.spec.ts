@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VersionsComponent } from './versions.component';
+import { VersionSubformComponent } from './versions.component';
 
 describe('VersionsComponent', () => {
-  let component: VersionsComponent;
-  let fixture: ComponentFixture<VersionsComponent>;
+  let component: VersionSubformComponent;
+  let fixture: ComponentFixture<VersionSubformComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VersionsComponent]
+      imports: [VersionSubformComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(VersionsComponent);
+
+    fixture = TestBed.createComponent(VersionSubformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

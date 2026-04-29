@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Franchise } from '../models/franchise.model';
 import { environment } from '../../../environments/environment';
+import { FranchiseCreateRequest } from '../models/franchise-create.model';
+import { FranchiseUpdateRequest } from '../models/franchise-update.model';
 
 @Injectable({ providedIn: 'root' })
 export class FranchiseService {
@@ -17,8 +19,23 @@ getByCategory(categoryId: string | number) {
   const id = String(categoryId);
   return this.http.get<Franchise[]>(`${this.baseUrl}?categoryId=${encodeURIComponent(id)}`);
 }
+
 getById(id: string) {
   return this.http.get<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`);
+}
+
+create(payload: FranchiseCreateRequest): Observable<Franchise> {
+  return this.http.post<Franchise>(this.baseUrl, payload);
+}
+
+// actualizar
+update(id: string, payload: FranchiseUpdateRequest) {
+  return this.http.put<Franchise>(`${this.baseUrl}/${encodeURIComponent(id)}`, payload);
+}
+
+  // obtener la categoría actual (UI maneja una)
+getPrimaryCategory(franchiseId: string) {
+  return this.http.get<{ categoryId: string | null }>(`${this.baseUrl}/${encodeURIComponent(franchiseId)}/category`);
 }
 
 }

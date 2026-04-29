@@ -40,6 +40,19 @@ namespace GeekVault.Infrastructure
                     .HasMaxLength(300);     // ajusta si necesitas más
             });
 
+            modelBuilder.Entity<Category>(b =>
+            {
+                b.Property(c => c.Name)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                b.Property(c => c.Description)
+                    .HasMaxLength(500);
+
+                b.HasIndex(c => c.Name)
+                    .IsUnique(); // Unicidad por nombre
+            });
+
             // Tabla puente FranchiseCategory (M:N)
             modelBuilder.Entity<FranchiseCategory>()
                 .HasKey(fc => new { fc.FranchiseId, fc.CategoryId });
@@ -53,6 +66,13 @@ namespace GeekVault.Infrastructure
                 .HasOne(fc => fc.Category)
                 .WithMany(c => c.FranchiseCategories)
                 .HasForeignKey(fc => fc.CategoryId);
+
+            // Character: mapea jsonb
+            modelBuilder.Entity<Character>(b =>
+            {
+                b.Property(c => c.ExtraData)
+                 .HasColumnType("jsonb"); // PostgreSQL jsonb
+            });
 
             // CharacterCharacterType (M:N)
             modelBuilder.Entity<CharacterCharacterType>()

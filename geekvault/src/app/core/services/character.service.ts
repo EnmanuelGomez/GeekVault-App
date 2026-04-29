@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Character } from '../models/character.model';
 import { CharacterType } from '../models/character-type.model';
 import { Franchise } from '../models/franchise.model';
+import { CreateCharacterRequest } from '../models/character-create.model';
 
 // Tipado opcional del detalle (extiende el base con posibles extras)
 export type CharacterDetail = Character & {
@@ -108,5 +109,10 @@ export class CharacterService {
         return norm.filter((c) => c.id && c.name);
       })
     );
-}
+  }
+
+  /** Crear personaje */
+  create(req: CreateCharacterRequest): Observable<Character> {
+    return this.http.post<Character>(this.baseUrl, req);
+  }
 }

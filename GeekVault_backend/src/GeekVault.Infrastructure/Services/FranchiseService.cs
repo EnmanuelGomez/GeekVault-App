@@ -1,5 +1,6 @@
 using GeekVault.Application.DTOs;
 using GeekVault.Application.Interfaces;
+using GeekVault.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeekVault.Infrastructure.Services
@@ -64,6 +65,136 @@ namespace GeekVault.Infrastructure.Services
                 })
                 .Distinct() // por seguridad si hubiera duplicados
                 .ToListAsync();
+        }
+
+        public async Task<FranchiseDto> CreateAsync(FranchiseCreateRequestDto request, CancellationToken ct = default)
+        {
+            var name = (request.Name ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name is required.");
+
+            var exists = await _db.Franchises
+                .AsNoTracking()
+                .AnyAsync(f => f.Name.ToLower() == name.ToLower(), ct);
+
+            if (exists)
+                throw new InvalidOperationException($"A franchise named '{name}' already exists.");
+
+            if (request.CategoryId == Guid.Empty)
+                throw new ArgumentException("CategoryId is required.");
+
+            // valida que la categoría exista (opcional pero recomendado)
+            var catExists = await _db.Categories
+                .AsNoTracking()
+                .AnyAsync(c => c.Id == request.CategoryId, ct);
+            if (!catExists)
+                throw new ArgumentException("CategoryId not found.");
+
+            var entity = new Franchise
+            {
+                Id = Guid.NewGuid(),
+                Name = name,
+                Description = string.IsNullOrWhiteSpace(request.Description) ? null : request.Description!.Trim(),
+                OriginCountry = string.IsNullOrWhiteSpace(request.OriginCountry) ? null : request.OriginCountry!.Trim(),
+                FoundedOn = request.FoundedOn,
+                Founders = string.IsNullOrWhiteSpace(request.Founders) ? null : request.Founders!.Trim(),
+                ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? null : request.ImageUrl!.Trim()
+            };
+
+            // agrega relación en la tabla puente
+            entity.FranchiseCategories.Add(new FranchiseCategory
+            {
+                FranchiseId = entity.Id,
+                CategoryId = request.CategoryId
+            });
+
+            _db.Franchises.Add(entity);
+            await _db.SaveChangesAsync(ct);
+
+            return new FranchiseDto
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                OriginCountry = entity.OriginCountry,
+                FoundedOn = entity.FoundedOn,
+                Founders = entity.Founders,
+                ImageUrl = entity.ImageUrl
+            };
+        }
+
+        public async Task<FranchiseDto> UpdateAsync(Guid id, FranchiseUpdateRequestDto request, CancellationToken ct = default)
+        {
+            var entity = await _db.Franchises
+                .Include(f => f.FranchiseCategories) // necesitamos la relación para reemplazarla
+                .FirstOrDefaultAsync(f => f.Id == id, ct);
+
+            if (entity is null)
+                throw new KeyNotFoundException($"Franchise {id} not found.");
+
+            var name = (request.Name ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name is required.");
+
+            var duplicate = await _db.Franchises
+                .AsNoTracking()
+                .AnyAsync(f => f.Id != id && f.Name.ToLower() == name.ToLower(), ct);
+
+            if (duplicate)
+                throw new InvalidOperationException($"A franchise named '{name}' already exists.");
+
+            if (request.CategoryId == Guid.Empty)
+                throw new ArgumentException("CategoryId is required.");
+
+            var catExists = await _db.Categories
+                .AsNoTracking()
+                .AnyAsync(c => c.Id == request.CategoryId, ct);
+
+            if (!catExists)
+                throw new ArgumentException("CategoryId not found.");
+
+            // Actualiza campos
+            entity.Name = name;
+            entity.Description = string.IsNullOrWhiteSpace(request.Description) ? null : request.Description!.Trim();
+            entity.OriginCountry = string.IsNullOrWhiteSpace(request.OriginCountry) ? null : request.OriginCountry!.Trim();
+            entity.FoundedOn = request.FoundedOn;
+            entity.Founders = string.IsNullOrWhiteSpace(request.Founders) ? null : request.Founders!.Trim();
+            entity.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? null : request.ImageUrl!.Trim();
+
+            // Reemplaza la relación M:N (solo 1 categoría desde la UI)
+            var existing = await _db.FranchiseCategories
+                .Where(fc => fc.FranchiseId == id)
+                .ToListAsync(ct);
+
+            _db.FranchiseCategories.RemoveRange(existing);
+            entity.FranchiseCategories.Add(new FranchiseCategory
+            {
+                FranchiseId = entity.Id,
+                CategoryId = request.CategoryId
+            });
+
+            await _db.SaveChangesAsync(ct);
+
+            return new FranchiseDto
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                OriginCountry = entity.OriginCountry,
+                FoundedOn = entity.FoundedOn,
+                Founders = entity.Founders,
+                ImageUrl = entity.ImageUrl
+            };
+        }
+
+        // Útil para preseleccionar la categoría en el formulario de edición
+        public async Task<Guid?> GetPrimaryCategoryIdAsync(Guid franchiseId, CancellationToken ct = default)
+        {
+            return await _db.FranchiseCategories
+                .AsNoTracking()
+                .Where(fc => fc.FranchiseId == franchiseId)
+                .Select(fc => (Guid?)fc.CategoryId)
+                .FirstOrDefaultAsync(ct);
         }
     }
 }

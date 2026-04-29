@@ -1,62 +1,161 @@
-.franchises-strip {
-  margin-top: .5rem;
+/* Variables locales (ajústalas a tu theme si ya lo tienes) */
+:host {
+  --gv-surface: #0f0f10;
+  --gv-surface-2: #1a1a1d;
+  --gv-border: #232326;
+  --gv-border-hover: #2f2f34;
+  --gv-text: #f0f2f5;
+  --gv-muted: #9aa0a6;
 
-  .h-scroll {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    gap: 1rem;
-    overflow-x: auto;
-    padding: .25rem .25rem .5rem;
+  --gv-third: #f32121;
+  --gv-third-contrast: #ffffff;
+  --gv-primary: #2196f3;
+  --gv-primary-contrast: #ffffff;
+  --gv-secondary: #22c55e;
+  --gv-secondary-contrast: #ffffff;
 
-    scroll-snap-type: x proximity;
-
-    & > * {
-      scroll-snap-align: start;
-    }
-
-    scrollbar-width: thin;
-    scrollbar-color: #3a3a40 transparent;
-
-    &::-webkit-scrollbar { height: 10px; }
-    &::-webkit-scrollbar-thumb { background: #3a3a40; border-radius: 999px; }
-    &::-webkit-scrollbar-track { background: transparent; }
-  }
+  --card-w: 280px; /* ancho visual de cada card para consistencia */
 }
 
-.franchise-card {
-  width: 280px;
+/* Contenedor de la tira.
+   - overflow: clip evita que el contenido genere scroll del documento.
+   - contain ayuda a aislar el layout/pintado de este bloque. */
+.franchises-strip {
+  position: relative;
+  padding-block: .25rem;
+  max-width: 100%;
+  overflow: clip;
+  contain: layout paint;
+}
+
+/* Carril desplazable horizontal:
+   - grid-auto-flow: column crea una fila continua de items.
+   - scroll-snap-type suaviza el "encaje" al arrastrar/scroll.
+   - La máscara (-webkit-mask/mask) usa variables CSS para los fades. */
+.h-scroll {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: 1rem;
+
+  overflow-x: auto;   /* solo desplazamiento horizontal interno */
+  overflow-y: hidden; /* no crece verticalmente */
+  padding: .25rem .5rem .75rem;
+
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain; /* evita “rebotar” fuera del carril */
+  -webkit-overflow-scrolling: touch;
+
+  /* Fades en los extremos (se actualizan desde TS con --fade-left/right) */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--fade-left, 0px),
+    black calc(100% - var(--fade-right, 0px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--fade-left, 0px),
+    black calc(100% - var(--fade-right, 0px)),
+    transparent 100%
+  );
+
+  & > * { scroll-snap-align: start; }
+
+  /* Estilo discreto de scrollbar (opcional) */
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a40 transparent;
+  &::-webkit-scrollbar { height: 10px; }
+  &::-webkit-scrollbar-thumb { background: #3a3a40; border-radius: 999px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+}
+
+/* Wrapper por item: coloca card + acciones en columna */
+.franchise-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: .5rem;
+}
+
+/* Estética base del card (si tu componente ya trae estilos, no chocan) */
+.franchise-card {
+  width: var(--card-w);
   border-radius: 14px;
   overflow: hidden;
-  background: #0f0f10;
-  border: 1px solid #232326;
+
+  background: var(--gv-surface);
+  border: 1px solid var(--gv-border);
   box-shadow: 0 6px 18px rgba(0,0,0,.25);
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  cursor: pointer;
 
   &:hover {
     transform: translateY(-2px);
-    border-color: #2f2f34;
+    border-color: var(--gv-border-hover);
     box-shadow: 0 10px 24px rgba(0,0,0,.35);
   }
+}
 
-  .image-wrap {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #1a1a1d;
-    display: grid;
-    place-items: center;
+/* Botoncitos “Ver/Editar” */
+.actions {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  justify-content: center;
 
-    img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-  .name {
-    padding: .75rem .9rem 1rem;
+    min-width: 86px;
+    height: 34px;
+    padding: 0 .8rem;
+
+    border-radius: 999px;
+    font-size: .9rem;
     font-weight: 600;
-    text-align: center;
-    color: #f0f2f5;
+    text-decoration: none;
+
+    color: var(--gv-primary-contrast);
+    background: var(--gv-primary);
+    border: 1px solid color-mix(in srgb, var(--gv-primary), #000 15%);
+
+    transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.28);
+      background: color-mix(in srgb, var(--gv-primary), #fff 6%);
+    }
+
+    &.secondary {
+      color: var(--gv-secondary-contrast);
+      background: var(--gv-secondary);
+      border: 1px solid color-mix(in srgb, var(--gv-secondary), #000 15%);
+
+      &:hover {
+        background: color-mix(in srgb, var(--gv-secondary), #fff 6%);
+      }
+    }
+
+    &.third {
+      color: var(--gv-third-contrast);
+      background: var(--gv-third);
+      border: 1px solid color-mix(in srgb, var(--gv-third), #000 15%);
+
+      &:hover {
+        background: color-mix(in srgb, var(--gv-third), #fff 6%);
+      }
+    }
   }
+}
+
+/* Ajuste de tamaño en móviles si quieres más compacto */
+@media (max-width: 768px) {
+  :host { --card-w: 240px; }
 }
